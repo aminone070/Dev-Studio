@@ -113,6 +113,30 @@
   html {
     color-scheme: dark;
   }
+
+  /* Global Scrollbar Styles */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted-foreground);
+  }
 }
 
 @layer utilities {
@@ -121,17 +145,6 @@
   }
   .text-pretty {
     text-wrap: pretty;
-  }
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: var(--color-border);
-    border-radius: 8px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;

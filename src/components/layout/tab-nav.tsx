@@ -18,12 +18,22 @@ interface TabNavProps {
 
 export function TabNav({ tabs, activeTab, className = "" }: TabNavProps) {
   return (
-    <div className="w-full min-w-0 overflow-x-auto pb-2 -mb-2 scrollbar-thin scrollbar-thumb-border hover:scrollbar-thumb-muted-foreground/30">
-      <nav
-        className={`flex items-center gap-1.5 p-1 bg-muted/30 border border-border rounded-lg w-max sm:mx-auto ${className}`}
-        aria-label="Tabs"
-      >
-        <div className="flex items-center gap-1.5 min-w-max px-0.5">
+    <div className={`w-full overflow-x-auto pb-2 -mb-2 ${className}`}>
+      {/* 
+        This structure guarantees:
+        1. On large screens: perfectly centered.
+        2. On small screens: scrolls from left to right.
+        3. Never clips edges because we use real DOM spacers instead of padding.
+      */}
+      <div className="flex w-max min-w-full sm:justify-center">
+        {/* Left spacer */}
+        <div className="w-1 shrink-0 sm:hidden" />
+        
+        <nav
+          className="flex shrink-0 items-center gap-1.5 p-1 bg-muted/30 border border-border rounded-lg"
+          aria-label="Tabs"
+        >
+          <div className="flex items-center gap-1.5 px-0.5">
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
             const Icon = tab.icon;
@@ -59,8 +69,12 @@ export function TabNav({ tabs, activeTab, className = "" }: TabNavProps) {
               </button>
             );
           })}
-        </div>
-      </nav>
+          </div>
+        </nav>
+        
+        {/* Right spacer */}
+        <div className="w-4 shrink-0 sm:hidden" />
+      </div>
     </div>
   );
 }

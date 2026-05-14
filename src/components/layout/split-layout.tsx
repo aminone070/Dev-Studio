@@ -15,7 +15,7 @@ export function SplitLayout({
   children,
   sidebarWidth = "w-64",
   className = "",
-  defaultOpen = true,
+  defaultOpen = false,
 }: SplitLayoutProps) {
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
