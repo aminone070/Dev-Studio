@@ -18,6 +18,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let subscription: { unsubscribe: () => void } | undefined;
 
+    // Failsafe: Force isReady to true after 2 seconds to prevent infinite loading
+    const timeoutId = setTimeout(() => {
+      console.warn("Auth initialization timed out. Forcing isReady to true.");
+      setIsReady(true);
+    }, 2000);
+
     try {
       const { data } = supabase.auth.onAuthStateChange((_event, s) => {
         setSession(s);
@@ -27,16 +33,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       supabase.auth.getSession().then(({ data: { session: s } }) => {
         setSession(s);
         setIsReady(true);
+        clearTimeout(timeoutId);
       }).catch(err => {
         console.error("Auth session error:", err);
         setIsReady(true);
+        clearTimeout(timeoutId);
       });
     } catch (err) {
       console.error("Auth initialization error:", err);
       setIsReady(true);
+      clearTimeout(timeoutId);
     }
 
     return () => {
+      clearTimeout(timeoutId);
       if (subscription) subscription.unsubscribe();
     };
   }, []);

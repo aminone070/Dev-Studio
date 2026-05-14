@@ -10,20 +10,31 @@ export function AuthGate() {
   const { isReady, user } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const router = useRouter();
-  const isPublic = PUBLIC_ROUTES.includes(pathname);
+  
+  // Handle trailing slashes and nested public routes robustly
+  const isPublic = PUBLIC_ROUTES.some(r => 
+    pathname === r || pathname.startsWith(r + "/") || (r === "/auth" && pathname === "/auth/")
+  );
 
   const [loadingTime, setLoadingTime] = useState(0);
 
   useEffect(() => {
+    console.log("[AuthGate] State changed:", { isReady, user: !!user, isPublic, pathname });
     if (isReady && !user && !isPublic) {
-      router.navigate({ to: "/auth" });
+      console.log("[AuthGate] User not authenticated on protected route. Redirecting to /auth");
+      router.navigate({ to: "/auth", replace: true }).catch(err => {
+        console.error("[AuthGate] Navigation to /auth failed:", err);
+      });
     }
-  }, [isReady, user, isPublic, router]);
+  }, [isReady, user, isPublic, router, pathname]);
 
   useEffect(() => {
     if (!isReady) {
       const interval = setInterval(() => {
-        setLoadingTime(t => t + 1);
+        setLoadingTime(t => {
+          if (t === 2) console.warn("[AuthGate] isReady is still false after 3 seconds!");
+          return t + 1;
+        });
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -58,7 +69,12 @@ export function AuthGate() {
   }
 
   if (!user) {
-    return null;
+    // We are currently redirecting to /auth, so we show a loading state
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="size-8 animate-spin text-muted-foreground" />
+      </div>
+    );
   }
 
   return (
