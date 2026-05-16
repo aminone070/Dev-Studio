@@ -52,7 +52,7 @@ function ProfilePage() {
     }
   };
 
-  const avatarSrc = profile.avatarUrl || user?.profileImage;
+  const avatarSrc = profile.avatarUrl || null;
   const displayedName = profile.displayName || user?.name;
 
   return (
