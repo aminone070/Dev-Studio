@@ -57,7 +57,7 @@ export function SplitLayout({
           style={{ width: "var(--sidebar-width)" }}
         >
           {sidebar}
-          <div className="sticky bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-background/20 to-transparent pointer-events-none z-10 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 rounded-b-2xl" />
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-background/20 to-transparent pointer-events-none z-10 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 rounded-b-2xl" />
         </div>
       </aside>
 
