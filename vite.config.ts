@@ -11,4 +11,28 @@ export default defineConfig({
     port: 5000,
     allowedHosts: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom"],
+          "vendor-router": ["@tanstack/react-router", "@tanstack/react-query"],
+          "vendor-radix": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-tabs",
+            "@radix-ui/react-select",
+            "@radix-ui/react-popover",
+            "@radix-ui/react-tooltip",
+            "@radix-ui/react-scroll-area",
+          ],
+          "vendor-icons": ["lucide-react"],
+          "vendor-charts": ["recharts"],
+          "vendor-forms": ["react-hook-form", "@hookform/resolvers", "zod"],
+        },
+      },
+    },
+    target: "es2020",
+    minify: "esbuild",
+  },
 });

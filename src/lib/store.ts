@@ -83,12 +83,12 @@ export const useForge = create<ForgeState>()(
         if (get().initialized) return;
         set({ isLoading: true });
         try {
-          const user = true;
-          if (user) {
-            const [p, a, c, s, conn, soc, mail, q, prog] = await Promise.all([
+          {
+            const [p, a, c, t, s, conn, soc, mail, q, prog] = await Promise.all([
               db.getPrompts(),
               db.getAgents(),
               db.getComponents(),
+              db.getTemplates(),
               db.getSnippets(),
               db.getConnectors(),
               db.getSocialDrafts(),
@@ -140,6 +140,17 @@ export const useForge = create<ForgeState>()(
                 usageCount: x.usage_count ?? 0,
                 createdAt: x.created_at ? new Date(x.created_at).getTime() : Date.now(),
                 updatedAt: x.updated_at ? new Date(x.updated_at).getTime() : Date.now()
+              })),
+              templates: t.map((x: any) => ({
+                id: x.id,
+                name: x.name,
+                description: x.description || "",
+                stack: x.stack || [],
+                tags: x.tags || [],
+                structure: x.structure || "",
+                notes: x.notes || "",
+                createdAt: x.created_at ? new Date(x.created_at).getTime() : Date.now(),
+                updatedAt: x.updated_at ? new Date(x.updated_at).getTime() : Date.now(),
               })),
               snippets: s.map((x: any) => ({
                 id: x.id,
@@ -793,7 +804,10 @@ export const useForge = create<ForgeState>()(
         }
       },
     }),
-    { name: "forgedev-store-v2" },
+    {
+      name: "forgedev-store-v3",
+      partialize: (state) => ({ userProgress: state.userProgress }),
+    },
   ),
 );
 

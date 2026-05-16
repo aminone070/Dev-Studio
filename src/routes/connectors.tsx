@@ -108,7 +108,7 @@ function ConnectorsPage() {
               type={tab}
               activeConnector={activeConnector}
               onUpdateConnector={handleUpdateConnector}
-              onSave={() => console.log("Saved!")}
+              onSave={() => {}}
             />
           </div>
         </SplitLayout>

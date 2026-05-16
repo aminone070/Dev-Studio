@@ -20,14 +20,21 @@ export async function getCurrentUser() {
 }
 
 export async function getProfile() {
-  return null;
+  try {
+    const r = await fetch("/api/profile");
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    return null;
+  }
 }
 
-export async function updateProfile(_profile: {
-  display_name?: string | null;
-  avatar_url?: string | null;
+export async function updateProfile(profile: {
+  displayName?: string | null;
+  avatarUrl?: string | null;
+  location?: string | null;
 }) {
-  return null;
+  return apiFetch("/api/profile", { method: "POST", body: JSON.stringify(profile) });
 }
 
 export async function getPrompts(): Promise<LocalRecord[]> {

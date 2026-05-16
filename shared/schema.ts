@@ -1,4 +1,4 @@
-import { pgTable, text, uuid, boolean, integer, real, jsonb, timestamp, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, text, uuid, boolean, integer, real, jsonb, timestamp, primaryKey, index } from "drizzle-orm/pg-core";
 
 export const prompts = pgTable("prompts", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -15,7 +15,7 @@ export const prompts = pgTable("prompts", {
   versions: jsonb("versions").default([]),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("prompts_user_id_idx").on(t.userId)]);
 
 export const agents = pgTable("agents", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -30,7 +30,7 @@ export const agents = pgTable("agents", {
   tags: text("tags").array().default([]),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("agents_user_id_idx").on(t.userId)]);
 
 export const components = pgTable("components", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -45,7 +45,7 @@ export const components = pgTable("components", {
   usageCount: integer("usage_count").default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("components_user_id_idx").on(t.userId)]);
 
 export const templates = pgTable("templates", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -58,7 +58,7 @@ export const templates = pgTable("templates", {
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("templates_user_id_idx").on(t.userId)]);
 
 export const snippets = pgTable("snippets", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -70,7 +70,7 @@ export const snippets = pgTable("snippets", {
   tags: text("tags").array().default([]),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("snippets_user_id_idx").on(t.userId)]);
 
 export const connectors = pgTable("connectors", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -82,7 +82,7 @@ export const connectors = pgTable("connectors", {
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("connectors_user_id_idx").on(t.userId)]);
 
 export const socialDrafts = pgTable("social_drafts", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -92,7 +92,7 @@ export const socialDrafts = pgTable("social_drafts", {
   mediaUrls: text("media_urls").array().default([]),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("social_drafts_user_id_idx").on(t.userId)]);
 
 export const mailTemplates = pgTable("mail_templates", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -102,7 +102,7 @@ export const mailTemplates = pgTable("mail_templates", {
   content: text("content").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => [index("mail_templates_user_id_idx").on(t.userId)]);
 
 export const interviewQuestions = pgTable("interview_questions", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -114,7 +114,71 @@ export const interviewQuestions = pgTable("interview_questions", {
   tags: text("tags").array().default([]),
   isGlobal: boolean("is_global").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (t) => [
+  index("interview_questions_user_id_idx").on(t.userId),
+  index("interview_questions_is_global_idx").on(t.isGlobal),
+]);
+
+export const userProfiles = pgTable("user_profiles", {
+  userId: text("user_id").primaryKey(),
+  displayName: text("display_name"),
+  avatarUrl: text("avatar_url"),
+  location: text("location"),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const savedJobs = pgTable("saved_jobs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull(),
+  title: text("title").notNull(),
+  company: text("company").default(""),
+  location: text("location").default(""),
+  url: text("url").default(""),
+  platform: text("platform").default(""),
+  status: text("status").default("saved"),
+  salary: text("salary").default(""),
+  remote: boolean("remote").default(false),
+  tags: text("tags").array().default([]),
+  notes: text("notes").default(""),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (t) => [index("saved_jobs_user_id_idx").on(t.userId)]);
+
+export const freelanceOffers = pgTable("freelance_offers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull(),
+  title: text("title").notNull(),
+  client: text("client").default(""),
+  platform: text("platform").default(""),
+  budget: text("budget").default(""),
+  currency: text("currency").default("USD"),
+  status: text("status").default("new"),
+  description: text("description").default(""),
+  url: text("url").default(""),
+  deadline: text("deadline").default(""),
+  tags: text("tags").array().default([]),
+  notes: text("notes").default(""),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (t) => [index("freelance_offers_user_id_idx").on(t.userId)]);
+
+export const myServices = pgTable("my_services", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull(),
+  title: text("title").notNull(),
+  platform: text("platform").default(""),
+  url: text("url").default(""),
+  category: text("category").default(""),
+  price: text("price").default(""),
+  currency: text("currency").default("USD"),
+  status: text("status").default("active"),
+  description: text("description").default(""),
+  deliveryDays: integer("delivery_days").default(3),
+  tags: text("tags").array().default([]),
+  notes: text("notes").default(""),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (t) => [index("my_services_user_id_idx").on(t.userId)]);
 
 export const userProgress = pgTable("user_progress", {
   userId: text("user_id").notNull(),
@@ -122,4 +186,7 @@ export const userProgress = pgTable("user_progress", {
   areaId: text("area_id").notNull(),
   completed: boolean("completed").default(true),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-}, (t) => [primaryKey({ columns: [t.userId, t.itemId] })]);
+}, (t) => [
+  primaryKey({ columns: [t.userId, t.itemId] }),
+  index("user_progress_user_id_idx").on(t.userId),
+]);

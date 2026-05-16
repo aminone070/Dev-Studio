@@ -16,6 +16,7 @@ import {
   X,
   Search,
   Users,
+  Briefcase,
 } from "lucide-react";
 import { CommandPalette } from "./command-palette";
 import { UserMenu } from "@/components/auth/user-menu";
@@ -53,6 +54,16 @@ const COMMUNICATION_NAV = [
     icon: Users,
     match: ["/connectors"],
     search: { tab: "companies" },
+  },
+] as const;
+
+const FREELANCE_NAV = [
+  {
+    to: "/jobs",
+    label: "Jobs & Freelance",
+    icon: Briefcase,
+    match: ["/jobs"],
+    search: { tab: "jobs" },
   },
 ] as const;
 
@@ -171,7 +182,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           {!isCollapsed && (
             <div className="flex flex-col leading-tight overflow-hidden">
               <span className="font-semibold tracking-tight text-sm truncate">Dev Studio</span>
-              <span className="text-[10px] text-muted-foreground font-mono truncate">v0.2 · personal hub</span>
+              <span className="text-[10px] text-muted-foreground font-mono truncate">your dev hub</span>
             </div>
           )}
           <button
@@ -222,6 +233,21 @@ export function AppShell({ children }: { children: ReactNode }) {
           )}
           <ul className="space-y-1">
             {SKILLS_NAV.map((item) => {
+              const active = item.match.some((p) => pathname.startsWith(p));
+              return <NavItem key={item.label} item={item} active={active} isCollapsed={isCollapsed} />;
+            })}
+          </ul>
+        </div>
+
+        {/* Freelance section */}
+        <div className="px-2 mt-4">
+          {!isCollapsed && (
+            <p className="px-2 mb-1 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+              Freelance
+            </p>
+          )}
+          <ul className="space-y-1">
+            {FREELANCE_NAV.map((item) => {
               const active = item.match.some((p) => pathname.startsWith(p));
               return <NavItem key={item.label} item={item} active={active} isCollapsed={isCollapsed} />;
             })}

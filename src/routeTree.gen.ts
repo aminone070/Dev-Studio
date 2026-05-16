@@ -16,6 +16,7 @@ import { Route as SocialRouteImport } from './routes/social'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as MailsRouteImport } from './routes/mails'
+import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as InterviewRouteImport } from './routes/interview'
 import { Route as ConnectorsRouteImport } from './routes/connectors'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -56,6 +57,11 @@ const MailsRoute = MailsRouteImport.update({
   path: '/mails',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobsRoute = JobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InterviewRoute = InterviewRouteImport.update({
   id: '/interview',
   path: '/interview',
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/connectors': typeof ConnectorsRoute
   '/interview': typeof InterviewRoute
+  '/jobs': typeof JobsRoute
   '/mails': typeof MailsRoute
   '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/connectors': typeof ConnectorsRoute
   '/interview': typeof InterviewRoute
+  '/jobs': typeof JobsRoute
   '/mails': typeof MailsRoute
   '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/connectors': typeof ConnectorsRoute
   '/interview': typeof InterviewRoute
+  '/jobs': typeof JobsRoute
   '/mails': typeof MailsRoute
   '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/connectors'
     | '/interview'
+    | '/jobs'
     | '/mails'
     | '/profile'
     | '/sitemap.xml'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/connectors'
     | '/interview'
+    | '/jobs'
     | '/mails'
     | '/profile'
     | '/sitemap.xml'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/connectors'
     | '/interview'
+    | '/jobs'
     | '/mails'
     | '/profile'
     | '/sitemap.xml'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ConnectorsRoute: typeof ConnectorsRoute
   InterviewRoute: typeof InterviewRoute
+  JobsRoute: typeof JobsRoute
   MailsRoute: typeof MailsRoute
   ProfileRoute: typeof ProfileRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MailsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jobs': {
+      id: '/jobs'
+      path: '/jobs'
+      fullPath: '/jobs'
+      preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/interview': {
       id: '/interview'
       path: '/interview'
@@ -260,6 +280,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ConnectorsRoute: ConnectorsRoute,
   InterviewRoute: InterviewRoute,
+  JobsRoute: JobsRoute,
   MailsRoute: MailsRoute,
   ProfileRoute: ProfileRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

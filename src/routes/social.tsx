@@ -106,7 +106,7 @@ function SocialPage() {
               platform={tab}
               activeDraft={activeDraft}
               onUpdateDraft={handleUpdateDraft}
-              onSave={() => console.log("Saved!")}
+              onSave={() => {}}
             />
           </div>
         </SplitLayout>
