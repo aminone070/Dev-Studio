@@ -434,21 +434,19 @@ export default function PlannerPage() {
                     />
                   ))
                 )}
+              </div>
 
-                <div className="pt-1">
-                  <AddTaskForm
-                    key={showAddForm ? "open" : "closed"}
-                    date={selectedDate}
-                    onAdd={(t) => { handleAddTask(t); setShowAddForm(false); }}
-                    onCancel={() => setShowAddForm(false)}
-                    initialOpen={showAddForm}
-                  />
-                </div>
-
+              {/* Pinned bottom: add task + AI assistant */}
+              <div className="shrink-0 border-t border-border/50 px-4 sm:px-5 py-3 space-y-2">
+                <AddTaskForm
+                  key={showAddForm ? "open" : "closed"}
+                  date={selectedDate}
+                  onAdd={(t) => { handleAddTask(t); setShowAddForm(false); }}
+                  onCancel={() => setShowAddForm(false)}
+                  initialOpen={showAddForm}
+                />
                 {!loading && (
-                  <div className="pt-2 pb-2">
-                    <AISuggestionsPanel date={selectedDate} tasks={dayTasks} />
-                  </div>
+                  <AISuggestionsPanel date={selectedDate} tasks={dayTasks} />
                 )}
               </div>
             </div>
