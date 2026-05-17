@@ -4,9 +4,6 @@ import {
   Target,
   Lightbulb,
   Users,
-  Clock,
-  Sparkles,
-  Brain,
   MessageSquare,
 } from "lucide-react";
 import { TabNav } from "@/components/layout";
@@ -16,9 +13,6 @@ const TABS = [
   { id: "leadership",      label: "Leadership",       icon: Target },
   { id: "problem-solving", label: "Problem Solving",  icon: Lightbulb },
   { id: "teamwork",        label: "Teamwork",         icon: Users },
-  { id: "time",            label: "Time Management",  icon: Clock },
-  { id: "growth",          label: "Growth Mindset",   icon: Sparkles },
-  { id: "mental-models",   label: "Mental Models",    icon: Brain },
   { id: "ai-mock",         label: "AI Mock Chat",     icon: MessageSquare },
 ] as const;
 

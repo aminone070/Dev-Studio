@@ -1,4 +1,4 @@
-import { Mic, Handshake, Swords, Wifi, Terminal, GitPullRequest, RefreshCw } from "lucide-react";
+import { Mic, Handshake, Swords, Wifi, Terminal, GitPullRequest, RefreshCw, Clock, Sparkles, Brain } from "lucide-react";
 import { SkillArea } from "@/components/tech-skills/skill-area";
 import { SOFT_SKILLS_DATA } from "@/data/skills";
 
@@ -15,10 +15,17 @@ const TEAMWORK_EXTRA_TABS = [
   { id: "agile",     label: "Agile / Scrum",         icon: RefreshCw },
 ];
 
+const LEADERSHIP_EXTRA_TABS = [
+  { id: "time",           label: "Time Management", icon: Clock },
+  { id: "growth",         label: "Growth Mindset",  icon: Sparkles },
+  { id: "mental-models",  label: "Mental Models",   icon: Brain },
+];
+
 export function SoftSkillView({ activeTab }: { activeTab?: string }) {
   const subAreaTabs =
     activeTab === "communication" ? COMMUNICATION_EXTRA_TABS :
     activeTab === "teamwork"      ? TEAMWORK_EXTRA_TABS :
+    activeTab === "leadership"    ? LEADERSHIP_EXTRA_TABS :
     [];
 
   return (

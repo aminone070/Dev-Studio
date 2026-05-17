@@ -13,9 +13,6 @@ const searchSchema = z.object({
       "leadership",
       "problem-solving",
       "teamwork",
-      "time",
-      "growth",
-      "mental-models",
       "ai-mock",
     ])
     .optional()
