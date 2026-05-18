@@ -184,7 +184,13 @@ export function SkillArea({
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3 text-muted-foreground" />
             <input
               type="text"
-              placeholder={data.id === "softskills" ? "Filter topics…" : "Filter stacks…"}
+              placeholder={
+                data.id === "softskills"
+                  ? "Filter topics…"
+                  : data.subAreasLabel
+                  ? `Filter ${data.subAreasLabel.toLowerCase()}…`
+                  : "Filter stacks…"
+              }
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               className="w-full bg-muted/40 border border-border/60 rounded-xl py-1.5 pl-8 pr-3 text-xs outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary/40 transition-all"
@@ -198,7 +204,11 @@ export function SkillArea({
         {data.subAreas && (
           <div>
             <p className="px-3 pt-2 pb-1 text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60">
-              {data.id === "softskills" ? "Topics" : "Stacks / Frameworks"}
+              {data.id === "softskills"
+                ? "Topics"
+                : data.subAreasLabel
+                ? data.subAreasLabel
+                : "Stacks / Frameworks"}
             </p>
             <nav className="space-y-0.5">
               {topLevel?.map(sa => {
@@ -306,7 +316,7 @@ export function SkillArea({
         <div className="px-4 pt-4 pb-3 border-b border-border/60 shrink-0">
           <TabNav
             tabs={allTabs.map(t => ({
-              id: t.id, label: t.label, icon: t.icon,
+              id: t.id, label: t.label, icon: t.icon as LucideIcon | undefined,
               onClick: () => handleTabClick(t.id, t.isSubArea),
             }))}
             activeTab={activeTabId}

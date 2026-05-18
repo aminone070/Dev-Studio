@@ -1,8 +1,8 @@
 import { useState } from "react";
 import {
   Globe, Server, Container, FlaskConical, Database,
-  BookOpen, Layers, Network, Cpu, Shield, Zap,
-  GitBranch, Boxes, ExternalLink, ChevronLeft, ChevronRight,
+  BookOpen, Layers, ExternalLink, ChevronLeft, ChevronRight,
+  type LucideIcon,
 } from "lucide-react";
 import { TabNav } from "@/components/layout";
 import { cn } from "@/lib/utils";
@@ -107,82 +107,6 @@ const AREAS: { id: string; label: string; icon: React.ElementType; materials: Ma
       { title: "SOLID Principles Course",     url: "https://www.pluralsight.com/courses/principles-oo-design",             type: "course",              desc: "Pluralsight course walking through each principle with before/after refactoring examples." },
     ],
   },
-  {
-    id: "design-patterns", label: "Design Patterns", icon: GitBranch,
-    materials: [
-      { title: "refactoring.guru — Patterns",  url: "https://refactoring.guru/design-patterns",                           type: "docs",   free: true,  desc: "The best visual catalog of all 23 GoF patterns — with real-world examples and pseudocode." },
-      { title: "Design Patterns (GoF)",        author: "Gang of Four",         url: "https://www.oreilly.com/library/view/design-patterns-elements/0201633612/", type: "book", desc: "The original 1994 patterns book — Creational, Structural, and Behavioral patterns." },
-      { title: "Head First Design Patterns",   author: "Freeman & Robson",     url: "https://www.oreilly.com/library/view/head-first-design/9781492077992/", type: "book", desc: "Visual, brain-friendly introduction to design patterns — great for beginners." },
-      { title: "Patterns of Enterprise Application Architecture", author: "Martin Fowler", url: "https://martinfowler.com/books/eaa.html", type: "book", desc: "Repository, Unit of Work, Active Record, Data Mapper — patterns for enterprise backends." },
-      { title: "Dive Into Design Patterns",    author: "Alexander Shvets",     url: "https://refactoring.guru/design-patterns/book",          type: "book",              desc: "Modern guide to all patterns with examples in multiple languages including TypeScript." },
-      { title: "sourcemaking.com",             url: "https://sourcemaking.com/design_patterns",                            type: "docs",   free: true,  desc: "Concise pattern catalog with UML diagrams and implementation notes." },
-      { title: "JavaScript Patterns",          author: "Stoyan Stefanov",      url: "https://www.oreilly.com/library/view/javascript-patterns/9781449399115/", type: "book", desc: "JS-specific patterns — module, observer, factory, decorator, and more." },
-    ],
-  },
-  {
-    id: "architecture", label: "Architecture", icon: Cpu,
-    materials: [
-      { title: "Clean Architecture",          author: "Robert C. Martin",      url: "https://www.oreilly.com/library/view/clean-architecture/9780134494272/", type: "book", desc: "Boundaries, use cases, and the dependency rule — architecture that ages gracefully." },
-      { title: "Fundamentals of Software Architecture", author: "Richards & Ford", url: "https://www.oreilly.com/library/view/fundamentals-of-software/9781492043447/", type: "book", desc: "Architectural styles, characteristics, decisions, and fitness functions." },
-      { title: "Software Architecture Patterns", author: "Mark Richards",      url: "https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/", type: "book", free: true, desc: "Free O'Reilly report on Layered, Event-Driven, Microkernel, and Space-Based architectures." },
-      { title: "Architecture Patterns with Python", author: "Percival & Gregory", url: "https://www.cosmicpython.com",                         type: "book",   free: true,  desc: "TDD, DDD, and event-driven architectures with Python — freely available online." },
-      { title: "Martin Fowler's bliki",        url: "https://martinfowler.com",                                            type: "docs",   free: true,  desc: "Authoritative articles on architecture — CQRS, event sourcing, strangler fig, bounded context." },
-      { title: "Building Evolutionary Architectures", author: "Ford, Parsons, Kua", url: "https://www.oreilly.com/library/view/building-evolutionary-architectures/9781491986356/", type: "book", desc: "How to build systems that can change — fitness functions and incremental design." },
-      { title: "The Architecture of Open Source Applications", url: "https://aosabook.org",  type: "docs",   free: true,  desc: "How real systems are designed — NGINX, Git, Mercurial, Eclipse, and more." },
-    ],
-  },
-  {
-    id: "system-design", label: "System Design", icon: Network,
-    materials: [
-      { title: "System Design Primer",        url: "https://github.com/donnemartin/system-design-primer",                  type: "docs",   free: true,  desc: "The most-starred system design resource on GitHub — scalability, load balancing, caching, and more." },
-      { title: "Designing Data-Intensive Applications", author: "Martin Kleppmann", url: "https://dataintensive.net",      type: "book",              desc: "The bible of distributed systems — replication, sharding, consistency, consensus." },
-      { title: "Grokking System Design",      url: "https://www.designgurus.io/course/grokking-the-system-design-interview", type: "course", desc: "Structured course for system design interviews — URL shortener, Twitter, Netflix, Uber." },
-      { title: "ByteByteGo",                  author: "Alex Xu",               url: "https://bytebytego.com",                                 type: "course",              desc: "Visual system design explanations — newsletter + book + videos loved by engineers worldwide." },
-      { title: "High Scalability Blog",        url: "http://highscalability.com",                                          type: "docs",   free: true,  desc: "Real-world architecture teardowns of Twitter, YouTube, Amazon, and more." },
-      { title: "System Design Interview (Vol 1 & 2)", author: "Alex Xu",       url: "https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF", type: "book", desc: "Step-by-step framework for designing any system in an interview — widely used." },
-      { title: "AWS Architecture Center",      url: "https://aws.amazon.com/architecture/",                                 type: "docs",   free: true,  desc: "Reference architectures and best practices for building scalable cloud systems." },
-      { title: "CAP Theorem — Visual Guide",   url: "https://mwhittaker.github.io/blog/an_illustrated_proof_of_the_cap_theorem/", type: "docs", free: true, desc: "Illustrated, rigorous proof of why you can only pick 2 of Consistency, Availability, Partition tolerance." },
-    ],
-  },
-  {
-    id: "microservices", label: "Microservices", icon: Boxes,
-    materials: [
-      { title: "Building Microservices",       author: "Sam Newman",            url: "https://samnewman.io/books/building_microservices_2nd_edition/", type: "book", desc: "The definitive guide — decomposition, communication, testing, deployment, and migration." },
-      { title: "Microservices Patterns",       author: "Chris Richardson",      url: "https://microservices.io/book",                          type: "book",              desc: "Saga, CQRS, API Gateway, Service Mesh, and more patterns with trade-off analysis." },
-      { title: "microservices.io",             author: "Chris Richardson",      url: "https://microservices.io",                               type: "docs",   free: true,  desc: "The canonical pattern catalog for microservices — decomposition, data, communication, reliability." },
-      { title: "Monolith to Microservices",    author: "Sam Newman",            url: "https://samnewman.io/books/monolith-to-microservices/",   type: "book",              desc: "Proven migration strategies — strangler fig, branch by abstraction, and parallel change." },
-      { title: "gRPC Documentation",           url: "https://grpc.io/docs/",                                                type: "docs",   free: true,  desc: "High-performance RPC framework — ideal for inter-service communication at scale." },
-      { title: "Event-Driven Architecture",    url: "https://martinfowler.com/articles/201701-event-driven.html",           type: "docs",   free: true,  desc: "Martin Fowler's authoritative breakdown of event notification, sourcing, and CQRS." },
-      { title: "Istio Service Mesh Docs",      url: "https://istio.io/latest/docs/",                                        type: "docs",   free: true,  desc: "Traffic management, mTLS, observability, and policy for microservice fleets." },
-      { title: "Distributed Systems Observability", author: "Cindy Sridharan",  url: "https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/", type: "book", free: true, desc: "Metrics, logging, and tracing — the three pillars of observability in distributed systems." },
-    ],
-  },
-  {
-    id: "security", label: "Security", icon: Shield,
-    materials: [
-      { title: "OWASP Top 10",                 url: "https://owasp.org/www-project-top-ten/",                              type: "docs",   free: true,  desc: "The essential checklist of the 10 most critical web application security risks." },
-      { title: "The Web Application Hacker's Handbook", author: "Stuttard & Pinto", url: "https://www.wiley.com/en-us/The+Web+Application+Hacker%27s+Handbook%3A+Finding+and+Exploiting+Security+Flaws%2C+2nd+Edition-p-9781118026472", type: "book", desc: "Comprehensive guide to finding and exploiting web security flaws — SQLi, XSS, CSRF, and more." },
-      { title: "PortSwigger Web Security Academy", url: "https://portswigger.net/web-security",                            type: "course", free: true,  desc: "Free, hands-on labs for every major web vulnerability — the best practical security training." },
-      { title: "OWASP Cheat Sheet Series",     url: "https://cheatsheetseries.owasp.org",                                  type: "docs",   free: true,  desc: "Quick-reference guides for securing authentication, sessions, APIs, cryptography, and more." },
-      { title: "Hacking: The Art of Exploitation", author: "Jon Erickson",     url: "https://nostarch.com/hacking2.htm",                      type: "book",              desc: "Low-level security — buffer overflows, shellcode, network attacks from first principles." },
-      { title: "Crypto 101",                   url: "https://www.crypto101.io",                                             type: "docs",   free: true,  desc: "Free cryptography primer — block ciphers, hashing, TLS, and public-key infrastructure." },
-      { title: "Security Headers",             url: "https://securityheaders.com",                                          type: "tool",   free: true,  desc: "Scan any URL and grade its HTTP security headers — CSP, HSTS, X-Frame-Options." },
-      { title: "HackTheBox",                   url: "https://www.hackthebox.com",                                           type: "tool",   free: true,  desc: "Hands-on security labs — CTF challenges, machines, and career paths for developers." },
-    ],
-  },
-  {
-    id: "performance", label: "Performance", icon: Zap,
-    materials: [
-      { title: "High Performance Browser Networking", author: "Ilya Grigorik", url: "https://hpbn.co",                    type: "book",   free: true,  desc: "TCP, TLS, HTTP/2, WebSockets, WebRTC — how the network actually works and how to optimize it." },
-      { title: "web.dev — Performance",        url: "https://web.dev/performance/",                                        type: "docs",   free: true,  desc: "Google's authoritative guide to Core Web Vitals, lazy loading, caching strategies, and more." },
-      { title: "Chrome DevTools Performance",  url: "https://developer.chrome.com/docs/devtools/performance/",             type: "docs",   free: true,  desc: "How to profile, flame charts, long tasks, memory leaks — straight from the source." },
-      { title: "Systems Performance",          author: "Brendan Gregg",        url: "https://www.brendangregg.com/systems-performance.html",  type: "book",              desc: "CPU, memory, storage, and network performance analysis — using flame graphs and BPF tools." },
-      { title: "The USE Method",               url: "https://www.brendangregg.com/usemethod.html",                         type: "docs",   free: true,  desc: "Utilization, Saturation, Errors — a systematic framework for diagnosing resource bottlenecks." },
-      { title: "Lighthouse Docs",              url: "https://developer.chrome.com/docs/lighthouse/",                       type: "tool",   free: true,  desc: "Automated auditing for performance, accessibility, SEO, and best practices." },
-      { title: "WebPageTest",                  url: "https://www.webpagetest.org",                                          type: "tool",   free: true,  desc: "Deep performance testing from real browsers in real locations — waterfall, filmstrip, metrics." },
-      { title: "Every Second Counts",          url: "https://www.oreilly.com/library/view/web-performance-in/9781492048183/", type: "book", desc: "Practical guide to measuring and improving real user performance metrics." },
-    ],
-  },
 ];
 
 const FILTERS: { id: MaterialType | "all"; label: string }[] = [
@@ -237,7 +161,7 @@ export function MaterialsView() {
           <div className="flex-1 min-w-0">
             <TabNav
               tabs={visibleAreas.map((a) => ({
-                id: a.id, label: a.label, icon: a.icon,
+                id: a.id, label: a.label, icon: a.icon as LucideIcon,
                 onClick: () => handleAreaChange(a.id),
               }))}
               activeTab={activeArea}

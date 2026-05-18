@@ -11,7 +11,21 @@ import { z } from "zod";
 
 const searchSchema = z.object({
   tab: z
-    .enum(["frontend", "backend", "devops", "testing", "database", "materials", "ai-mock"])
+    .enum([
+      "frontend",
+      "backend",
+      "devops",
+      "testing",
+      "database",
+      "design-patterns",
+      "architecture",
+      "system-design",
+      "microservices",
+      "security",
+      "performance",
+      "materials",
+      "ai-mock",
+    ])
     .optional()
     .default("frontend"),
 });
@@ -21,11 +35,17 @@ export const Route = createFileRoute("/tech-skills")({
   head: () => ({
     meta: [
       { title: "Technical Skills Hub — Dev Studio" },
-      { name: "description", content: "Master frontend, backend, devops, testing, and databases with our unified hub." },
+      {
+        name: "description",
+        content:
+          "Master frontend, backend, devops, testing, databases, design patterns, architecture, system design, microservices, security, and performance.",
+      },
     ],
   }),
   component: TechSkillsPage,
 });
+
+const NON_AREA_TABS = new Set(["materials", "ai-mock"]);
 
 function TechSkillsPage() {
   const { tab } = useSearch({ from: "/tech-skills" });
@@ -33,11 +53,7 @@ function TechSkillsPage() {
   return (
     <PageContainer>
       <PageSection>
-        <PageHeader
-          icon={Code2}
-          title="Technical Skills Hub"
-          className="mb-4"
-        />
+        <PageHeader icon={Code2} title="Technical Skills Hub" className="mb-4" />
         <SkillTabs />
       </PageSection>
 
