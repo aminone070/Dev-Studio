@@ -17,12 +17,6 @@ const searchSchema = z.object({
       "devops",
       "testing",
       "database",
-      "design-patterns",
-      "architecture",
-      "system-design",
-      "microservices",
-      "security",
-      "performance",
       "materials",
       "ai-mock",
     ])
@@ -38,7 +32,7 @@ export const Route = createFileRoute("/tech-skills")({
       {
         name: "description",
         content:
-          "Master frontend, backend, devops, testing, databases, design patterns, architecture, system design, microservices, security, and performance.",
+          "Master frontend, backend, devops, testing, databases, materials, and AI mock interviews.",
       },
     ],
   }),

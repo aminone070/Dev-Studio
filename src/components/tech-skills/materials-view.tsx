@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
   Globe, Server, Container, FlaskConical, Database,
-  BookOpen, Layers, ExternalLink, ChevronLeft, ChevronRight,
+  BookOpen, ExternalLink, Search,
   type LucideIcon,
 } from "lucide-react";
-import { TabNav } from "@/components/layout";
+import { SplitLayout } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
 type MaterialType = "book" | "course" | "docs" | "tool";
@@ -95,18 +95,6 @@ const AREAS: { id: string; label: string; icon: React.ElementType; materials: Ma
       { title: "SQL Performance Explained",   author: "Markus Winand",         url: "https://sql-performance-explained.com",                  type: "book",              desc: "Focused, practical book on writing fast SQL — indexes, execution plans, N+1 avoidance." },
     ],
   },
-  {
-    id: "solid", label: "SOLID", icon: Layers,
-    materials: [
-      { title: "Clean Code",                  author: "Robert C. Martin",      url: "https://www.oreilly.com/library/view/clean-code-a/9780136083238/", type: "book", desc: "The classic guide to writing readable, maintainable code — naming, functions, and SOLID in practice." },
-      { title: "Clean Architecture",          author: "Robert C. Martin",      url: "https://www.oreilly.com/library/view/clean-architecture/9780134494272/", type: "book", desc: "How SOLID principles scale to full system architecture — boundaries, dependencies, use cases." },
-      { title: "SOLID Explained — Stackify",  url: "https://stackify.com/solid-design-principles/",                        type: "docs",   free: true,  desc: "Concise visual guide to all 5 SOLID principles with code examples in multiple languages." },
-      { title: "SOLID on refactoring.guru",   url: "https://refactoring.guru/refactoring/what-is-refactoring",             type: "docs",   free: true,  desc: "Interactive explanations of Single Responsibility, Open/Closed, Liskov, Interface Segregation, and DI." },
-      { title: "Agile Principles, Patterns, and Practices", author: "Robert C. Martin", url: "https://www.pearson.com/en-us/subject-catalog/p/agile-principles-patterns-and-practices-in-c/P200000009457", type: "book", desc: "Where SOLID was first articulated — C# examples but universally applicable." },
-      { title: "The Pragmatic Programmer",    author: "Hunt & Thomas",         url: "https://pragprog.com/titles/tpp20/",                     type: "book",              desc: "DRY, orthogonality, and design-by-contract — the practical roots of SOLID thinking." },
-      { title: "SOLID Principles Course",     url: "https://www.pluralsight.com/courses/principles-oo-design",             type: "course",              desc: "Pluralsight course walking through each principle with before/after refactoring examples." },
-    ],
-  },
 ];
 
 const FILTERS: { id: MaterialType | "all"; label: string }[] = [
@@ -115,132 +103,168 @@ const FILTERS: { id: MaterialType | "all"; label: string }[] = [
   { id: "tool", label: "Tools" },
 ];
 
-const TABS_PER_PAGE = 6;
-
 export function MaterialsView() {
   const [activeArea, setActiveArea] = useState("frontend");
   const [filter, setFilter]         = useState<MaterialType | "all">("all");
-  const [tabPage, setTabPage]       = useState(0);
-
-  const totalPages  = Math.ceil(AREAS.length / TABS_PER_PAGE);
-  const visibleAreas = AREAS.slice(tabPage * TABS_PER_PAGE, (tabPage + 1) * TABS_PER_PAGE);
+  const [search, setSearch]         = useState("");
 
   const area  = AREAS.find((a) => a.id === activeArea) ?? AREAS[0];
-  const items = filter === "all" ? area.materials : area.materials.filter((m) => m.type === filter);
+  const AreaIcon = area.icon;
 
-  const handleAreaChange = (id: string) => { setActiveArea(id); setFilter("all"); };
+  const items = area.materials.filter((m) => {
+    const matchesFilter = filter === "all" || m.type === filter;
+    const matchesSearch = !search ||
+      m.title.toLowerCase().includes(search.toLowerCase()) ||
+      (m.author ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      m.desc.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
-  const handlePrevPage = () => {
-    const newPage = tabPage - 1;
-    setTabPage(newPage);
-    const firstOnPage = AREAS[newPage * TABS_PER_PAGE];
-    if (firstOnPage) handleAreaChange(firstOnPage.id);
+  const handleAreaChange = (id: string) => {
+    setActiveArea(id);
+    setFilter("all");
+    setSearch("");
   };
 
-  const handleNextPage = () => {
-    const newPage = tabPage + 1;
-    setTabPage(newPage);
-    const firstOnPage = AREAS[newPage * TABS_PER_PAGE];
-    if (firstOnPage) handleAreaChange(firstOnPage.id);
-  };
-
-  return (
-    <div className="h-full flex flex-col overflow-hidden">
-      {/* Inner area tab nav with pagination */}
-      <div className="px-4 pt-4 pb-3 border-b border-border/60 shrink-0">
+  /* ── Sidebar ─────────────────────────────────────────── */
+  const sidebar = (
+    <div className="h-full flex flex-col min-h-0">
+      <div className="px-3 py-3 border-b border-border/60 shrink-0 space-y-2.5">
         <div className="flex items-center gap-2">
-          {totalPages > 1 && (
-            <button
-              onClick={handlePrevPage}
-              disabled={tabPage === 0}
-              className="size-7 rounded-lg flex items-center justify-center border border-border/60 bg-muted/40 text-muted-foreground hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed transition-all shrink-0"
-            >
-              <ChevronLeft className="size-3.5" />
-            </button>
-          )}
-          <div className="flex-1 min-w-0">
-            <TabNav
-              tabs={visibleAreas.map((a) => ({
-                id: a.id, label: a.label, icon: a.icon as LucideIcon,
-                onClick: () => handleAreaChange(a.id),
-              }))}
-              activeTab={activeArea}
-            />
+          <div className="size-7 rounded-xl bg-primary/10 grid place-items-center text-primary shrink-0">
+            <BookOpen className="size-3.5" />
           </div>
-          {totalPages > 1 && (
-            <button
-              onClick={handleNextPage}
-              disabled={tabPage === totalPages - 1}
-              className="size-7 rounded-lg flex items-center justify-center border border-border/60 bg-muted/40 text-muted-foreground hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed transition-all shrink-0"
-            >
-              <ChevronRight className="size-3.5" />
-            </button>
-          )}
+          <span className="flex-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 truncate">
+            Materials
+          </span>
+        </div>
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search resources…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-muted/40 border border-border/60 rounded-xl py-1.5 pl-8 pr-3 text-xs outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary/40 transition-all"
+          />
         </div>
       </div>
 
-      {/* Type filter pills */}
-      <div className="px-4 sm:px-8 pt-5 pb-3 shrink-0 flex items-center gap-2 flex-wrap">
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => setFilter(f.id)}
-            className={cn(
-              "px-3 py-1 rounded-xl text-xs font-medium border transition-all",
-              filter === f.id
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-muted/40 text-muted-foreground border-border/60 hover:bg-muted/70",
-            )}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Cards grid */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin">
-        <div className="px-4 sm:px-8 pb-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {items.map((m) => (
-              <a
-                key={m.url}
-                href={m.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col gap-3 p-4 rounded-2xl border border-border/60 bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
+      <div className="flex-1 overflow-y-auto p-2 scrollbar-thin">
+        <p className="px-3 pt-2 pb-1 text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60">
+          Domains
+        </p>
+        <nav className="space-y-0.5">
+          {AREAS.map((a) => {
+            const Icon = a.icon as LucideIcon;
+            const isActive = activeArea === a.id;
+            return (
+              <button
+                key={a.id}
+                onClick={() => handleAreaChange(a.id)}
+                className={cn(
+                  "w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all",
+                  isActive
+                    ? "bg-primary/10 text-primary ring-1 ring-primary/20"
+                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                )}
               >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md border", TYPE_COLORS[m.type])}>
-                      {TYPE_LABELS[m.type]}
-                    </span>
-                    {m.free && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
-                        Free
-                      </span>
-                    )}
-                  </div>
-                  <ExternalLink className="size-3.5 text-muted-foreground/50 group-hover:text-primary shrink-0 transition-colors mt-0.5" />
+                <div className="flex items-center gap-2">
+                  <Icon className="size-3 shrink-0" />
+                  <span className={isActive ? "text-foreground" : ""}>{a.label}</span>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
-                    {m.title}
-                  </p>
-                  {m.author && (
-                    <p className="text-[11px] text-muted-foreground mt-0.5">by {m.author}</p>
-                  )}
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed flex-1">{m.desc}</p>
-              </a>
-            ))}
-            {items.length === 0 && (
-              <div className="col-span-full text-center py-16 text-sm text-muted-foreground italic">
-                No {filter} resources for {area.label} yet.
-              </div>
-            )}
-          </div>
-        </div>
+                <span className={cn(
+                  "text-[10px] font-semibold tabular-nums",
+                  isActive ? "text-primary/70" : "text-muted-foreground/50",
+                )}>
+                  {a.materials.length}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
     </div>
+  );
+
+  /* ── Main content ────────────────────────────────────── */
+  return (
+    <SplitLayout sidebar={sidebar} sidebarWidth="lg:w-[220px]">
+      <div className="h-full flex flex-col overflow-hidden">
+        {/* Header with area title + type filters */}
+        <div className="px-4 pt-4 pb-3 border-b border-border/60 shrink-0">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <div className="size-6 rounded-lg bg-primary/10 grid place-items-center text-primary shrink-0">
+                <AreaIcon className="size-3.5" />
+              </div>
+              <span className="text-sm font-semibold text-foreground">{area.label}</span>
+              <span className="text-xs text-muted-foreground">· {items.length} resource{items.length !== 1 ? "s" : ""}</span>
+            </div>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => setFilter(f.id)}
+                  className={cn(
+                    "px-3 py-1 rounded-xl text-xs font-medium border transition-all",
+                    filter === f.id
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-muted/40 text-muted-foreground border-border/60 hover:bg-muted/70",
+                  )}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Cards grid */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
+          <div className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              {items.map((m) => (
+                <a
+                  key={m.url}
+                  href={m.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col gap-3 p-4 rounded-2xl border border-border/60 bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md border", TYPE_COLORS[m.type])}>
+                        {TYPE_LABELS[m.type]}
+                      </span>
+                      {m.free && (
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
+                          Free
+                        </span>
+                      )}
+                    </div>
+                    <ExternalLink className="size-3.5 text-muted-foreground/50 group-hover:text-primary shrink-0 transition-colors mt-0.5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+                      {m.title}
+                    </p>
+                    {m.author && (
+                      <p className="text-[11px] text-muted-foreground mt-0.5">by {m.author}</p>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed flex-1">{m.desc}</p>
+                </a>
+              ))}
+              {items.length === 0 && (
+                <div className="col-span-full text-center py-16 text-sm text-muted-foreground italic">
+                  No {filter === "all" ? "" : filter + " "}resources found{search ? ` for "${search}"` : ""}.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </SplitLayout>
   );
 }
