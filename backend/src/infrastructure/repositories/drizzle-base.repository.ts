@@ -149,4 +149,28 @@ export class DrizzleBaseRepository<
     }
     return true;
   }
+
+  /**
+   * Ownership-checked delete in a single query.
+   * Avoids the extra findById round-trip that a separate check + delete would need.
+   */
+  async deleteByUserAndId(userId: string, id: string): Promise<boolean> {
+    const hasDeletedAt = "deletedAt" in this.table;
+    const whereClause = and(
+      eq((this.table as any).id, id),
+      eq((this.table as any).userId, userId),
+    );
+
+    if (hasDeletedAt) {
+      await this.dbClient
+        .update(this.table)
+        .set({ deletedAt: new Date(), updatedAt: new Date() })
+        .where(whereClause);
+    } else {
+      await this.dbClient
+        .delete(this.table)
+        .where(whereClause);
+    }
+    return true;
+  }
 }

@@ -1,4 +1,6 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import type { Response } from "express";
 import { IUnitOfWork } from "../../domain/repositories/unit-of-work.interface.js";
 
 export class AuthService {
@@ -56,6 +58,43 @@ export class AuthService {
       verificationTokenExpires: null,
     });
     return updated;
+  }
+
+  // ─── Token helpers (belong in application layer, not presentation) ───────
+
+  private static readonly JWT_SECRET =
+    process.env.JWT_SECRET ||
+    "supersecretjwtkey_devstudio_2026_secure_random_string";
+  private static readonly COOKIE_NAME = "ds_token";
+  private static readonly COOKIE_OPTS = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax" as const,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  };
+
+  signToken(userId: string): string {
+    return jwt.sign({ sub: userId }, AuthService.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+  }
+
+  verifyToken(token: string): { sub: string } {
+    return jwt.verify(token, AuthService.JWT_SECRET) as { sub: string };
+  }
+
+  sendToken(res: Response, userId: string, user: Record<string, unknown>): void {
+    const token = this.signToken(userId);
+    res.cookie(AuthService.COOKIE_NAME, token, AuthService.COOKIE_OPTS);
+    res.json({ user });
+  }
+
+  clearToken(res: Response): void {
+    res.clearCookie(AuthService.COOKIE_NAME);
+  }
+
+  getTokenFromRequest(req: { cookies?: Record<string, string> }): string | null {
+    return req.cookies?.[AuthService.COOKIE_NAME] ?? null;
   }
 }
 

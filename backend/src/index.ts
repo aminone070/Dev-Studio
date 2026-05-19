@@ -12,6 +12,8 @@ import {
 } from "./presentation/config/index.js";
 import { registerRoutes } from "./presentation/routes.js";
 import { setupGooglePassport } from "./presentation/controllers/auth.controller.js";
+import { requestIdMiddleware } from "./presentation/middleware/request-id.js";
+import { logger } from "./infrastructure/lib/logger.js";
 import { setupSwagger } from "./presentation/docs/swagger.js";
 import {
   notFoundHandler,
@@ -27,6 +29,9 @@ const app = express();
 
 // Trust the proxy (Replit dev proxy, nginx, etc.) so rate-limit and IP detection work correctly
 app.set("trust proxy", 1);
+
+// --- Request tracing ---
+app.use(requestIdMiddleware);
 
 // --- Security & HTTP Hardening ---
 app.use(helmetOptions);
@@ -67,15 +72,15 @@ app.use(globalErrorHandler);
 
 async function startServer() {
   try {
-    console.log("Checking and seeding database...");
+    logger.info("Checking and seeding database...");
     await runSeeding();
-    console.log("Seeding check complete.");
+    logger.info("Seeding check complete.");
   } catch (err) {
-    console.error("Database seeding failed on startup:", err);
+    logger.error("Database seeding failed on startup", { err });
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Dev Studio running on port ${PORT}`);
+    logger.info(`Dev Studio running on port ${PORT}`, { port: PORT, env: process.env.NODE_ENV ?? "development" });
   });
 }
 

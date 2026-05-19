@@ -10,5 +10,7 @@ export interface IRepository<TSelect, TInsert> {
   updateMany(filter: any, data: Partial<TInsert>): Promise<TSelect[]>;
   delete(id: string): Promise<boolean>;
   deleteMany(filter: any): Promise<boolean>;
+  /** Delete by primary key with ownership check in a single query. */
+  deleteByUserAndId(userId: string, id: string): Promise<boolean>;
 }
 

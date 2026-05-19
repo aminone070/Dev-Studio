@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import { logger } from "../../infrastructure/lib/logger.js";
 
 /**
  * Global error-handling middleware.
@@ -30,7 +31,11 @@ export function globalErrorHandler(
     (err as { status?: number })?.status ??
     500;
 
-  console.error("[error]", err);
+  logger.error("Unhandled error", {
+    message,
+    statusCode,
+    ...(err instanceof Error ? { stack: err.stack } : {}),
+  });
 
   res.status(statusCode).json({
     error: message,
