@@ -12,6 +12,7 @@
     "test:frontend": "npm run test --prefix frontend",
     "test:backend": "npm run test --prefix backend",
     "format:frontend": "npm run format --prefix frontend",
-    "format:backend": "npm run format --prefix backend"
+    "format:backend": "npm run format --prefix backend",
+    "commitall": "git add . && git commit -m \"chore: auto commit from Dev Studio\" && git push"
   }
 }
