@@ -55,15 +55,10 @@ function ProfilePage() {
   return (
     <PageContainer>
       <PageSection>
-        <PageHeader
-          icon={User}
-          eyebrow="Account"
-          title="Profile"
-        />
+        <PageHeader icon={User} eyebrow="Account" title="Profile" />
       </PageSection>
       <div className="flex-1 min-h-0 rounded-2xl border border-border/60 bg-card overflow-y-auto p-4 sm:p-8">
         <div className="max-w-[600px] mx-auto space-y-6">
-
           {/* Avatar & name preview */}
           <div className="rounded-lg border border-border bg-card p-5 shadow-sm flex items-center gap-4">
             <UserAvatar name={displayedName} avatarUrl={form.avatarUrl || null} size="lg" />
@@ -136,12 +131,15 @@ function ProfilePage() {
             <div className="space-y-1">
               <p className="text-sm font-medium">Hard Reset Application</p>
               <p className="text-xs text-muted-foreground">
-                This will clear all local settings, progress, and cache. Use this if you encounter duplicate data or synchronization issues.
+                This will clear all local settings, progress, and cache. Use this if you encounter
+                duplicate data or synchronization issues.
               </p>
             </div>
             <button
               onClick={() => {
-                if (confirm("Are you sure? This will reload the app and clear your local progress.")) {
+                if (
+                  confirm("Are you sure? This will reload the app and clear your local progress.")
+                ) {
                   hardReset();
                 }
               }}

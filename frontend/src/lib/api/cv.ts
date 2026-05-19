@@ -2,7 +2,11 @@ import { apiFetch } from "./base";
 import type { CVProfile, ATSResult } from "../../types/cv";
 
 export async function getCVProfiles(): Promise<CVProfile[]> {
-  try { return await apiFetch<CVProfile[]>("/api/cv"); } catch { return []; }
+  try {
+    return await apiFetch<CVProfile[]>("/api/cv");
+  } catch {
+    return [];
+  }
 }
 
 export async function upsertCVProfile(cv: Partial<CVProfile>): Promise<CVProfile> {

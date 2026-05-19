@@ -40,7 +40,8 @@ export const seedConnectors: Connector[] = [
     name: "Sarah Chen — TechCorp HR",
     email: "s.chen@techcorp.io",
     phone: "+1 415 555 0100",
-    notes: "Recruiter for senior eng roles. Prefers initial contact via email. Replied within 24h last time.",
+    notes:
+      "Recruiter for senior eng roles. Prefers initial contact via email. Replied within 24h last time.",
     createdAt: d(14),
     updatedAt: d(2),
   },
@@ -50,7 +51,8 @@ export const seedConnectors: Connector[] = [
     name: "Marcus Webb — DevHire",
     email: "marcus@devhire.co",
     phone: undefined,
-    notes: "Specialized in remote-first startups. Focuses on React/Node stack roles. Met at ReactConf.",
+    notes:
+      "Specialized in remote-first startups. Focuses on React/Node stack roles. Met at ReactConf.",
     createdAt: d(20),
     updatedAt: d(7),
   },
@@ -70,7 +72,8 @@ export const seedConnectors: Connector[] = [
     name: "Alex Rivera — SoloFounder.io",
     email: "alex@solofounder.io",
     phone: undefined,
-    notes: "Indie hacker. Needs help with full-stack features monthly. Pays on time. Slack-based comms.",
+    notes:
+      "Indie hacker. Needs help with full-stack features monthly. Pays on time. Slack-based comms.",
     createdAt: d(90),
     updatedAt: d(3),
   },
@@ -90,7 +93,8 @@ export const seedConnectors: Connector[] = [
     name: "Bloom Studio",
     email: "studio@bloom.design",
     phone: undefined,
-    notes: "Design agency. Subcontracts dev work. Prefers fixed-price. Good for filler work between projects.",
+    notes:
+      "Design agency. Subcontracts dev work. Prefers fixed-price. Good for filler work between projects.",
     createdAt: d(50),
     updatedAt: d(15),
   },

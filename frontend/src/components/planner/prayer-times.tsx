@@ -17,18 +17,24 @@ export function PrayerTimes({ date, onPrayerTimesLoaded: _ }: PrayerTimesProps) 
   const nextPrayerIdx = isToday ? nextIdx : -1;
 
   return (
-    <div className={cn(
-      "rounded-2xl border overflow-hidden transition-all duration-200",
-      open ? "border-primary/20 bg-gradient-to-b from-primary/5 to-transparent" : "border-border/40 bg-muted/20 hover:border-primary/15"
-    )}>
+    <div
+      className={cn(
+        "rounded-2xl border overflow-hidden transition-all duration-200",
+        open
+          ? "border-primary/20 bg-gradient-to-b from-primary/5 to-transparent"
+          : "border-border/40 bg-muted/20 hover:border-primary/15",
+      )}
+    >
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center gap-3 px-4 py-3 text-left"
       >
-        <div className={cn(
-          "size-8 rounded-xl flex items-center justify-center shrink-0 transition-colors",
-          open ? "bg-primary/15" : "bg-muted/60"
-        )}>
+        <div
+          className={cn(
+            "size-8 rounded-xl flex items-center justify-center shrink-0 transition-colors",
+            open ? "bg-primary/15" : "bg-muted/60",
+          )}
+        >
           <Moon className={cn("size-4", open ? "text-primary" : "text-muted-foreground")} />
         </div>
         <div className="flex-1 min-w-0">
@@ -37,8 +43,13 @@ export function PrayerTimes({ date, onPrayerTimesLoaded: _ }: PrayerTimesProps) 
           </p>
           <p className="text-xs text-muted-foreground flex items-center gap-1 truncate">
             {city ? (
-              <><MapPin className="size-2.5 shrink-0" />{city}</>
-            ) : "Azan schedule"}
+              <>
+                <MapPin className="size-2.5 shrink-0" />
+                {city}
+              </>
+            ) : (
+              "Azan schedule"
+            )}
           </p>
         </div>
         {loading ? (
@@ -64,60 +75,71 @@ export function PrayerTimes({ date, onPrayerTimesLoaded: _ }: PrayerTimesProps) 
             </div>
           )}
 
-          {!loading && !error && prayers.map((prayer, i) => {
-            const isNext = isToday && i === nextPrayerIdx;
-            const isPast = isToday && to24hMin(prayer.time) < nowMin;
-            const diff = isNext ? to24hMin(prayer.time) - nowMin : 0;
+          {!loading &&
+            !error &&
+            prayers.map((prayer, i) => {
+              const isNext = isToday && i === nextPrayerIdx;
+              const isPast = isToday && to24hMin(prayer.time) < nowMin;
+              const diff = isNext ? to24hMin(prayer.time) - nowMin : 0;
 
-            return (
-              <div
-                key={prayer.name}
-                className={cn(
-                  "flex items-center justify-between px-3 py-2 rounded-xl transition-all",
-                  isNext
-                    ? "bg-primary text-primary-foreground shadow-sm ring-1 ring-primary/30"
-                    : isPast
-                    ? "opacity-40"
-                    : "hover:bg-muted/40"
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <prayer.Icon className={cn("size-4 shrink-0", isNext ? "text-primary-foreground" : prayer.iconColor)} />
-                  <div>
-                    <p className={cn(
-                      "text-xs font-semibold",
-                      isNext ? "text-primary-foreground" : "text-foreground"
-                    )}>
-                      {prayer.name}
+              return (
+                <div
+                  key={prayer.name}
+                  className={cn(
+                    "flex items-center justify-between px-3 py-2 rounded-xl transition-all",
+                    isNext
+                      ? "bg-primary text-primary-foreground shadow-sm ring-1 ring-primary/30"
+                      : isPast
+                        ? "opacity-40"
+                        : "hover:bg-muted/40",
+                  )}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <prayer.Icon
+                      className={cn(
+                        "size-4 shrink-0",
+                        isNext ? "text-primary-foreground" : prayer.iconColor,
+                      )}
+                    />
+                    <div>
+                      <p
+                        className={cn(
+                          "text-xs font-semibold",
+                          isNext ? "text-primary-foreground" : "text-foreground",
+                        )}
+                      >
+                        {prayer.name}
+                      </p>
+                      <p
+                        className={cn(
+                          "text-[10px]",
+                          isNext ? "text-primary-foreground/70" : "text-muted-foreground",
+                        )}
+                      >
+                        {prayer.arabicName}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p
+                      className={cn(
+                        "text-xs font-bold font-mono",
+                        isNext ? "text-primary-foreground" : "text-foreground",
+                      )}
+                    >
+                      {prayer.time}
                     </p>
-                    <p className={cn(
-                      "text-[10px]",
-                      isNext ? "text-primary-foreground/70" : "text-muted-foreground"
-                    )}>
-                      {prayer.arabicName}
-                    </p>
+                    {isNext && (
+                      <p className="text-[10px] text-primary-foreground/70 flex items-center gap-0.5 justify-end">
+                        <Clock className="size-2.5" />
+                        {formatCountdown(diff)}
+                      </p>
+                    )}
+                    {isPast && !isNext && <p className="text-[10px] text-muted-foreground">done</p>}
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className={cn(
-                    "text-xs font-bold font-mono",
-                    isNext ? "text-primary-foreground" : "text-foreground"
-                  )}>
-                    {prayer.time}
-                  </p>
-                  {isNext && (
-                    <p className="text-[10px] text-primary-foreground/70 flex items-center gap-0.5 justify-end">
-                      <Clock className="size-2.5" />
-                      {formatCountdown(diff)}
-                    </p>
-                  )}
-                  {isPast && !isNext && (
-                    <p className="text-[10px] text-muted-foreground">done</p>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
 
           {!loading && !error && prayers.length > 0 && (
             <button

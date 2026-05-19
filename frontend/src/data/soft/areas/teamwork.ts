@@ -24,8 +24,16 @@ export const teamworkSubArea: SubArea = {
     },
   ],
   resources: [
-    { label: "The Five Dysfunctions of a Team", url: "https://www.tablegroup.com/product/dysfunctions/", desc: "Patrick Lencioni's model for building trust and accountability." },
-    { label: "Team Topologies",                 url: "https://teamtopologies.com/",                      desc: "Organising teams for fast flow of change." },
+    {
+      label: "The Five Dysfunctions of a Team",
+      url: "https://www.tablegroup.com/product/dysfunctions/",
+      desc: "Patrick Lencioni's model for building trust and accountability.",
+    },
+    {
+      label: "Team Topologies",
+      url: "https://teamtopologies.com/",
+      desc: "Organising teams for fast flow of change.",
+    },
   ],
 };
 
@@ -59,9 +67,21 @@ export const conflictSubArea: SubArea = {
     },
   ],
   resources: [
-    { label: "Crucial Conversations",    url: "https://cruciallearning.com/",     desc: "Tools for high-stakes disagreements." },
-    { label: "Nonviolent Communication", url: "https://www.cnvc.org/",            desc: "Empathy-first framework for resolving tension." },
-    { label: "Getting to Yes",           url: "https://www.pon.harvard.edu/",     desc: "Harvard negotiation project — principled conflict resolution." },
+    {
+      label: "Crucial Conversations",
+      url: "https://cruciallearning.com/",
+      desc: "Tools for high-stakes disagreements.",
+    },
+    {
+      label: "Nonviolent Communication",
+      url: "https://www.cnvc.org/",
+      desc: "Empathy-first framework for resolving tension.",
+    },
+    {
+      label: "Getting to Yes",
+      url: "https://www.pon.harvard.edu/",
+      desc: "Harvard negotiation project — principled conflict resolution.",
+    },
   ],
 };
 
@@ -95,8 +115,16 @@ export const remoteSubArea: SubArea = {
     },
   ],
   resources: [
-    { label: "GitLab Remote Playbook", url: "https://handbook.gitlab.com/handbook/company/culture/all-remote/", desc: "Industry-leading async remote culture guide." },
-    { label: "Basecamp — Shape Up",    url: "https://basecamp.com/shapeup",                                     desc: "Async-first product development at scale." },
+    {
+      label: "GitLab Remote Playbook",
+      url: "https://handbook.gitlab.com/handbook/company/culture/all-remote/",
+      desc: "Industry-leading async remote culture guide.",
+    },
+    {
+      label: "Basecamp — Shape Up",
+      url: "https://basecamp.com/shapeup",
+      desc: "Async-first product development at scale.",
+    },
   ],
 };
 
@@ -126,7 +154,11 @@ export const pairingSubArea: SubArea = {
     },
   ],
   resources: [
-    { label: "Martin Fowler — Pair Programming", url: "https://martinfowler.com/articles/on-pair-programming.html", desc: "Exhaustive guide to pairing styles, benefits, and practical patterns." },
+    {
+      label: "Martin Fowler — Pair Programming",
+      url: "https://martinfowler.com/articles/on-pair-programming.html",
+      desc: "Exhaustive guide to pairing styles, benefits, and practical patterns.",
+    },
   ],
 };
 
@@ -218,15 +250,27 @@ export const agileSubArea: SubArea = {
     },
   ],
   checklist: [
-    { id: "sprint-goal-clear",    label: "Sprint goal defined before picking tickets" },
-    { id: "dod-written",          label: "Definition of Done written and agreed by the team" },
-    { id: "retro-actions-tracked",label: "Retro action items tracked across sprints" },
-    { id: "standup-under-15",     label: "Daily standup kept under 15 minutes" },
+    { id: "sprint-goal-clear", label: "Sprint goal defined before picking tickets" },
+    { id: "dod-written", label: "Definition of Done written and agreed by the team" },
+    { id: "retro-actions-tracked", label: "Retro action items tracked across sprints" },
+    { id: "standup-under-15", label: "Daily standup kept under 15 minutes" },
   ],
   resources: [
-    { label: "Agile Manifesto",        url: "https://agilemanifesto.org/",          desc: "The original 4 values and 12 principles — read before anything else." },
-    { label: "Scrum Guide",            url: "https://scrumguides.org/",             desc: "The official, free Scrum Guide by Schwaber & Sutherland." },
-    { label: "Shape Up — Basecamp",    url: "https://basecamp.com/shapeup",         desc: "An alternative to Scrum for async-first product teams." },
+    {
+      label: "Agile Manifesto",
+      url: "https://agilemanifesto.org/",
+      desc: "The original 4 values and 12 principles — read before anything else.",
+    },
+    {
+      label: "Scrum Guide",
+      url: "https://scrumguides.org/",
+      desc: "The official, free Scrum Guide by Schwaber & Sutherland.",
+    },
+    {
+      label: "Shape Up — Basecamp",
+      url: "https://basecamp.com/shapeup",
+      desc: "An alternative to Scrum for async-first product teams.",
+    },
   ],
 };
 

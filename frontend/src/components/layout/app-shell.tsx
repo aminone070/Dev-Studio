@@ -1,25 +1,54 @@
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
-  LayoutDashboard, Sparkles, Bot, Component as ComponentIcon,
-  LayoutTemplate, Code2, Plus, Flame, Code, Heart,
-  Menu, X, Search, Users, Briefcase, FileText, CalendarDays,
-  Sun, Moon, Bell, Languages, CheckCheck, Trash2, Info, CalendarCheck,
+  LayoutDashboard,
+  Sparkles,
+  Bot,
+  Component as ComponentIcon,
+  LayoutTemplate,
+  Code2,
+  Plus,
+  Flame,
+  Code,
+  Heart,
+  Menu,
+  X,
+  Search,
+  Users,
+  Briefcase,
+  FileText,
+  CalendarDays,
+  Sun,
+  Moon,
+  Bell,
+  Languages,
+  CheckCheck,
+  Trash2,
+  Info,
+  CalendarCheck,
 } from "lucide-react";
 import { CommandPalette } from "./command-palette";
 import { ErrorBoundary } from "./error-boundary";
 import { UserMenu } from "@/components/auth/user-menu";
 import { useAuth } from "@/hooks/use-auth";
-import {
-  Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { WORKSPACE_NAV, COMMUNICATION_NAV, FREELANCE_NAV, SKILLS_NAV, STORAGE_KEYS } from "@/constants";
+import {
+  WORKSPACE_NAV,
+  COMMUNICATION_NAV,
+  FREELANCE_NAV,
+  SKILLS_NAV,
+  STORAGE_KEYS,
+} from "@/constants";
 
 /* ── Theme ─────────────────────────────────────────────── */
 const THEME_KEY = STORAGE_KEYS.THEME;
 function readTheme(): "dark" | "light" {
-  try { return (localStorage.getItem(THEME_KEY) as "dark" | "light") || "dark"; } catch { return "dark"; }
+  try {
+    return (localStorage.getItem(THEME_KEY) as "dark" | "light") || "dark";
+  } catch {
+    return "dark";
+  }
 }
 function applyTheme(t: "dark" | "light") {
   document.documentElement.classList.toggle("dark", t === "dark");
@@ -33,7 +62,11 @@ function applyTheme(t: "dark" | "light") {
 /* ── Language ───────────────────────────────────────────── */
 const LANG_KEY = STORAGE_KEYS.LANG;
 function readLang(): "en" | "ar" {
-  try { return (localStorage.getItem(LANG_KEY) as "en" | "ar") || "en"; } catch { return "en"; }
+  try {
+    return (localStorage.getItem(LANG_KEY) as "en" | "ar") || "en";
+  } catch {
+    return "en";
+  }
 }
 function applyLang(l: "en" | "ar") {
   document.documentElement.setAttribute("lang", l);
@@ -56,9 +89,30 @@ interface AppNotification {
 }
 
 const INIT_NOTIFICATIONS: AppNotification[] = [
-  { id: "n1", title: "Planner updated", body: "AI suggestions are now live on your planner.", time: "2 min ago", read: false, icon: "sparkles" },
-  { id: "n2", title: "Tasks due today", body: "You have 3 high-priority tasks scheduled.", time: "1 hr ago", read: false, icon: "calendar" },
-  { id: "n3", title: "Welcome to Dev Studio", body: "Your workspace is ready. Start building!", time: "Today", read: true, icon: "info" },
+  {
+    id: "n1",
+    title: "Planner updated",
+    body: "AI suggestions are now live on your planner.",
+    time: "2 min ago",
+    read: false,
+    icon: "sparkles",
+  },
+  {
+    id: "n2",
+    title: "Tasks due today",
+    body: "You have 3 high-priority tasks scheduled.",
+    time: "1 hr ago",
+    read: false,
+    icon: "calendar",
+  },
+  {
+    id: "n3",
+    title: "Welcome to Dev Studio",
+    body: "Your workspace is ready. Start building!",
+    time: "Today",
+    read: true,
+    icon: "info",
+  },
 ];
 
 function NotifIcon({ icon }: { icon: AppNotification["icon"] }) {
@@ -68,7 +122,15 @@ function NotifIcon({ icon }: { icon: AppNotification["icon"] }) {
 }
 
 /* ── NavItem ────────────────────────────────────────────── */
-function NavItem({ item, active, isCollapsed }: { item: any; active: boolean; isCollapsed: boolean }) {
+function NavItem({
+  item,
+  active,
+  isCollapsed,
+}: {
+  item: any;
+  active: boolean;
+  isCollapsed: boolean;
+}) {
   const Icon = item.icon;
   const content = (
     <Link
@@ -79,7 +141,7 @@ function NavItem({ item, active, isCollapsed }: { item: any; active: boolean; is
         isCollapsed ? "justify-center size-9 mx-auto" : "gap-2.5 px-3 py-2",
         active
           ? "bg-primary/10 text-primary ring-1 ring-primary/20"
-          : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+          : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
       )}
     >
       <Icon className={cn("size-4 shrink-0", active && "text-primary")} />
@@ -91,7 +153,9 @@ function NavItem({ item, active, isCollapsed }: { item: any; active: boolean; is
     <li>
       <Tooltip>
         <TooltipTrigger asChild>{content}</TooltipTrigger>
-        <TooltipContent side="right" sideOffset={12} className="font-medium text-xs">{item.label}</TooltipContent>
+        <TooltipContent side="right" sideOffset={12} className="font-medium text-xs">
+          {item.label}
+        </TooltipContent>
       </Tooltip>
     </li>
   );
@@ -108,7 +172,11 @@ function SectionLabel({ label, isCollapsed }: { label: string; isCollapsed: bool
 
 const SIDEBAR_KEY = STORAGE_KEYS.SIDEBAR_COLLAPSED;
 function readSidebarPref(): boolean {
-  try { return localStorage.getItem(SIDEBAR_KEY) !== "false"; } catch { return true; }
+  try {
+    return localStorage.getItem(SIDEBAR_KEY) !== "false";
+  } catch {
+    return true;
+  }
 }
 function writeSidebarPref(c: boolean) {
   try {
@@ -133,7 +201,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     applyTheme(next);
     setThemeState(next);
   };
-  useEffect(() => { applyTheme(theme); }, [theme]);
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
 
   /* Language */
   const [lang, setLangState] = useState<"en" | "ar">(readLang);
@@ -142,7 +212,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     applyLang(next);
     setLangState(next);
   };
-  useEffect(() => { applyLang(lang); }, [lang]);
+  useEffect(() => {
+    applyLang(lang);
+  }, [lang]);
 
   /* Notifications */
   const [notifications, setNotifications] = useState<AppNotification[]>(INIT_NOTIFICATIONS);
@@ -153,7 +225,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const markAllRead = () => setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   const clearAll = () => setNotifications([]);
   const dismissOne = (id: string) => setNotifications((prev) => prev.filter((n) => n.id !== id));
-  const readOne = (id: string) => setNotifications((prev) => prev.map((n) => n.id === id ? { ...n, read: true } : n));
+  const readOne = (id: string) =>
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
 
   /* Close notif dropdown on outside click */
   useEffect(() => {
@@ -179,10 +252,15 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const toggleCollapsed = () => {
-    setIsCollapsed((prev) => { writeSidebarPref(!prev); return !prev; });
+    setIsCollapsed((prev) => {
+      writeSidebarPref(!prev);
+      return !prev;
+    });
   };
 
   return (
@@ -201,19 +279,26 @@ export function AppShell({ children }: { children: ReactNode }) {
           className={cn(
             "fixed md:relative inset-y-0 left-0 z-[110] flex shrink-0 flex-col transition-[width,transform] duration-300 ease-in-out p-2",
             mobileOpen ? "translate-x-0 w-64" : "-translate-x-full md:translate-x-0",
-            isCollapsed ? "md:w-[72px]" : "md:w-[228px]"
+            isCollapsed ? "md:w-[72px]" : "md:w-[228px]",
           )}
         >
           <nav className="flex flex-col flex-1 rounded-2xl bg-sidebar border border-border/60 shadow-sm overflow-hidden">
             {/* Logo */}
-            <div className={cn("flex items-center shrink-0 px-3 py-3", isCollapsed ? "justify-center" : "gap-2.5")}>
+            <div
+              className={cn(
+                "flex items-center shrink-0 px-3 py-3",
+                isCollapsed ? "justify-center" : "gap-2.5",
+              )}
+            >
               <div className="size-7 rounded-xl bg-primary grid place-items-center shrink-0 shadow-sm">
                 <Flame className="size-3.5 text-primary-foreground" />
               </div>
               {!isCollapsed && (
                 <div className="flex flex-col leading-tight overflow-hidden">
                   <span className="font-semibold tracking-tight text-sm truncate">Dev Studio</span>
-                  <span className="text-[10px] text-muted-foreground font-mono truncate">your dev hub</span>
+                  <span className="text-[10px] text-muted-foreground font-mono truncate">
+                    your dev hub
+                  </span>
                 </div>
               )}
               <button
@@ -231,8 +316,16 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <SectionLabel label="Workspace" isCollapsed={isCollapsed} />
                 <ul className="space-y-0.5">
                   {WORKSPACE_NAV.map((item) => {
-                    const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
-                    return <NavItem key={item.to} item={item} active={active} isCollapsed={isCollapsed} />;
+                    const active =
+                      item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+                    return (
+                      <NavItem
+                        key={item.to}
+                        item={item}
+                        active={active}
+                        isCollapsed={isCollapsed}
+                      />
+                    );
                   })}
                 </ul>
               </div>
@@ -241,7 +334,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <ul className="space-y-0.5">
                   {COMMUNICATION_NAV.map((item) => {
                     const active = item.match.some((p) => pathname.startsWith(p));
-                    return <NavItem key={item.label} item={item} active={active} isCollapsed={isCollapsed} />;
+                    return (
+                      <NavItem
+                        key={item.label}
+                        item={item}
+                        active={active}
+                        isCollapsed={isCollapsed}
+                      />
+                    );
                   })}
                 </ul>
               </div>
@@ -250,7 +350,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <ul className="space-y-0.5">
                   {SKILLS_NAV.map((item) => {
                     const active = item.match.some((p) => pathname.startsWith(p));
-                    return <NavItem key={item.label} item={item} active={active} isCollapsed={isCollapsed} />;
+                    return (
+                      <NavItem
+                        key={item.label}
+                        item={item}
+                        active={active}
+                        isCollapsed={isCollapsed}
+                      />
+                    );
                   })}
                 </ul>
               </div>
@@ -259,7 +366,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <ul className="space-y-0.5">
                   {FREELANCE_NAV.map((item) => {
                     const active = item.match.some((p) => pathname.startsWith(p));
-                    return <NavItem key={item.label} item={item} active={active} isCollapsed={isCollapsed} />;
+                    return (
+                      <NavItem
+                        key={item.label}
+                        item={item}
+                        active={active}
+                        isCollapsed={isCollapsed}
+                      />
+                    );
                   })}
                 </ul>
               </div>
@@ -289,7 +403,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                       <Search className="size-4 shrink-0" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="right" sideOffset={12} className="font-medium text-xs">Quick search (⌘K)</TooltipContent>
+                  <TooltipContent side="right" sideOffset={12} className="font-medium text-xs">
+                    Quick search (⌘K)
+                  </TooltipContent>
                 </Tooltip>
               )}
               <UserMenu isCollapsed={isCollapsed} />
@@ -300,10 +416,8 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* ── Main area ────────────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0 p-2 pl-0 md:pl-0 gap-2">
-
         {/* ── Top header bar ───────────────────────── */}
         <header className="shrink-0 flex items-center justify-between gap-2 px-3 py-2 rounded-2xl bg-background/80 backdrop-blur-sm border border-border/60 shadow-sm relative z-[100]">
-
           {/* Left: sidebar toggle */}
           <div className="flex items-center gap-2 shrink-0">
             <button
@@ -329,12 +443,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           >
             <Search className="size-3.5 text-muted-foreground shrink-0" />
             <span className="text-sm text-muted-foreground truncate">Search…</span>
-            <kbd className="ml-auto font-mono bg-background text-muted-foreground px-1.5 py-0.5 rounded-md border border-border text-[10px] hidden sm:block">⌘K</kbd>
+            <kbd className="ml-auto font-mono bg-background text-muted-foreground px-1.5 py-0.5 rounded-md border border-border text-[10px] hidden sm:block">
+              ⌘K
+            </kbd>
           </button>
 
           {/* Right: actions */}
           <div className="flex items-center gap-1.5 shrink-0">
-
             {/* Theme toggle */}
             <TooltipProvider delayDuration={0}>
               <Tooltip>
@@ -344,10 +459,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     className="size-8 grid place-items-center rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-border/60 transition-all"
                     aria-label="Toggle theme"
                   >
-                    {theme === "dark"
-                      ? <Sun className="size-4" />
-                      : <Moon className="size-4" />
-                    }
+                    {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" className="text-xs">
@@ -377,7 +489,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
-                      onClick={() => { setNotifOpen((o) => !o); if (!notifOpen) markAllRead(); }}
+                      onClick={() => {
+                        setNotifOpen((o) => !o);
+                        if (!notifOpen) markAllRead();
+                      }}
                       className="relative size-8 grid place-items-center rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-border/60 transition-all"
                       aria-label="Notifications"
                     >
@@ -389,7 +504,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                       )}
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="bottom" className="text-xs">Notifications</TooltipContent>
+                  <TooltipContent side="bottom" className="text-xs">
+                    Notifications
+                  </TooltipContent>
                 </Tooltip>
 
                 {/* Notification dropdown */}
@@ -447,27 +564,40 @@ export function AppShell({ children }: { children: ReactNode }) {
                                 onKeyDown={(e) => e.key === "Enter" && readOne(n.id)}
                                 className={cn(
                                   "w-full text-left flex items-start gap-3 px-3 py-2.5 rounded-xl transition-all group cursor-pointer",
-                                  n.read ? "opacity-60 hover:opacity-100 hover:bg-muted/40" : "bg-primary/5 hover:bg-primary/10 ring-1 ring-primary/10"
+                                  n.read
+                                    ? "opacity-60 hover:opacity-100 hover:bg-muted/40"
+                                    : "bg-primary/5 hover:bg-primary/10 ring-1 ring-primary/10",
                                 )}
                               >
-                                <div className={cn(
-                                  "size-7 rounded-xl flex items-center justify-center shrink-0 mt-0.5",
-                                  n.read ? "bg-muted/60" : "bg-primary/10"
-                                )}>
+                                <div
+                                  className={cn(
+                                    "size-7 rounded-xl flex items-center justify-center shrink-0 mt-0.5",
+                                    n.read ? "bg-muted/60" : "bg-primary/10",
+                                  )}
+                                >
                                   <NotifIcon icon={n.icon} />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center justify-between gap-2">
-                                    <p className="text-xs font-semibold leading-tight truncate">{n.title}</p>
+                                    <p className="text-xs font-semibold leading-tight truncate">
+                                      {n.title}
+                                    </p>
                                     <button
-                                      onClick={(e) => { e.stopPropagation(); dismissOne(n.id); }}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        dismissOne(n.id);
+                                      }}
                                       className="size-4 rounded-md flex items-center justify-center text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-all shrink-0"
                                     >
                                       <X className="size-3" />
                                     </button>
                                   </div>
-                                  <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5 line-clamp-2">{n.body}</p>
-                                  <p className="text-[10px] text-muted-foreground/50 mt-1">{n.time}</p>
+                                  <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5 line-clamp-2">
+                                    {n.body}
+                                  </p>
+                                  <p className="text-[10px] text-muted-foreground/50 mt-1">
+                                    {n.time}
+                                  </p>
                                 </div>
                                 {!n.read && (
                                   <div className="size-1.5 rounded-full bg-primary shrink-0 mt-2" />

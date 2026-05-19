@@ -15,9 +15,16 @@ interface Props {
 }
 
 const EMPTY: Partial<SavedJob> = {
-  title: "", company: "", location: "", url: "",
-  platform: "LinkedIn", status: "saved", salary: "",
-  remote: false, tags: [], notes: "",
+  title: "",
+  company: "",
+  location: "",
+  url: "",
+  platform: "LinkedIn",
+  status: "saved",
+  salary: "",
+  remote: false,
+  tags: [],
+  notes: "",
 };
 
 export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }: Props) {
@@ -27,8 +34,13 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
   const [tagInput, setTagInput] = useState("");
 
   useEffect(() => {
-    if (job) { setForm({ ...job }); setTagInput(""); }
-    else if (isNew) { setForm({ ...EMPTY }); setTagInput(""); }
+    if (job) {
+      setForm({ ...job });
+      setTagInput("");
+    } else if (isNew) {
+      setForm({ ...EMPTY });
+      setTagInput("");
+    }
   }, [job, isNew]);
 
   if (!job && !isNew) {
@@ -36,15 +48,26 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
   }
 
   const handleSave = async () => {
-    if (!form.title?.trim()) { toast.error("Title is required."); return; }
+    if (!form.title?.trim()) {
+      toast.error("Title is required.");
+      return;
+    }
     setSaving(true);
-    try { await onSave(form); } finally { setSaving(false); }
+    try {
+      await onSave(form);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async () => {
     if (!job || !confirm("Delete this job?")) return;
     setDeleting(true);
-    try { await onDelete(job.id); } finally { setDeleting(false); }
+    try {
+      await onDelete(job.id);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const addTag = () => {
@@ -72,7 +95,11 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
             className="size-7 grid place-items-center rounded-md hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
             title="Delete job"
           >
-            {deleting ? <Loader2 className="size-3.5 animate-spin" /> : <Trash2 className="size-3.5" />}
+            {deleting ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : (
+              <Trash2 className="size-3.5" />
+            )}
           </button>
         )}
       </div>
@@ -90,23 +117,47 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="Company">
-              <input className={inp} value={form.company ?? ""} onChange={(e) => setForm((p) => ({ ...p, company: e.target.value }))} placeholder="Acme Corp" />
+              <input
+                className={inp}
+                value={form.company ?? ""}
+                onChange={(e) => setForm((p) => ({ ...p, company: e.target.value }))}
+                placeholder="Acme Corp"
+              />
             </Field>
             <Field label="Location">
-              <input className={inp} value={form.location ?? ""} onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))} placeholder="Cairo / Remote" />
+              <input
+                className={inp}
+                value={form.location ?? ""}
+                onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))}
+                placeholder="Cairo / Remote"
+              />
             </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="Platform">
-              <select className={inp} value={form.platform ?? ""} onChange={(e) => setForm((p) => ({ ...p, platform: e.target.value }))}>
-                {JOB_PLATFORMS.map((p) => <option key={p} value={p}>{p}</option>)}
+              <select
+                className={inp}
+                value={form.platform ?? ""}
+                onChange={(e) => setForm((p) => ({ ...p, platform: e.target.value }))}
+              >
+                {JOB_PLATFORMS.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
               </select>
             </Field>
             <Field label="Status">
-              <select className={inp} value={form.status ?? "saved"} onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}>
+              <select
+                className={inp}
+                value={form.status ?? "saved"}
+                onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}
+              >
                 {JOB_STATUSES.map((s) => (
-                  <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                  <option key={s} value={s}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </option>
                 ))}
               </select>
             </Field>
@@ -114,10 +165,21 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="Salary">
-              <input className={inp} value={form.salary ?? ""} onChange={(e) => setForm((p) => ({ ...p, salary: e.target.value }))} placeholder="$80k – $120k" />
+              <input
+                className={inp}
+                value={form.salary ?? ""}
+                onChange={(e) => setForm((p) => ({ ...p, salary: e.target.value }))}
+                placeholder="$80k – $120k"
+              />
             </Field>
             <Field label="Job URL">
-              <input type="url" className={inp} value={form.url ?? ""} onChange={(e) => setForm((p) => ({ ...p, url: e.target.value }))} placeholder="https://…" />
+              <input
+                type="url"
+                className={inp}
+                value={form.url ?? ""}
+                onChange={(e) => setForm((p) => ({ ...p, url: e.target.value }))}
+                placeholder="https://…"
+              />
             </Field>
           </div>
 
@@ -129,15 +191,25 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
               onChange={(e) => setForm((p) => ({ ...p, remote: e.target.checked }))}
               className="rounded border-border accent-primary size-3.5"
             />
-            <label htmlFor="remote-chk" className="text-xs text-muted-foreground cursor-pointer">Remote position</label>
+            <label htmlFor="remote-chk" className="text-xs text-muted-foreground cursor-pointer">
+              Remote position
+            </label>
           </div>
 
           <Field label="Tags">
             <div className="flex flex-wrap gap-1.5 mb-1.5">
               {(form.tags ?? []).map((t) => (
-                <span key={t} className="flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground border border-border">
+                <span
+                  key={t}
+                  className="flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground border border-border"
+                >
                   {t}
-                  <button onClick={() => setForm((p) => ({ ...p, tags: p.tags?.filter((x) => x !== t) }))} className="hover:text-destructive leading-none">×</button>
+                  <button
+                    onClick={() => setForm((p) => ({ ...p, tags: p.tags?.filter((x) => x !== t) }))}
+                    className="hover:text-destructive leading-none"
+                  >
+                    ×
+                  </button>
                 </span>
               ))}
             </div>
@@ -149,7 +221,12 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
                 onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
                 placeholder="Add tag…"
               />
-              <button onClick={addTag} className="px-2.5 py-1.5 text-xs border border-border rounded-md hover:bg-sidebar-accent/40 text-muted-foreground hover:text-foreground transition-colors">Add</button>
+              <button
+                onClick={addTag}
+                className="px-2.5 py-1.5 text-xs border border-border rounded-md hover:bg-sidebar-accent/40 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Add
+              </button>
             </div>
           </Field>
 
@@ -188,12 +265,15 @@ export function JobEditor({ job, isNew, onSave, onDelete, onSaveRemote, onBack }
   );
 }
 
-const inp = "w-full px-3 py-2 text-sm rounded-md border border-border bg-background focus:outline-none focus:ring-1 focus:ring-ring";
+const inp =
+  "w-full px-3 py-2 text-sm rounded-md border border-border bg-background focus:outline-none focus:ring-1 focus:ring-ring";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1">
-      <label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{label}</label>
+      <label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+        {label}
+      </label>
       {children}
     </div>
   );

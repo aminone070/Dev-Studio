@@ -53,9 +53,12 @@ export function setupGooglePassport() {
           const displayName = profile.displayName;
           const avatarUrl = profile.photos?.[0]?.value ?? null;
 
-          const [existing] = await db.select().from(authUsers).where(
-            or(eq(authUsers.googleId, googleId), ...(email ? [eq(authUsers.email, email)] : []))
-          );
+          const [existing] = await db
+            .select()
+            .from(authUsers)
+            .where(
+              or(eq(authUsers.googleId, googleId), ...(email ? [eq(authUsers.email, email)] : [])),
+            );
 
           if (existing) {
             const [updated] = await db
@@ -80,8 +83,8 @@ export function setupGooglePassport() {
         } catch (err) {
           return done(err as Error);
         }
-      }
-    )
+      },
+    ),
   );
 
   passport.serializeUser((user: any, done) => done(null, user.id));
@@ -103,7 +106,7 @@ router.get("/google", (req: Request, res: Response, next: NextFunction) => {
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false, failureRedirect: "/auth?error=google_failed" }),
-  googleCallback
+  googleCallback,
 );
 
 export default router;

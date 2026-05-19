@@ -94,14 +94,18 @@ export function Snippets({ selectedId }: { selectedId?: string }) {
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className={`text-xs font-medium truncate flex-1 ${active ? "text-foreground" : ""}`}>
+                  <span
+                    className={`text-xs font-medium truncate flex-1 ${active ? "text-foreground" : ""}`}
+                  >
                     {s.title}
                   </span>
                   <span className="text-[9px] text-muted-foreground font-mono px-1.5 py-0.5 rounded-lg bg-muted/60 border border-border/60 shrink-0">
                     {s.language}
                   </span>
                 </div>
-                <p className="text-[10px] text-muted-foreground line-clamp-1">{s.description || "No description"}</p>
+                <p className="text-[10px] text-muted-foreground line-clamp-1">
+                  {s.description || "No description"}
+                </p>
               </button>
             </li>
           );
@@ -112,7 +116,13 @@ export function Snippets({ selectedId }: { selectedId?: string }) {
           </li>
         )}
       </ul>
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
       <div className="p-2 pt-0 shrink-0">
         <button
           onClick={create}
@@ -131,26 +141,63 @@ export function Snippets({ selectedId }: { selectedId?: string }) {
           <div className="px-4 sm:px-8 pt-6 sm:pt-8 pb-4 border-b border-border bg-background">
             <div className="flex flex-col sm:flex-row items-start gap-4 mb-6">
               <div className="flex-1 min-w-0">
-                <Input value={selected.title} onChange={(e) => update({ title: e.target.value })} className="text-2xl font-semibold tracking-tight bg-transparent border-none p-0 focus:ring-0" />
-                <Input value={selected.description} onChange={(e) => update({ description: e.target.value })} className="text-sm text-muted-foreground bg-transparent border-none p-0 focus:ring-0 mt-1" />
+                <Input
+                  value={selected.title}
+                  onChange={(e) => update({ title: e.target.value })}
+                  className="text-2xl font-semibold tracking-tight bg-transparent border-none p-0 focus:ring-0"
+                />
+                <Input
+                  value={selected.description}
+                  onChange={(e) => update({ description: e.target.value })}
+                  className="text-sm text-muted-foreground bg-transparent border-none p-0 focus:ring-0 mt-1"
+                />
               </div>
-              <button onClick={() => setConfirmOpen(true)} className="p-2 rounded-xl border border-border hover:bg-destructive/10 self-end sm:self-auto mt-2 sm:mt-0">
+              <button
+                onClick={() => setConfirmOpen(true)}
+                className="p-2 rounded-xl border border-border hover:bg-destructive/10 self-end sm:self-auto mt-2 sm:mt-0"
+              >
                 <Trash2 className="size-4 text-muted-foreground" />
               </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <Field label="Language"><Input value={selected.language} onChange={(e) => update({ language: e.target.value })} className="font-mono" /></Field>
-              <Field label="Tags"><Input value={selected.tags.join(", ")} onChange={(e) => update({ tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })} className="font-mono" /></Field>
+              <Field label="Language">
+                <Input
+                  value={selected.language}
+                  onChange={(e) => update({ language: e.target.value })}
+                  className="font-mono"
+                />
+              </Field>
+              <Field label="Tags">
+                <Input
+                  value={selected.tags.join(", ")}
+                  onChange={(e) =>
+                    update({
+                      tags: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                  className="font-mono"
+                />
+              </Field>
             </div>
           </div>
 
           <div className="flex-1 overflow-auto p-4 sm:p-8 min-h-0 bg-sidebar/20">
             <div className="w-full max-w-[1400px] mx-auto h-full">
               <div className="relative group h-full">
-                <TextArea value={selected.code} onChange={(e) => update({ code: e.target.value })} className="h-full font-mono resize-none" />
+                <TextArea
+                  value={selected.code}
+                  onChange={(e) => update({ code: e.target.value })}
+                  className="h-full font-mono resize-none"
+                />
                 <button
-                  onClick={() => { navigator.clipboard.writeText(selected.code); toast.success("Snippet copied"); }}
+                  onClick={() => {
+                    navigator.clipboard.writeText(selected.code);
+                    toast.success("Snippet copied");
+                  }}
                   className="absolute top-4 right-4 inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-xs px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <Copy className="size-3.5" /> Copy Snippet
@@ -163,14 +210,24 @@ export function Snippets({ selectedId }: { selectedId?: string }) {
         <section className="grid place-items-center p-8 text-center flex-1">
           <div>
             <Scissors className="size-10 text-muted-foreground/30 mx-auto mb-3" />
-            <button onClick={create} className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors">
+            <button
+              onClick={create}
+              className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors"
+            >
               Save your first snippet
             </button>
           </div>
         </section>
       )}
 
-      <ConfirmDialog open={confirmOpen} onOpenChange={setConfirmOpen} title="Delete snippet?" description="This snippet will be permanently removed. This action cannot be undone." confirmLabel="Delete" onConfirm={handleDelete} />
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete snippet?"
+        description="This snippet will be permanently removed. This action cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+      />
     </SplitLayout>
   );
 }

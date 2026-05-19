@@ -5,7 +5,6 @@ import { eq, and } from "drizzle-orm";
 import { requireUser, stripDates, isUUID } from "../../middleware/auth.js";
 import { getAll, create, createBulk, deleteById } from "../../controllers/social.controller.js";
 
-
 const router = Router();
 
 router.get("/", getAll);

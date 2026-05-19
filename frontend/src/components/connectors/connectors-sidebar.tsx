@@ -124,7 +124,9 @@ export function ConnectorsSidebar({
               onClick={() => onSelectConnector(connector.id)}
             >
               <div className="pr-6">
-                <div className={`truncate leading-snug text-xs font-medium ${activeConnectorId === connector.id ? "text-foreground" : ""}`}>
+                <div
+                  className={`truncate leading-snug text-xs font-medium ${activeConnectorId === connector.id ? "text-foreground" : ""}`}
+                >
                   {connector.name || "Unnamed Contact"}
                 </div>
                 <div className="truncate text-[10px] text-muted-foreground mt-0.5">
@@ -135,7 +137,10 @@ export function ConnectorsSidebar({
                 </div>
               </div>
               <button
-                onClick={(e) => { e.stopPropagation(); setPendingDeleteId(connector.id); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPendingDeleteId(connector.id);
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                 title="Delete contact"
               >
@@ -153,7 +158,13 @@ export function ConnectorsSidebar({
         )}
       </nav>
 
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
 
       {/* Bottom Action */}
       <div className="px-2 pb-2 shrink-0">
@@ -167,7 +178,9 @@ export function ConnectorsSidebar({
 
       <ConfirmDialog
         open={pendingDeleteId !== null}
-        onOpenChange={(open) => { if (!open) setPendingDeleteId(null); }}
+        onOpenChange={(open) => {
+          if (!open) setPendingDeleteId(null);
+        }}
         title="Delete contact?"
         description="This contact will be permanently removed. This action cannot be undone."
         confirmLabel="Delete"

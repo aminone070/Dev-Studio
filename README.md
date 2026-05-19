@@ -22,19 +22,19 @@
 
 Dev Studio is built on a high-performance, modern React and Node.js stack designed for lightning-fast HMR and solid type safety.
 
-| Layer | Component | Description |
-|---|---|---|
-| 🎨 **Frontend** | **React 19** | Custom components with modern hooks and fast reconciliation |
-| 🔀 **Routing** | **TanStack Router** | Strongly typed, file-based routing architecture |
-| 🔄 **Querying** | **TanStack Query** | State-of-the-art async data fetching and state caching |
-| 💾 **State** | **Zustand** | Lightweight, responsive state store synchronized with local storage |
-| 💅 **Styling** | **Tailwind CSS v4** | CSS-first configuration and atomic component classes |
-| 🏗️ **UI Kit** | **shadcn/ui** | Clean, responsive component library |
-| ⚙️ **Backend** | **Express 5** | High-performance HTTP server running on [server.ts](file:///c:/Users/Memo/Downloads/Dev%20Studio/Dev-Studio/server.ts) |
-| ⚡ **ORM** | **Drizzle ORM** | Strictly-typed database queries and migrations |
-| 🗄️ **Database** | **PostgreSQL** | Local persistence supporting active connection pooling |
-| 🛠️ **Build System** | **Vite** | Fast local compilation and dynamic Hot Module Replacement (HMR) |
-| 🛡️ **Language** | **TypeScript** | 100% strict type safety across the entire repository |
+| Layer               | Component           | Description                                                                                                            |
+| ------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 🎨 **Frontend**     | **React 19**        | Custom components with modern hooks and fast reconciliation                                                            |
+| 🔀 **Routing**      | **TanStack Router** | Strongly typed, file-based routing architecture                                                                        |
+| 🔄 **Querying**     | **TanStack Query**  | State-of-the-art async data fetching and state caching                                                                 |
+| 💾 **State**        | **Zustand**         | Lightweight, responsive state store synchronized with local storage                                                    |
+| 💅 **Styling**      | **Tailwind CSS v4** | CSS-first configuration and atomic component classes                                                                   |
+| 🏗️ **UI Kit**       | **shadcn/ui**       | Clean, responsive component library                                                                                    |
+| ⚙️ **Backend**      | **Express 5**       | High-performance HTTP server running on [server.ts](file:///c:/Users/Memo/Downloads/Dev%20Studio/Dev-Studio/server.ts) |
+| ⚡ **ORM**          | **Drizzle ORM**     | Strictly-typed database queries and migrations                                                                         |
+| 🗄️ **Database**     | **PostgreSQL**      | Local persistence supporting active connection pooling                                                                 |
+| 🛠️ **Build System** | **Vite**            | Fast local compilation and dynamic Hot Module Replacement (HMR)                                                        |
+| 🛡️ **Language**     | **TypeScript**      | 100% strict type safety across the entire repository                                                                   |
 
 ---
 
@@ -53,6 +53,7 @@ Dev Studio runs fully in your local workspace. Follow these steps to spin up the
 ### 📦 Step 1: Install Dependencies
 
 Install the node modules inside your local project directory:
+
 ```bash
 npm install
 ```
@@ -91,6 +92,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 ### 📊 Step 3: Initialize the Database Schema
 
 Push the database tables to your local PostgreSQL instance using Drizzle ORM:
+
 ```bash
 npm run db:push
 ```
@@ -100,6 +102,7 @@ npm run db:push
 ### 💻 Step 4: Run the Application
 
 Start the local development server (which compiles the frontend under Vite and boots the Express backend simultaneously):
+
 ```bash
 npm run dev
 ```
@@ -112,14 +115,14 @@ Open your browser and navigate to **[http://localhost:5000](http://localhost:500
 
 You can execute the following NPM commands in your workspace:
 
-| Script | Command | Description |
-|---|---|---|
-| 🏃 **Dev Mode** | `npm run dev` | Runs Express server + Vite Dev Middleware with HMR |
-| 🧱 **Production Build** | `npm run build` | Compiles the production SPA bundle into the `dist/` folder |
-| 💾 **Drizzle Push** | `npm run db:push` | Pushes local changes in Drizzle schema to your live database |
-| 🛡️ **TypeScript Check** | `npx tsc --noEmit` | Runs strict type checking over client and server code |
-| 🔍 **ESLint Check** | `npm run lint` | Analyzes code quality using ESLint |
-| 💅 **Prettier Format** | `npm run format` | Standardizes codebase formatting with Prettier |
+| Script                  | Command            | Description                                                  |
+| ----------------------- | ------------------ | ------------------------------------------------------------ |
+| 🏃 **Dev Mode**         | `npm run dev`      | Runs Express server + Vite Dev Middleware with HMR           |
+| 🧱 **Production Build** | `npm run build`    | Compiles the production SPA bundle into the `dist/` folder   |
+| 💾 **Drizzle Push**     | `npm run db:push`  | Pushes local changes in Drizzle schema to your live database |
+| 🛡️ **TypeScript Check** | `npx tsc --noEmit` | Runs strict type checking over client and server code        |
+| 🔍 **ESLint Check**     | `npm run lint`     | Analyzes code quality using ESLint                           |
+| 💅 **Prettier Format**  | `npm run format`   | Standardizes codebase formatting with Prettier               |
 
 ---
 
@@ -158,9 +161,9 @@ vite.config.ts           # Vite compile configuration with development proxy set
 
 Discover more about the Dev Studio architecture and integrations under the `docs/` folder:
 
-* 📐 [System Architecture](./docs/architecture/README.md) — Comprehensive design and request pipeline.
-* 💾 [Data Models & Schema](./docs/architecture/DATA_MODELS.md) — Drizzle schema properties and relations.
-* 🔐 [Setup & Environment Configuration](./docs/setup/README.md) — Deep dive into environment variables.
-* 🔑 [API Credentials Setup](./docs/setup/CREDENTIALS_SETUP.md) — External API setup guide.
-* 🔌 [Integration Center](./docs/integrations/README.md) — Setting up webhooks and server hooks.
-* 🤝 [Contributing Guidelines](./docs/CONTRIBUTING.md) — Standard workflow for raising Pull Requests.
+- 📐 [System Architecture](./docs/architecture/README.md) — Comprehensive design and request pipeline.
+- 💾 [Data Models & Schema](./docs/architecture/DATA_MODELS.md) — Drizzle schema properties and relations.
+- 🔐 [Setup & Environment Configuration](./docs/setup/README.md) — Deep dive into environment variables.
+- 🔑 [API Credentials Setup](./docs/setup/CREDENTIALS_SETUP.md) — External API setup guide.
+- 🔌 [Integration Center](./docs/integrations/README.md) — Setting up webhooks and server hooks.
+- 🤝 [Contributing Guidelines](./docs/CONTRIBUTING.md) — Standard workflow for raising Pull Requests.

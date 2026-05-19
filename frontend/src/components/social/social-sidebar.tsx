@@ -29,7 +29,6 @@ const FILTERS: { label: string; value: DraftFilter }[] = [
   { label: "Older", value: "older" },
 ];
 
-
 export function SocialSidebar({
   platform,
   drafts,
@@ -127,7 +126,9 @@ export function SocialSidebar({
               onClick={() => onSelectDraft(draft.id)}
             >
               <div className="pr-6">
-                <div className={`truncate leading-snug text-xs font-medium ${activeDraftId === draft.id ? "text-foreground" : ""}`}>
+                <div
+                  className={`truncate leading-snug text-xs font-medium ${activeDraftId === draft.id ? "text-foreground" : ""}`}
+                >
                   {draft.content || "Untitled Draft"}
                 </div>
                 <div className="text-[9px] text-muted-foreground/60 mt-1">
@@ -135,7 +136,10 @@ export function SocialSidebar({
                 </div>
               </div>
               <button
-                onClick={(e) => { e.stopPropagation(); setPendingDeleteId(draft.id); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPendingDeleteId(draft.id);
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                 title="Delete draft"
               >
@@ -153,7 +157,13 @@ export function SocialSidebar({
         )}
       </nav>
 
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
 
       {/* Bottom Action */}
       <div className="px-2 pb-2 shrink-0">
@@ -167,7 +177,9 @@ export function SocialSidebar({
 
       <ConfirmDialog
         open={pendingDeleteId !== null}
-        onOpenChange={(open) => { if (!open) setPendingDeleteId(null); }}
+        onOpenChange={(open) => {
+          if (!open) setPendingDeleteId(null);
+        }}
         title="Delete draft?"
         description="This draft will be permanently removed. This action cannot be undone."
         confirmLabel="Delete"

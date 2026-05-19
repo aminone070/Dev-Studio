@@ -146,14 +146,18 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className={`text-[9px] px-1.5 py-0.5 rounded-lg font-semibold uppercase tracking-wider ${
-                    active ? "bg-primary/15 text-primary" : "bg-muted text-muted-foreground"
-                  }`}>
+                  <span
+                    className={`text-[9px] px-1.5 py-0.5 rounded-lg font-semibold uppercase tracking-wider ${
+                      active ? "bg-primary/15 text-primary" : "bg-muted text-muted-foreground"
+                    }`}
+                  >
                     {p.category}
                   </span>
                   {p.favorite && <Star className="size-3 text-amber-400 fill-amber-400 ml-auto" />}
                 </div>
-                <p className={`text-xs font-medium leading-snug truncate ${active ? "text-foreground" : ""}`}>
+                <p
+                  className={`text-xs font-medium leading-snug truncate ${active ? "text-foreground" : ""}`}
+                >
                   {p.title}
                 </p>
                 <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">
@@ -169,7 +173,13 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
           </li>
         )}
       </ul>
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
       <div className="p-2 pt-0 shrink-0">
         <button
           onClick={create}
@@ -206,7 +216,9 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
                   className="p-2 rounded-xl border border-border hover:bg-muted/60"
                   title="Favorite"
                 >
-                  <Star className={`size-4 ${selected.favorite ? "fill-amber-400 text-amber-400" : "text-muted-foreground"}`} />
+                  <Star
+                    className={`size-4 ${selected.favorite ? "fill-amber-400 text-amber-400" : "text-muted-foreground"}`}
+                  />
                 </button>
                 <button
                   onClick={() => setConfirmOpen(true)}
@@ -220,15 +232,30 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-xs">
               <Field label="Category">
-                <Input value={selected.category} onChange={(e) => updateSelected({ category: e.target.value })} />
+                <Input
+                  value={selected.category}
+                  onChange={(e) => updateSelected({ category: e.target.value })}
+                />
               </Field>
               <Field label="Model">
-                <Input value={selected.model ?? ""} onChange={(e) => updateSelected({ model: e.target.value })} placeholder="claude-3.5-sonnet" className="font-mono" />
+                <Input
+                  value={selected.model ?? ""}
+                  onChange={(e) => updateSelected({ model: e.target.value })}
+                  placeholder="claude-3.5-sonnet"
+                  className="font-mono"
+                />
               </Field>
               <Field label="Tags">
                 <Input
                   value={selected.tags.join(", ")}
-                  onChange={(e) => updateSelected({ tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })}
+                  onChange={(e) =>
+                    updateSelected({
+                      tags: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
                   className="font-mono"
                 />
               </Field>
@@ -238,7 +265,12 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
               <label className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 block mb-2">
                 Prompt body
               </label>
-              <TextArea value={selected.body} onChange={(e) => updateSelected({ body: e.target.value })} rows={12} className="font-mono" />
+              <TextArea
+                value={selected.body}
+                onChange={(e) => updateSelected({ body: e.target.value })}
+                rows={12}
+                className="font-mono"
+              />
             </div>
 
             {selected.variables.length > 0 && (
@@ -252,7 +284,12 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
                       <code className="text-xs text-primary font-mono bg-primary/5 border border-primary/20 px-2 py-1 rounded-lg shrink-0 w-32 truncate">
                         {`{{${v}}}`}
                       </code>
-                      <Input value={varValues[v] ?? ""} onChange={(e) => setVarValues({ ...varValues, [v]: e.target.value })} placeholder={`Value for ${v}`} className="flex-1" />
+                      <Input
+                        value={varValues[v] ?? ""}
+                        onChange={(e) => setVarValues({ ...varValues, [v]: e.target.value })}
+                        placeholder={`Value for ${v}`}
+                        className="flex-1"
+                      />
                     </div>
                   ))}
                 </div>
@@ -260,19 +297,35 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
             )}
 
             <div className="flex flex-wrap items-center gap-2 mb-8 border-t border-border pt-6">
-              <button onClick={usePrompt} className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-xl hover:opacity-90">
+              <button
+                onClick={usePrompt}
+                className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-xl hover:opacity-90"
+              >
                 <Copy className="size-4" /> Use prompt
               </button>
-              <button onClick={() => { navigator.clipboard.writeText(selected.body); toast.success("Raw template copied"); }} className="inline-flex items-center gap-1.5 text-sm border border-border px-4 py-2 rounded-xl hover:bg-muted/60">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(selected.body);
+                  toast.success("Raw template copied");
+                }}
+                className="inline-flex items-center gap-1.5 text-sm border border-border px-4 py-2 rounded-xl hover:bg-muted/60"
+              >
                 <Copy className="size-4" /> Copy raw
               </button>
               <button
-                onClick={() => { const v = { id: newId("v"), createdAt: Date.now(), body: selected.body }; updateSelected({ versions: [v, ...selected.versions] }); toast.success("Version saved"); }}
+                onClick={() => {
+                  const v = { id: newId("v"), createdAt: Date.now(), body: selected.body };
+                  updateSelected({ versions: [v, ...selected.versions] });
+                  toast.success("Version saved");
+                }}
                 className="inline-flex items-center gap-1.5 text-sm border border-border px-4 py-2 rounded-xl hover:bg-muted/60"
               >
                 <History className="size-4" /> Save version
               </button>
-              <button onClick={() => toast.info("AI prompt enhancer — connect Lovable AI to enable")} className="ml-auto inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider border border-accent/40 text-accent px-3 py-2 rounded-xl hover:bg-accent/10">
+              <button
+                onClick={() => toast.info("AI prompt enhancer — connect Lovable AI to enable")}
+                className="ml-auto inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider border border-accent/40 text-accent px-3 py-2 rounded-xl hover:bg-accent/10"
+              >
                 <Wand2 className="size-3.5" /> AI Enhance
               </button>
             </div>
@@ -284,9 +337,20 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
                 </h3>
                 <ul className="space-y-2">
                   {selected.versions.map((v) => (
-                    <li key={v.id} className="flex items-center justify-between text-xs p-2.5 rounded-xl bg-background border border-border/60">
-                      <span className="font-mono text-muted-foreground">{new Date(v.createdAt).toLocaleString()}</span>
-                      <button onClick={() => { navigator.clipboard.writeText(v.body); toast.success("Version copied"); }} className="text-primary hover:underline">
+                    <li
+                      key={v.id}
+                      className="flex items-center justify-between text-xs p-2.5 rounded-xl bg-background border border-border/60"
+                    >
+                      <span className="font-mono text-muted-foreground">
+                        {new Date(v.createdAt).toLocaleString()}
+                      </span>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(v.body);
+                          toast.success("Version copied");
+                        }}
+                        className="text-primary hover:underline"
+                      >
                         Copy
                       </button>
                     </li>
@@ -301,14 +365,24 @@ export function Prompts({ selectedId }: { selectedId?: string }) {
           <div>
             <Sparkles className="size-10 text-muted-foreground/30 mx-auto mb-3" />
             <p className="text-sm text-muted-foreground mb-3">No prompt selected.</p>
-            <button onClick={create} className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors">
+            <button
+              onClick={create}
+              className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors"
+            >
               Create your first prompt
             </button>
           </div>
         </section>
       )}
 
-      <ConfirmDialog open={confirmOpen} onOpenChange={setConfirmOpen} title="Delete prompt?" description="This prompt will be permanently removed. This action cannot be undone." confirmLabel="Delete" onConfirm={handleDelete} />
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete prompt?"
+        description="This prompt will be permanently removed. This action cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+      />
     </SplitLayout>
   );
 }

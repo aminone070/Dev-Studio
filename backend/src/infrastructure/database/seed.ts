@@ -32,7 +32,7 @@ async function seedGlobalInterviewQuestions() {
       tags: ["behavioral"],
       isGlobal: true,
       userId: null,
-    }))
+    })),
   ];
 
   await db.insert(interviewQuestions).values(rows as any[]);

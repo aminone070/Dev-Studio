@@ -11,15 +11,7 @@ import { z } from "zod";
 
 const searchSchema = z.object({
   tab: z
-    .enum([
-      "frontend",
-      "backend",
-      "devops",
-      "testing",
-      "database",
-      "materials",
-      "ai-mock",
-    ])
+    .enum(["frontend", "backend", "devops", "testing", "database", "materials", "ai-mock"])
     .optional()
     .default("frontend"),
 });

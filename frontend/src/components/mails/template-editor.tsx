@@ -59,10 +59,7 @@ export function TemplateEditor({
           </div>
           <div className="flex-1 min-w-0 flex items-center gap-3">
             <span className="text-sm font-medium text-muted-foreground w-12 shrink-0">Tone:</span>
-            <Select
-              value="professional"
-              onValueChange={() => {}}
-            >
+            <Select value="professional" onValueChange={() => {}}>
               <SelectTrigger className="flex-1 h-9">
                 <SelectValue placeholder="Select tone" />
               </SelectTrigger>

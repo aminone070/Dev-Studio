@@ -1,14 +1,24 @@
 export async function scrapeRemoteOKTagged(query: string): Promise<any[]> {
   const words = query.toLowerCase().split(/\s+/);
-  const skip = new Set(["developer", "engineer", "senior", "junior", "full", "stack", "and", "the"]);
+  const skip = new Set([
+    "developer",
+    "engineer",
+    "senior",
+    "junior",
+    "full",
+    "stack",
+    "and",
+    "the",
+  ]);
   const tag = words.find((w) => w.length > 3 && !skip.has(w)) ?? words[0];
   const r = await fetch(`https://remoteok.com/api?tag=${encodeURIComponent(tag)}`, {
-    headers: { "User-Agent": "Mozilla/5.0 DevStudio/1.0", "Accept": "application/json" },
+    headers: { "User-Agent": "Mozilla/5.0 DevStudio/1.0", Accept: "application/json" },
     signal: AbortSignal.timeout(8000),
   });
   if (!r.ok) throw new Error(`RemoteOK ${r.status}`);
-  const data = await r.json() as any[];
-  return data.slice(1)
+  const data = (await r.json()) as any[];
+  return data
+    .slice(1)
     .filter((j: any) => j.id && j.title)
     .slice(0, 15)
     .map((j: any) => ({

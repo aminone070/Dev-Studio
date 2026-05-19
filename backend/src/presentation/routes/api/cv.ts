@@ -4,15 +4,23 @@ import { cvProfiles } from "../../../domain/schema.js";
 import { eq, and } from "drizzle-orm";
 import { requireUser, stripDates, isUUID } from "../../middleware/auth.js";
 import { getOpenAI } from "../../../infrastructure/lib/openai.js";
-import { getAll, create, deleteById, postAtsCheck, postParsePdf } from "../../controllers/cv.controller.js";
-
+import {
+  getAll,
+  create,
+  deleteById,
+  postAtsCheck,
+  postParsePdf,
+} from "../../controllers/cv.controller.js";
 
 const router = Router();
 
-
 function parseCVRow(row: any) {
   const parse = (val: string, fallback: any) => {
-    try { return JSON.parse(val || "null") ?? fallback; } catch { return fallback; }
+    try {
+      return JSON.parse(val || "null") ?? fallback;
+    } catch {
+      return fallback;
+    }
   };
   return {
     id: row.id,

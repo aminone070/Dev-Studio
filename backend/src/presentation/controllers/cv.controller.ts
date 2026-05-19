@@ -26,13 +26,25 @@ export const create = async (req: Request, res: Response) => {
     languages: JSON.stringify(languages || []),
   };
   const safeId = isUUID(id) ? id : undefined;
-  const existing = safeId ? await db.select().from(cvProfiles).where(and(eq(cvProfiles.id, safeId), eq(cvProfiles.userId, uid))) : [];
+  const existing = safeId
+    ? await db
+        .select()
+        .from(cvProfiles)
+        .where(and(eq(cvProfiles.id, safeId), eq(cvProfiles.userId, uid)))
+    : [];
 
   if (existing.length > 0) {
-    const [r] = await db.update(cvProfiles).set({ ...data, updatedAt: new Date() }).where(eq(cvProfiles.id, safeId!)).returning();
+    const [r] = await db
+      .update(cvProfiles)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(cvProfiles.id, safeId!))
+      .returning();
     res.json(parseCVRow(r));
   } else {
-    const [r] = await db.insert(cvProfiles).values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any).returning();
+    const [r] = await db
+      .insert(cvProfiles)
+      .values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any)
+      .returning();
     res.json(parseCVRow(r));
   }
 };
@@ -40,8 +52,13 @@ export const create = async (req: Request, res: Response) => {
 export const deleteById = async (req: Request, res: Response) => {
   const uid = requireUser(req, res);
   if (!uid) return;
-  if (!isUUID(req.params.id)) { res.json({ ok: true }); return; }
-  await db.delete(cvProfiles).where(and(eq(cvProfiles.id, req.params.id), eq(cvProfiles.userId, uid)));
+  if (!isUUID(req.params.id)) {
+    res.json({ ok: true });
+    return;
+  }
+  await db
+    .delete(cvProfiles)
+    .where(and(eq(cvProfiles.id, req.params.id), eq(cvProfiles.userId, uid)));
   res.json({ ok: true });
 };
 
@@ -62,9 +79,12 @@ SUMMARY:
 ${cvProfile.summary || ""}
 
 EXPERIENCE:
-${(cvProfile.experience || []).map((e: any) =>
-  `${e.role} at ${e.company} (${e.start} - ${e.current ? "Present" : e.end})\n${e.description}\n${(e.bullets || []).join("\n")}`
-).join("\n\n")}
+${(cvProfile.experience || [])
+  .map(
+    (e: any) =>
+      `${e.role} at ${e.company} (${e.start} - ${e.current ? "Present" : e.end})\n${e.description}\n${(e.bullets || []).join("\n")}`,
+  )
+  .join("\n\n")}
 
 SKILLS:
 Technical: ${(cvProfile.skills?.technical || []).join(", ")}
@@ -154,8 +174,15 @@ export const postParsePdf = async (req: Request, res: Response) => {
       return;
     }
 
-    const asciiText = buffer.toString("ascii").replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s{3,}/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
-    const lines = asciiText.split("\n").filter((l) => l.trim().length > 3 && /[a-zA-Z]{3,}/.test(l));
+    const asciiText = buffer
+      .toString("ascii")
+      .replace(/[^\x20-\x7E\n\r\t]/g, " ")
+      .replace(/\s{3,}/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+    const lines = asciiText
+      .split("\n")
+      .filter((l) => l.trim().length > 3 && /[a-zA-Z]{3,}/.test(l));
     res.json({ text: lines.join("\n") });
   } catch (err) {
     res.status(500).json({ error: "Failed to parse PDF" });

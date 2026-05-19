@@ -16,13 +16,25 @@ export const create = async (req: Request, res: Response) => {
   const { id, ...raw } = req.body;
   const data = stripDates(raw);
   const safeId = isUUID(id) ? id : undefined;
-  const existing = safeId ? await db.select().from(socialDrafts).where(and(eq(socialDrafts.id, safeId), eq(socialDrafts.userId, uid))) : [];
-  
+  const existing = safeId
+    ? await db
+        .select()
+        .from(socialDrafts)
+        .where(and(eq(socialDrafts.id, safeId), eq(socialDrafts.userId, uid)))
+    : [];
+
   if (existing.length > 0) {
-    const [r] = await db.update(socialDrafts).set({ ...data, updatedAt: new Date() }).where(eq(socialDrafts.id, safeId!)).returning();
+    const [r] = await db
+      .update(socialDrafts)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(socialDrafts.id, safeId!))
+      .returning();
     res.json(r);
   } else {
-    const [r] = await db.insert(socialDrafts).values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any).returning();
+    const [r] = await db
+      .insert(socialDrafts)
+      .values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any)
+      .returning();
     res.json(r);
   }
 };
@@ -51,6 +63,8 @@ export const deleteById = async (req: Request, res: Response) => {
     res.json({ ok: true });
     return;
   }
-  await db.delete(socialDrafts).where(and(eq(socialDrafts.id, req.params.id), eq(socialDrafts.userId, uid)));
+  await db
+    .delete(socialDrafts)
+    .where(and(eq(socialDrafts.id, req.params.id), eq(socialDrafts.userId, uid)));
   res.json({ ok: true });
 };

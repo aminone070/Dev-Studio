@@ -21,7 +21,6 @@ export const Route = createFileRoute("/social")({
   component: SocialPage,
 });
 
-
 function SocialPage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
@@ -53,7 +52,7 @@ function SocialPage() {
   };
 
   const handleUpdateDraft = (updates: Partial<SocialDraft>) => {
-    const current = socialDrafts.find(d => d.id === activeDraftId);
+    const current = socialDrafts.find((d) => d.id === activeDraftId);
     if (!current) return;
     upsertSocialDraft({ ...current, ...updates, updatedAt: Date.now() });
   };
@@ -63,11 +62,7 @@ function SocialPage() {
   return (
     <PageContainer>
       <PageSection>
-        <PageHeader
-          icon={Share2}
-          title="Social Media"
-          className="mb-4"
-        />
+        <PageHeader icon={Share2} title="Social Media" className="mb-4" />
         <TabNav
           tabs={SOCIAL_TABS.map((t) => ({
             ...t,

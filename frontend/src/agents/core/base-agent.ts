@@ -10,7 +10,7 @@ export abstract class BaseAgent {
   constructor(
     public id: string,
     public name: string,
-    public systemPrompt: string
+    public systemPrompt: string,
   ) {}
 
   abstract run(input: string, context: AgentContext): Promise<string>;

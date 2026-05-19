@@ -66,12 +66,7 @@ export function QuestionSidebar({
         </div>
       </div>
 
-      {showAddQ && (
-        <AddQuestionForm
-          onSave={onSaveNewQuestion}
-          onCancel={onToggleAddForm}
-        />
-      )}
+      {showAddQ && <AddQuestionForm onSave={onSaveNewQuestion} onCancel={onToggleAddForm} />}
 
       <div className="flex-1 overflow-y-auto p-2 scrollbar-thin space-y-3">
         {/* My Questions */}
@@ -82,7 +77,7 @@ export function QuestionSidebar({
           </p>
           <nav className="space-y-0.5">
             {filtered.map((q) => {
-              const isActive  = activeId === q.id;
+              const isActive = activeId === q.id;
               const isConfirm = confirmDeleteQ === q.id;
               return (
                 <div
@@ -95,18 +90,27 @@ export function QuestionSidebar({
                   )}
                   onClick={() => onSelectQuestion(q.id)}
                 >
-                  <span className={cn("flex-1 truncate", isActive ? "text-foreground" : "")}>{q.title}</span>
+                  <span className={cn("flex-1 truncate", isActive ? "text-foreground" : "")}>
+                    {q.title}
+                  </span>
                   <div className="flex items-center gap-1 shrink-0">
                     {q.scenarios.length > 0 && (
-                      <span className={cn(
-                        "text-[9px] font-bold px-1.5 py-0.5 rounded-full tabular-nums",
-                        isActive ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground/60",
-                      )}>
+                      <span
+                        className={cn(
+                          "text-[9px] font-bold px-1.5 py-0.5 rounded-full tabular-nums",
+                          isActive
+                            ? "bg-primary/20 text-primary"
+                            : "bg-muted text-muted-foreground/60",
+                        )}
+                      >
                         {q.scenarios.length}
                       </span>
                     )}
                     {isConfirm ? (
-                      <div className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
+                      <div
+                        className="flex items-center gap-0.5"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <button
                           onClick={() => onDeleteQuestion(q.id)}
                           className="size-5 rounded flex items-center justify-center text-red-400 hover:bg-red-500/10 transition-all"
@@ -123,7 +127,10 @@ export function QuestionSidebar({
                       </div>
                     ) : (
                       <button
-                        onClick={(e) => { e.stopPropagation(); onDeleteQuestion(q.id); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteQuestion(q.id);
+                        }}
                         className="size-5 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 text-muted-foreground/50 hover:text-red-400 hover:bg-red-500/10 transition-all"
                         title="Delete question"
                       >
@@ -135,7 +142,9 @@ export function QuestionSidebar({
               );
             })}
             {filtered.length === 0 && (
-              <p className="text-[10px] text-center text-muted-foreground py-4 italic">No questions match</p>
+              <p className="text-[10px] text-center text-muted-foreground py-4 italic">
+                No questions match
+              </p>
             )}
           </nav>
         </div>

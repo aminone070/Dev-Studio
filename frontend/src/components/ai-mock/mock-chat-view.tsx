@@ -8,7 +8,9 @@ export function MockChatView({ context }: { context: "tech" | "soft" }) {
       </div>
       <div className="flex items-center gap-2 justify-center mb-3">
         <Sparkles className="size-4 text-primary" />
-        <span className="text-xs font-semibold uppercase tracking-widest text-primary">Coming Soon</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+          Coming Soon
+        </span>
         <Sparkles className="size-4 text-primary" />
       </div>
       <h2 className="text-2xl font-bold tracking-tight mb-3">AI Mock Interview</h2>

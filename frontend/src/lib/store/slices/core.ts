@@ -14,7 +14,12 @@ import { seedMailTemplates } from "@/data/mails/mail-templates";
 
 let _initInFlight = false;
 
-export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unknown]], [], Partial<ForgeState>> = (set, get) => ({
+export const createCoreSlice: StateCreator<
+  ForgeState,
+  [["zustand/persist", unknown]],
+  [],
+  Partial<ForgeState>
+> = (set, get) => ({
   init: async () => {
     if (get().initialized || _initInFlight) return;
     _initInFlight = true;
@@ -33,9 +38,9 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
         db.getUserProgress(),
         db.getCVProfiles(),
       ]);
-      
+
       const progressMap: Record<string, boolean> = {};
-      prog.forEach((i: UserProgressRow) => progressMap[i.itemId] = i.completed ?? true);
+      prog.forEach((i: UserProgressRow) => (progressMap[i.itemId] = i.completed ?? true));
 
       set({
         prompts: p.map((x) => ({
@@ -48,7 +53,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           variables: x.variables || [],
           favorite: x.favorite || false,
           usageCount: x.usageCount ?? 0,
-          versions: (x.versions as unknown as Prompt['versions']) || [],
+          versions: (x.versions as unknown as Prompt["versions"]) || [],
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
           updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
@@ -60,10 +65,10 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           tools: x.tools || [],
           model: x.model || "gpt-4",
           temperature: x.temperature ?? 0.7,
-          status: (x.status as Agent['status']) || "idle",
+          status: (x.status as Agent["status"]) || "idle",
           tags: x.tags || [],
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         components: c.map((x) => ({
           id: x.id,
@@ -76,7 +81,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           favorite: x.favorite || false,
           usageCount: x.usageCount ?? 0,
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         templates: t.map((x) => ({
           id: x.id,
@@ -97,7 +102,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           code: x.code,
           tags: x.tags || [],
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         connectors: conn.map((x) => ({
           id: x.id,
@@ -107,7 +112,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           phone: x.phone || undefined,
           notes: x.notes || undefined,
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         socialDrafts: soc.map((x) => ({
           id: x.id,
@@ -115,7 +120,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           content: x.content,
           mediaUrls: x.mediaUrls || [],
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         mailTemplates: mail.map((x) => ({
           id: x.id,
@@ -123,7 +128,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           subject: x.subject || undefined,
           content: x.content,
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         interviewQuestions: q.map((x) => ({
           id: x.id,
@@ -135,11 +140,11 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           category: x.category || "frontend",
           tags: x.tags || [],
           favorite: x.favorite ?? false,
-          createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now()
+          createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
         })),
         cvProfiles: cvs,
         userProgress: progressMap,
-        initialized: true
+        initialized: true,
       });
 
       if (p.length === 0 && a.length === 0) {
@@ -158,41 +163,41 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
   seedIfEmpty: async () => {
     console.log("Seeding initial data...");
 
-    const promptsData = seedPrompts.map(({ id: _id, ...p }) => ({ 
-      ...p, 
-      user_id: 'local',
-      body: p.body, 
-      system_prompt: "" 
+    const promptsData = seedPrompts.map(({ id: _id, ...p }) => ({
+      ...p,
+      user_id: "local",
+      body: p.body,
+      system_prompt: "",
     }));
-    const agentsData = seedAgents.map(({ id: _id, ...a }) => ({ 
-      ...a, 
-      user_id: 'local',
-      system_prompt: a.systemPrompt 
+    const agentsData = seedAgents.map(({ id: _id, ...a }) => ({
+      ...a,
+      user_id: "local",
+      system_prompt: a.systemPrompt,
     }));
     const componentsData = seedComponents.map(({ id: _id, ...c }) => ({
       ...c,
-      user_id: 'local'
+      user_id: "local",
     }));
     const snippetsData = seedSnippets.map(({ id: _id, ...s }) => ({
       ...s,
-      user_id: 'local'
+      user_id: "local",
     }));
     const templatesData = seedTemplates.map(({ id: _id, ...t }) => ({
       ...t,
-      user_id: 'local'
+      user_id: "local",
     }));
     const connectorsData = seedConnectors.map(({ id: _id, ...c }) => ({
       ...c,
-      user_id: 'local',
+      user_id: "local",
     }));
     const socialDraftsData = seedSocialDrafts.map(({ id: _id, ...d }) => ({
       ...d,
       media_urls: d.mediaUrls,
-      user_id: 'local',
+      user_id: "local",
     }));
     const mailTemplatesData = seedMailTemplates.map(({ id: _id, ...m }) => ({
       ...m,
-      user_id: 'local',
+      user_id: "local",
     }));
 
     try {
@@ -219,21 +224,30 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
     console.log("Seeding extras (connectors / social / mail)...");
     const state = get();
 
-    const connectorsData = state.connectors.length === 0
-      ? seedConnectors.map(({ id: _id, ...c }) => ({ ...c, user_id: 'local' }))
-      : [];
-    const socialDraftsData = state.socialDrafts.length === 0
-      ? seedSocialDrafts.map(({ id: _id, ...d }) => ({ ...d, media_urls: d.mediaUrls, user_id: 'local' }))
-      : [];
-    const mailTemplatesData = state.mailTemplates.length === 0
-      ? seedMailTemplates.map(({ id: _id, ...m }) => ({ ...m, user_id: 'local' }))
-      : [];
+    const connectorsData =
+      state.connectors.length === 0
+        ? seedConnectors.map(({ id: _id, ...c }) => ({ ...c, user_id: "local" }))
+        : [];
+    const socialDraftsData =
+      state.socialDrafts.length === 0
+        ? seedSocialDrafts.map(({ id: _id, ...d }) => ({
+            ...d,
+            media_urls: d.mediaUrls,
+            user_id: "local",
+          }))
+        : [];
+    const mailTemplatesData =
+      state.mailTemplates.length === 0
+        ? seedMailTemplates.map(({ id: _id, ...m }) => ({ ...m, user_id: "local" }))
+        : [];
 
     try {
       await Promise.all([
         connectorsData.length > 0 ? db.upsertConnectors(connectorsData) : Promise.resolve([]),
         socialDraftsData.length > 0 ? db.upsertSocialDrafts(socialDraftsData) : Promise.resolve([]),
-        mailTemplatesData.length > 0 ? db.upsertMailTemplates(mailTemplatesData) : Promise.resolve([]),
+        mailTemplatesData.length > 0
+          ? db.upsertMailTemplates(mailTemplatesData)
+          : Promise.resolve([]),
       ]);
 
       // Partial refresh
@@ -252,7 +266,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           phone: x.phone || undefined,
           notes: x.notes || undefined,
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         socialDrafts: soc.map((x) => ({
           id: x.id,
@@ -260,7 +274,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           content: x.content,
           mediaUrls: x.mediaUrls || [],
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
         mailTemplates: mail.map((x) => ({
           id: x.id,
@@ -268,7 +282,7 @@ export const createCoreSlice: StateCreator<ForgeState, [["zustand/persist", unkn
           subject: x.subject || undefined,
           content: x.content,
           createdAt: x.createdAt ? new Date(x.createdAt).getTime() : Date.now(),
-          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now()
+          updatedAt: x.updatedAt ? new Date(x.updatedAt).getTime() : Date.now(),
         })),
       });
     } catch (e) {

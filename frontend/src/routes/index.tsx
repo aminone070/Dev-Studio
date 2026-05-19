@@ -3,11 +3,33 @@ import { useForge } from "@/lib/store";
 import { PageHeader, PageContainer, PageSection } from "@/components/layout";
 import { SplitLayout } from "@/components/layout";
 import {
-  Sparkles, Bot, Component as ComponentIcon, LayoutTemplate,
-  ArrowUpRight, Flame, TrendingUp, Globe, Server, Container,
-  FlaskConical, GraduationCap, Star, Database, Heart, Users,
-  Send, Mail, Code2, Linkedin, Twitter, Instagram, FileText,
-  LayoutDashboard, CalendarDays, Briefcase, Code,
+  Sparkles,
+  Bot,
+  Component as ComponentIcon,
+  LayoutTemplate,
+  ArrowUpRight,
+  Flame,
+  TrendingUp,
+  Globe,
+  Server,
+  Container,
+  FlaskConical,
+  GraduationCap,
+  Star,
+  Database,
+  Heart,
+  Users,
+  Send,
+  Mail,
+  Code2,
+  Linkedin,
+  Twitter,
+  Instagram,
+  FileText,
+  LayoutDashboard,
+  CalendarDays,
+  Briefcase,
+  Code,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -32,8 +54,15 @@ function timeAgo(ts: number) {
 
 function Index() {
   const {
-    prompts, agents, components, templates, snippets,
-    interviewQuestions, connectors, socialDrafts, mailTemplates,
+    prompts,
+    agents,
+    components,
+    templates,
+    snippets,
+    interviewQuestions,
+    connectors,
+    socialDrafts,
+    mailTemplates,
   } = useForge();
 
   const activeAgents = agents.filter((a) => a.status === "active").length;
@@ -53,49 +82,147 @@ function Index() {
   const whatsappTemplates = mailTemplates.filter((m) => m.channel === "whatsapp").length;
 
   const toolStats = [
-    { label: "Prompts",      value: prompts.length,      hint: "in library",         icon: Sparkles,       to: "/tools" as const, tab: "prompts" as const    },
-    { label: "Agents",       value: activeAgents,         hint: `${agents.length} total`,  icon: Bot,       to: "/tools" as const, tab: "agents" as const     },
-    { label: "Components",   value: components.length,    hint: "ready to reuse",     icon: ComponentIcon,  to: "/tools" as const, tab: "components" as const },
-    { label: "Templates",    value: templates.length,     hint: `${snippets.length} snippets`, icon: LayoutTemplate, to: "/tools" as const, tab: "templates" as const },
+    {
+      label: "Prompts",
+      value: prompts.length,
+      hint: "in library",
+      icon: Sparkles,
+      to: "/tools" as const,
+      tab: "prompts" as const,
+    },
+    {
+      label: "Agents",
+      value: activeAgents,
+      hint: `${agents.length} total`,
+      icon: Bot,
+      to: "/tools" as const,
+      tab: "agents" as const,
+    },
+    {
+      label: "Components",
+      value: components.length,
+      hint: "ready to reuse",
+      icon: ComponentIcon,
+      to: "/tools" as const,
+      tab: "components" as const,
+    },
+    {
+      label: "Templates",
+      value: templates.length,
+      hint: `${snippets.length} snippets`,
+      icon: LayoutTemplate,
+      to: "/tools" as const,
+      tab: "templates" as const,
+    },
   ];
 
   const networkStats = [
-    { label: "Connectors",      value: connectors.length,     hint: `${companiesCount} co · ${hrCount} HR`, icon: Users,    to: "/connectors" as const },
-    { label: "Social drafts",   value: socialDrafts.length,   hint: `${linkedInDrafts} LI · ${twitterDrafts} X`, icon: Send, to: "/social" as const },
-    { label: "Mail templates",  value: mailTemplates.length,  hint: `${coverLetters} cover · ${gmailTemplates} gmail`, icon: Mail, to: "/mails" as const },
-    { label: "Snippets",        value: snippets.length,       hint: "code snippets",   icon: Code2,          to: "/tools" as const },
+    {
+      label: "Connectors",
+      value: connectors.length,
+      hint: `${companiesCount} co · ${hrCount} HR`,
+      icon: Users,
+      to: "/connectors" as const,
+    },
+    {
+      label: "Social drafts",
+      value: socialDrafts.length,
+      hint: `${linkedInDrafts} LI · ${twitterDrafts} X`,
+      icon: Send,
+      to: "/social" as const,
+    },
+    {
+      label: "Mail templates",
+      value: mailTemplates.length,
+      hint: `${coverLetters} cover · ${gmailTemplates} gmail`,
+      icon: Mail,
+      to: "/mails" as const,
+    },
+    {
+      label: "Snippets",
+      value: snippets.length,
+      hint: "code snippets",
+      icon: Code2,
+      to: "/tools" as const,
+    },
   ];
 
   const focusAreas = [
-    { to: "/tech-skills", label: "Frontend",   icon: Globe,        desc: "React, Angular, Vue, Next.js",         area: "frontend",   search: { tab: "frontend" }  },
-    { to: "/tech-skills", label: "Backend",    icon: Server,       desc: "Node.js, ASP.NET, Python, Go",          area: "backend",    search: { tab: "backend" }   },
-    { to: "/tech-skills", label: "DevOps",     icon: Container,    desc: "CI/CD, containers, IaC",                area: "devops",     search: { tab: "devops" }    },
-    { to: "/tech-skills", label: "Testing",    icon: FlaskConical, desc: "Unit, integration, E2E",                area: "testing",    search: { tab: "testing" }   },
-    { to: "/tech-skills", label: "Database",   icon: Database,     desc: "SQL, NoSQL, Redis, transactions",       area: "database",   search: { tab: "database" }  },
-    { to: "/soft-skills", label: "Soft Skills",icon: Heart,        desc: "Communication, leadership, growth",     area: "softskills", search: { tab: "communication" } },
+    {
+      to: "/tech-skills",
+      label: "Frontend",
+      icon: Globe,
+      desc: "React, Angular, Vue, Next.js",
+      area: "frontend",
+      search: { tab: "frontend" },
+    },
+    {
+      to: "/tech-skills",
+      label: "Backend",
+      icon: Server,
+      desc: "Node.js, ASP.NET, Python, Go",
+      area: "backend",
+      search: { tab: "backend" },
+    },
+    {
+      to: "/tech-skills",
+      label: "DevOps",
+      icon: Container,
+      desc: "CI/CD, containers, IaC",
+      area: "devops",
+      search: { tab: "devops" },
+    },
+    {
+      to: "/tech-skills",
+      label: "Testing",
+      icon: FlaskConical,
+      desc: "Unit, integration, E2E",
+      area: "testing",
+      search: { tab: "testing" },
+    },
+    {
+      to: "/tech-skills",
+      label: "Database",
+      icon: Database,
+      desc: "SQL, NoSQL, Redis, transactions",
+      area: "database",
+      search: { tab: "database" },
+    },
+    {
+      to: "/soft-skills",
+      label: "Soft Skills",
+      icon: Heart,
+      desc: "Communication, leadership, growth",
+      area: "softskills",
+      search: { tab: "communication" },
+    },
   ] as const;
 
   const quickLinks = [
-    { to: "/planner",    label: "Planner",       icon: CalendarDays  },
-    { to: "/tools",      label: "Tools",          icon: Code2         },
-    { to: "/connectors", label: "Connectors",     icon: Users         },
-    { to: "/cv",         label: "CV Builder",     icon: FileText      },
-    { to: "/jobs",       label: "Jobs",           icon: Briefcase     },
-    { to: "/social",     label: "Social",         icon: Send          },
-    { to: "/mails",      label: "Mails",          icon: Mail          },
-    { to: "/tech-skills",label: "Tech Skills",    icon: Code          },
-    { to: "/interview",  label: "Interview",      icon: GraduationCap },
+    { to: "/planner", label: "Planner", icon: CalendarDays },
+    { to: "/tools", label: "Tools", icon: Code2 },
+    { to: "/connectors", label: "Connectors", icon: Users },
+    { to: "/cv", label: "CV Builder", icon: FileText },
+    { to: "/jobs", label: "Jobs", icon: Briefcase },
+    { to: "/social", label: "Social", icon: Send },
+    { to: "/mails", label: "Mails", icon: Mail },
+    { to: "/tech-skills", label: "Tech Skills", icon: Code },
+    { to: "/interview", label: "Interview", icon: GraduationCap },
   ] as const;
 
-  const platformIcon = (p: string) => p === "linkedin" ? Linkedin : p === "twitter" ? Twitter : Instagram;
-  const channelLabel = (c: string) => c === "cover-letter" ? "Cover letter" : c === "gmail" ? "Gmail" : "WhatsApp";
+  const platformIcon = (p: string) =>
+    p === "linkedin" ? Linkedin : p === "twitter" ? Twitter : Instagram;
+  const channelLabel = (c: string) =>
+    c === "cover-letter" ? "Cover letter" : c === "gmail" ? "Gmail" : "WhatsApp";
 
   /* ── Sidebar ───────────────────────────────────────── */
   const sidebar = (
     <div className="flex flex-col h-full min-h-0">
       {/* Dev tools stats */}
       <div className="px-3 pt-3 pb-2 border-b border-border/60 shrink-0">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-2">Dev tools</p>
+        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-2">
+          Dev tools
+        </p>
         <ul className="space-y-0.5">
           {toolStats.map((s) => {
             const Icon = s.icon;
@@ -108,9 +235,13 @@ function Index() {
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <Icon className="size-3.5 text-muted-foreground group-hover:text-primary shrink-0 transition-colors" />
-                    <span className="text-xs text-muted-foreground group-hover:text-foreground truncate transition-colors">{s.label}</span>
+                    <span className="text-xs text-muted-foreground group-hover:text-foreground truncate transition-colors">
+                      {s.label}
+                    </span>
                   </div>
-                  <span className="text-xs font-semibold font-mono tabular-nums shrink-0">{s.value}</span>
+                  <span className="text-xs font-semibold font-mono tabular-nums shrink-0">
+                    {s.value}
+                  </span>
                 </Link>
               </li>
             );
@@ -120,7 +251,9 @@ function Index() {
 
       {/* Network stats */}
       <div className="px-3 pt-2.5 pb-2 border-b border-border/60 shrink-0">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-2">Network & comms</p>
+        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-2">
+          Network & comms
+        </p>
         <ul className="space-y-0.5">
           {networkStats.map((s) => {
             const Icon = s.icon;
@@ -132,9 +265,13 @@ function Index() {
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <Icon className="size-3.5 text-muted-foreground group-hover:text-primary shrink-0 transition-colors" />
-                    <span className="text-xs text-muted-foreground group-hover:text-foreground truncate transition-colors">{s.label}</span>
+                    <span className="text-xs text-muted-foreground group-hover:text-foreground truncate transition-colors">
+                      {s.label}
+                    </span>
                   </div>
-                  <span className="text-xs font-semibold font-mono tabular-nums shrink-0">{s.value}</span>
+                  <span className="text-xs font-semibold font-mono tabular-nums shrink-0">
+                    {s.value}
+                  </span>
                 </Link>
               </li>
             );
@@ -144,7 +281,9 @@ function Index() {
 
       {/* Quick links */}
       <div className="flex-1 overflow-y-auto scrollbar-thin px-3 pt-2.5 pb-2">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-2">Quick navigate</p>
+        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-2">
+          Quick navigate
+        </p>
         <ul className="space-y-0.5">
           {quickLinks.map((l) => {
             const Icon = l.icon;
@@ -155,7 +294,9 @@ function Index() {
                   className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-muted/60 transition-colors group"
                 >
                   <Icon className="size-3.5 text-muted-foreground group-hover:text-primary shrink-0 transition-colors" />
-                  <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{l.label}</span>
+                  <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                    {l.label}
+                  </span>
                 </Link>
               </li>
             );
@@ -168,7 +309,9 @@ function Index() {
         <div className="rounded-xl bg-primary/10 border border-primary/20 p-3">
           <div className="flex items-center gap-2 mb-1.5">
             <Flame className="size-3.5 text-primary" />
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-primary">Builder</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+              Builder
+            </p>
           </div>
           <p className="text-[11px] text-muted-foreground mb-2.5 leading-relaxed">
             Pull the right prompts, components & templates instantly.
@@ -210,7 +353,6 @@ function Index() {
         <SplitLayout sidebar={sidebar} sidebarWidth="lg:w-[260px]">
           <div className="overflow-y-auto scrollbar-thin h-full">
             <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-5 space-y-8">
-
               {/* ── Focus areas ─────────────────────────── */}
               <section>
                 <div className="flex items-center justify-between mb-3">
@@ -235,7 +377,9 @@ function Index() {
                       >
                         <Icon className="size-4 text-primary mb-2.5" />
                         <p className="text-xs font-semibold mb-0.5">{a.label}</p>
-                        <p className="text-[10px] text-muted-foreground line-clamp-2 leading-relaxed">{a.desc}</p>
+                        <p className="text-[10px] text-muted-foreground line-clamp-2 leading-relaxed">
+                          {a.desc}
+                        </p>
                         <p className="text-[10px] font-mono text-muted-foreground mt-2 flex items-center gap-1">
                           {count} Q&A
                           <ArrowUpRight className="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -273,24 +417,31 @@ function Index() {
                           <span className="px-1.5 py-0.5 rounded-lg bg-primary/10 text-primary text-[10px] font-mono uppercase">
                             {p.category}
                           </span>
-                          <span className="text-[10px] text-muted-foreground font-mono ml-auto">{timeAgo(p.updatedAt)}</span>
+                          <span className="text-[10px] text-muted-foreground font-mono ml-auto">
+                            {timeAgo(p.updatedAt)}
+                          </span>
                         </div>
-                        <h3 className="text-xs font-semibold mb-1 text-balance leading-snug">{p.title}</h3>
-                        <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed">{p.description}</p>
+                        <h3 className="text-xs font-semibold mb-1 text-balance leading-snug">
+                          {p.title}
+                        </h3>
+                        <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed">
+                          {p.description}
+                        </p>
                       </Link>
                     ))}
                   </div>
                 ) : (
                   <div className="rounded-xl border border-dashed border-border/60 p-6 text-center">
                     <Sparkles className="size-8 text-muted-foreground/30 mx-auto mb-2" />
-                    <p className="text-xs text-muted-foreground">No prompts yet. Create your first one in the Tools library.</p>
+                    <p className="text-xs text-muted-foreground">
+                      No prompts yet. Create your first one in the Tools library.
+                    </p>
                   </div>
                 )}
               </section>
 
               {/* ── Two-col: recent connectors + starred Q&A ── */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
                 {/* Recent connectors */}
                 <section>
                   <div className="flex items-center justify-between mb-3">
@@ -317,7 +468,9 @@ function Index() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-xs font-semibold truncate">{c.name}</p>
-                            <p className="text-[10px] text-muted-foreground capitalize">{c.type} · {timeAgo(c.updatedAt)}</p>
+                            <p className="text-[10px] text-muted-foreground capitalize">
+                              {c.type} · {timeAgo(c.updatedAt)}
+                            </p>
                           </div>
                         </Link>
                       ))}
@@ -351,13 +504,17 @@ function Index() {
                           className="flex items-start gap-3 p-3 rounded-xl border border-border/60 bg-card hover:border-primary/30 transition-all"
                         >
                           <Star className="size-3.5 text-amber-400 fill-amber-400 mt-0.5 shrink-0" />
-                          <p className="text-xs text-foreground leading-relaxed line-clamp-2">{q.question}</p>
+                          <p className="text-xs text-foreground leading-relaxed line-clamp-2">
+                            {q.question}
+                          </p>
                         </Link>
                       ))}
                     </div>
                   ) : (
                     <div className="rounded-xl border border-dashed border-border/60 p-5 text-center">
-                      <p className="text-[11px] text-muted-foreground">Star interview questions to see them here.</p>
+                      <p className="text-[11px] text-muted-foreground">
+                        Star interview questions to see them here.
+                      </p>
                     </div>
                   )}
                 </section>
@@ -368,51 +525,65 @@ function Index() {
                 <section>
                   <h2 className="text-sm font-semibold tracking-tight mb-3">Latest activity</h2>
                   <div className="grid sm:grid-cols-2 gap-2.5">
-                    {socialDrafts.length > 0 && (() => {
-                      const draft = [...socialDrafts].sort((a, b) => b.updatedAt - a.updatedAt)[0];
-                      const PIcon = platformIcon(draft.platform);
-                      return (
-                        <Link
-                          to="/social"
-                          className="block p-4 rounded-xl border border-border/60 bg-card hover:border-primary/30 transition-all"
-                        >
-                          <div className="flex items-center gap-2 mb-2.5">
-                            <PIcon className="size-3.5 text-primary" />
-                            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-                              Latest draft · {draft.platform}
+                    {socialDrafts.length > 0 &&
+                      (() => {
+                        const draft = [...socialDrafts].sort(
+                          (a, b) => b.updatedAt - a.updatedAt,
+                        )[0];
+                        const PIcon = platformIcon(draft.platform);
+                        return (
+                          <Link
+                            to="/social"
+                            className="block p-4 rounded-xl border border-border/60 bg-card hover:border-primary/30 transition-all"
+                          >
+                            <div className="flex items-center gap-2 mb-2.5">
+                              <PIcon className="size-3.5 text-primary" />
+                              <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                                Latest draft · {draft.platform}
+                              </p>
+                              <span className="text-[10px] text-muted-foreground font-mono ml-auto">
+                                {timeAgo(draft.updatedAt)}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-foreground line-clamp-3 leading-relaxed">
+                              {draft.content}
                             </p>
-                            <span className="text-[10px] text-muted-foreground font-mono ml-auto">{timeAgo(draft.updatedAt)}</span>
-                          </div>
-                          <p className="text-[11px] text-foreground line-clamp-3 leading-relaxed">{draft.content}</p>
-                          <p className="text-[11px] font-mono text-primary mt-2.5 flex items-center gap-1">
-                            {socialDrafts.length} drafts total <ArrowUpRight className="size-3" />
-                          </p>
-                        </Link>
-                      );
-                    })()}
+                            <p className="text-[11px] font-mono text-primary mt-2.5 flex items-center gap-1">
+                              {socialDrafts.length} drafts total <ArrowUpRight className="size-3" />
+                            </p>
+                          </Link>
+                        );
+                      })()}
 
-                    {mailTemplates.length > 0 && (() => {
-                      const tpl = [...mailTemplates].sort((a, b) => b.updatedAt - a.updatedAt)[0];
-                      return (
-                        <Link
-                          to="/mails"
-                          className="block p-4 rounded-xl border border-border/60 bg-card hover:border-primary/30 transition-all"
-                        >
-                          <div className="flex items-center gap-2 mb-2.5">
-                            <FileText className="size-3.5 text-primary" />
-                            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-                              Latest · {channelLabel(tpl.channel)}
+                    {mailTemplates.length > 0 &&
+                      (() => {
+                        const tpl = [...mailTemplates].sort((a, b) => b.updatedAt - a.updatedAt)[0];
+                        return (
+                          <Link
+                            to="/mails"
+                            className="block p-4 rounded-xl border border-border/60 bg-card hover:border-primary/30 transition-all"
+                          >
+                            <div className="flex items-center gap-2 mb-2.5">
+                              <FileText className="size-3.5 text-primary" />
+                              <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                                Latest · {channelLabel(tpl.channel)}
+                              </p>
+                              <span className="text-[10px] text-muted-foreground font-mono ml-auto">
+                                {timeAgo(tpl.updatedAt)}
+                              </span>
+                            </div>
+                            {tpl.subject && (
+                              <p className="text-xs font-semibold mb-1 truncate">{tpl.subject}</p>
+                            )}
+                            <p className="text-[11px] text-muted-foreground line-clamp-3 leading-relaxed">
+                              {tpl.content}
                             </p>
-                            <span className="text-[10px] text-muted-foreground font-mono ml-auto">{timeAgo(tpl.updatedAt)}</span>
-                          </div>
-                          {tpl.subject && <p className="text-xs font-semibold mb-1 truncate">{tpl.subject}</p>}
-                          <p className="text-[11px] text-muted-foreground line-clamp-3 leading-relaxed">{tpl.content}</p>
-                          <p className="text-[11px] font-mono text-primary mt-2.5 flex items-center gap-1">
-                            {mailTemplates.length} templates <ArrowUpRight className="size-3" />
-                          </p>
-                        </Link>
-                      );
-                    })()}
+                            <p className="text-[11px] font-mono text-primary mt-2.5 flex items-center gap-1">
+                              {mailTemplates.length} templates <ArrowUpRight className="size-3" />
+                            </p>
+                          </Link>
+                        );
+                      })()}
                   </div>
                 </section>
               )}
@@ -427,7 +598,9 @@ function Index() {
                 <div className="rounded-xl border border-border/60 bg-card p-4">
                   <div className="flex items-end gap-3 mb-4">
                     <p className="text-3xl font-semibold tracking-tight">{totalUsage}</p>
-                    <p className="text-xs text-muted-foreground pb-1">total invocations across all prompts</p>
+                    <p className="text-xs text-muted-foreground pb-1">
+                      total invocations across all prompts
+                    </p>
                   </div>
                   {favoritePrompts.length > 0 ? (
                     <ul className="space-y-2">
@@ -440,16 +613,19 @@ function Index() {
                           >
                             {p.title}
                           </Link>
-                          <span className="text-[11px] font-mono text-muted-foreground shrink-0">{p.usageCount}×</span>
+                          <span className="text-[11px] font-mono text-muted-foreground shrink-0">
+                            {p.usageCount}×
+                          </span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-[11px] text-muted-foreground">Star prompts to track usage here.</p>
+                    <p className="text-[11px] text-muted-foreground">
+                      Star prompts to track usage here.
+                    </p>
                   )}
                 </div>
               </section>
-
             </div>
           </div>
         </SplitLayout>

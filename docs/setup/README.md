@@ -10,33 +10,43 @@
 Follow these steps to run Dev Studio on your local machine:
 
 ### 📥 1. Clone the Project
+
 Open your terminal, clone the repository, and change directory into the workspace root.
 
 ### 📦 2. Install Project Dependencies
+
 Use standard npm utility to install packages required for both the React client and Express server:
+
 ```bash
 npm install
 ```
 
 ### 🔑 3. Configure Secrets (.env)
+
 Create a `.env` file in the project's root folder. Dev Studio uses these variables at runtime:
+
 ```ini
 PORT=5000
 JWT_SECRET=use_a_strong_random_key_here
 DATABASE_URL=postgresql://username:password@localhost:5432/dev_studio_db
 OPENAI_API_KEY=your_openai_key_here
 ```
+
 > [!TIP]
 > See [Environment Variables](./ENVIRONMENT.md) for a detailed reference of all supported variables.
 
 ### 💾 4. Spin up the Database Schema
+
 Push the Drizzle-mapped database schema directly into your live local PostgreSQL instance:
+
 ```bash
 npm run db:push
 ```
 
 ### 🚀 5. Boot the Development Servers
+
 Start the unified Express 5 backend server combined with the Vite Dev HMR server:
+
 ```bash
 npm run dev
 ```
@@ -49,13 +59,13 @@ The application will launch on **[http://localhost:5000](http://localhost:5000)*
 
 You can run the following package scripts from the command line:
 
-| Script | Command | Purpose |
-|---|---|---|
-| **dev** | `npm run dev` | Runs the Express server in development mode, proxying frontend requests to the Vite development bundle with dynamic hot module replacement (HMR). |
-| **build** | `npm run build` | Builds a production-ready, highly optimized Single Page Application (SPA) static bundle under the `dist/` directory. |
-| **db:push** | `npm run db:push` | Inspects your Drizzle schema exports and updates your live PostgreSQL database to match, without requiring standard migration boilerplate files. |
-| **lint** | `npm run lint` | Analyzes code files for syntax validation and formatting guidelines using ESLint. |
-| **format** | `npm run format` | Standardizes codebase formatting and alignment using Prettier. |
+| Script      | Command           | Purpose                                                                                                                                           |
+| ----------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **dev**     | `npm run dev`     | Runs the Express server in development mode, proxying frontend requests to the Vite development bundle with dynamic hot module replacement (HMR). |
+| **build**   | `npm run build`   | Builds a production-ready, highly optimized Single Page Application (SPA) static bundle under the `dist/` directory.                              |
+| **db:push** | `npm run db:push` | Inspects your Drizzle schema exports and updates your live PostgreSQL database to match, without requiring standard migration boilerplate files.  |
+| **lint**    | `npm run lint`    | Analyzes code files for syntax validation and formatting guidelines using ESLint.                                                                 |
+| **format**  | `npm run format`  | Standardizes codebase formatting and alignment using Prettier.                                                                                    |
 
 ---
 

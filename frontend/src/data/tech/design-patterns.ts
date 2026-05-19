@@ -93,7 +93,11 @@ export const designPatternsArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Creational Patterns — refactoring.guru", url: "https://refactoring.guru/design-patterns/creational-patterns", desc: "Visual guides for all 5 creational patterns." },
+        {
+          label: "Creational Patterns — refactoring.guru",
+          url: "https://refactoring.guru/design-patterns/creational-patterns",
+          desc: "Visual guides for all 5 creational patterns.",
+        },
       ],
     },
     {
@@ -130,7 +134,11 @@ export const designPatternsArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Structural Patterns — refactoring.guru", url: "https://refactoring.guru/design-patterns/structural-patterns", desc: "Visual guides for all 7 structural patterns." },
+        {
+          label: "Structural Patterns — refactoring.guru",
+          url: "https://refactoring.guru/design-patterns/structural-patterns",
+          desc: "Visual guides for all 7 structural patterns.",
+        },
       ],
     },
     {
@@ -167,7 +175,11 @@ export const designPatternsArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Behavioral Patterns — refactoring.guru", url: "https://refactoring.guru/design-patterns/behavioral-patterns", desc: "Visual guides for all 11 behavioral patterns." },
+        {
+          label: "Behavioral Patterns — refactoring.guru",
+          url: "https://refactoring.guru/design-patterns/behavioral-patterns",
+          desc: "Visual guides for all 11 behavioral patterns.",
+        },
       ],
     },
     {
@@ -200,8 +212,16 @@ export const designPatternsArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Patterns of Enterprise App Architecture", url: "https://martinfowler.com/books/eaa.html", desc: "Martin Fowler's definitive catalog of architectural patterns." },
-        { label: "CQRS — Martin Fowler", url: "https://martinfowler.com/bliki/CQRS.html", desc: "Fowler's authoritative explanation of CQRS." },
+        {
+          label: "Patterns of Enterprise App Architecture",
+          url: "https://martinfowler.com/books/eaa.html",
+          desc: "Martin Fowler's definitive catalog of architectural patterns.",
+        },
+        {
+          label: "CQRS — Martin Fowler",
+          url: "https://martinfowler.com/bliki/CQRS.html",
+          desc: "Fowler's authoritative explanation of CQRS.",
+        },
       ],
     },
   ],

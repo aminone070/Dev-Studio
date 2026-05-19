@@ -21,7 +21,6 @@ export const Route = createFileRoute("/mails")({
   component: MailsPage,
 });
 
-
 function MailsPage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
@@ -53,7 +52,7 @@ function MailsPage() {
   };
 
   const handleUpdateMail = (updates: Partial<MailTemplate>) => {
-    const current = mailTemplates.find(m => m.id === activeTemplateId);
+    const current = mailTemplates.find((m) => m.id === activeTemplateId);
     if (!current) return;
     upsertMailTemplate({ ...current, ...updates, updatedAt: Date.now() });
   };
@@ -63,11 +62,7 @@ function MailsPage() {
   return (
     <PageContainer>
       <PageSection>
-        <PageHeader
-          icon={Mail}
-          title="Communication Hub"
-          className="mb-4"
-        />
+        <PageHeader icon={Mail} title="Communication Hub" className="mb-4" />
         <TabNav
           tabs={MAIL_TABS.map((t) => ({
             ...t,

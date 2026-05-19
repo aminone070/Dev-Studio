@@ -94,17 +94,24 @@ export function Templates({ selectedId }: { selectedId?: string }) {
                     : "hover:bg-muted/60 text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <p className={`text-xs font-medium truncate leading-snug mb-1 ${active ? "text-foreground" : ""}`}>
+                <p
+                  className={`text-xs font-medium truncate leading-snug mb-1 ${active ? "text-foreground" : ""}`}
+                >
                   {t.name}
                 </p>
                 <div className="flex flex-wrap gap-1 mb-1">
                   {t.stack.slice(0, 2).map((s) => (
-                    <span key={s} className="text-[8px] px-1.5 rounded-lg bg-muted text-muted-foreground border border-border/60 uppercase font-mono">
+                    <span
+                      key={s}
+                      className="text-[8px] px-1.5 rounded-lg bg-muted text-muted-foreground border border-border/60 uppercase font-mono"
+                    >
                       {s}
                     </span>
                   ))}
                 </div>
-                <p className="text-[10px] text-muted-foreground line-clamp-1">{t.description || "No description"}</p>
+                <p className="text-[10px] text-muted-foreground line-clamp-1">
+                  {t.description || "No description"}
+                </p>
               </button>
             </li>
           );
@@ -115,7 +122,13 @@ export function Templates({ selectedId }: { selectedId?: string }) {
           </li>
         )}
       </ul>
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
       <div className="p-2 pt-0 shrink-0">
         <button
           onClick={create}
@@ -134,40 +147,91 @@ export function Templates({ selectedId }: { selectedId?: string }) {
           <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-8">
             <div className="flex flex-col sm:flex-row items-start gap-4">
               <div className="flex-1 min-w-0">
-                <Input value={selected.name} onChange={(e) => update({ name: e.target.value })} className="text-2xl font-semibold tracking-tight bg-transparent border-none p-0 focus:ring-0" />
-                <Input value={selected.description} onChange={(e) => update({ description: e.target.value })} className="text-sm text-muted-foreground bg-transparent border-none p-0 focus:ring-0 mt-1" />
+                <Input
+                  value={selected.name}
+                  onChange={(e) => update({ name: e.target.value })}
+                  className="text-2xl font-semibold tracking-tight bg-transparent border-none p-0 focus:ring-0"
+                />
+                <Input
+                  value={selected.description}
+                  onChange={(e) => update({ description: e.target.value })}
+                  className="text-sm text-muted-foreground bg-transparent border-none p-0 focus:ring-0 mt-1"
+                />
               </div>
-              <button onClick={() => setConfirmOpen(true)} className="p-2 rounded-xl border border-border hover:bg-destructive/10 self-end sm:self-auto mt-2 sm:mt-0">
+              <button
+                onClick={() => setConfirmOpen(true)}
+                className="p-2 rounded-xl border border-border hover:bg-destructive/10 self-end sm:self-auto mt-2 sm:mt-0"
+              >
                 <Trash2 className="size-4 text-muted-foreground" />
               </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <Field label="Tech Stack">
-                <Input value={selected.stack.join(", ")} onChange={(e) => update({ stack: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })} className="font-mono" placeholder="React, Next.js, etc." />
+                <Input
+                  value={selected.stack.join(", ")}
+                  onChange={(e) =>
+                    update({
+                      stack: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                  className="font-mono"
+                  placeholder="React, Next.js, etc."
+                />
               </Field>
               <Field label="Tags">
-                <Input value={selected.tags.join(", ")} onChange={(e) => update({ tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })} className="font-mono" placeholder="saas, internal-tool, etc." />
+                <Input
+                  value={selected.tags.join(", ")}
+                  onChange={(e) =>
+                    update({
+                      tags: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                  className="font-mono"
+                  placeholder="saas, internal-tool, etc."
+                />
               </Field>
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-sm font-medium">
-                <ListTree className="size-4 text-primary" /><h3>Project Structure</h3>
+                <ListTree className="size-4 text-primary" />
+                <h3>Project Structure</h3>
               </div>
-              <TextArea value={selected.structure} onChange={(e) => update({ structure: e.target.value })} rows={8} className="font-mono" placeholder="Describe the file/folder layout..." />
+              <TextArea
+                value={selected.structure}
+                onChange={(e) => update({ structure: e.target.value })}
+                rows={8}
+                className="font-mono"
+                placeholder="Describe the file/folder layout..."
+              />
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-sm font-medium">
-                <StickyNote className="size-4 text-primary" /><h3>Notes & Instructions</h3>
+                <StickyNote className="size-4 text-primary" />
+                <h3>Notes & Instructions</h3>
               </div>
-              <TextArea value={selected.notes} onChange={(e) => update({ notes: e.target.value })} rows={8} placeholder="Implementation details, usage tips..." />
+              <TextArea
+                value={selected.notes}
+                onChange={(e) => update({ notes: e.target.value })}
+                rows={8}
+                placeholder="Implementation details, usage tips..."
+              />
             </div>
 
             <div className="pt-6 border-t border-border">
               <button
-                onClick={() => { toast.success(`Scaffolding ${selected.name}…`); setTimeout(() => toast.success("Template guidance ready!"), 2000); }}
+                onClick={() => {
+                  toast.success(`Scaffolding ${selected.name}…`);
+                  setTimeout(() => toast.success("Template guidance ready!"), 2000);
+                }}
                 className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-medium py-3 rounded-xl hover:opacity-90 transition-opacity"
               >
                 <Check className="size-4" /> Use Template
@@ -179,14 +243,24 @@ export function Templates({ selectedId }: { selectedId?: string }) {
         <section className="grid place-items-center p-8 text-center flex-1">
           <div>
             <LayoutTemplate className="size-10 text-muted-foreground/30 mx-auto mb-3" />
-            <button onClick={create} className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors">
+            <button
+              onClick={create}
+              className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors"
+            >
               Save your first template
             </button>
           </div>
         </section>
       )}
 
-      <ConfirmDialog open={confirmOpen} onOpenChange={setConfirmOpen} title="Delete template?" description="This template will be permanently removed. This action cannot be undone." confirmLabel="Delete" onConfirm={handleDelete} />
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete template?"
+        description="This template will be permanently removed. This action cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+      />
     </SplitLayout>
   );
 }

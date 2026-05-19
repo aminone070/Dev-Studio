@@ -16,13 +16,25 @@ export const create = async (req: Request, res: Response) => {
   const { id, ...raw } = req.body;
   const data = stripDates(raw);
   const safeId = isUUID(id) ? id : undefined;
-  const existing = safeId ? await db.select().from(prompts).where(and(eq(prompts.id, safeId), eq(prompts.userId, uid))) : [];
-  
+  const existing = safeId
+    ? await db
+        .select()
+        .from(prompts)
+        .where(and(eq(prompts.id, safeId), eq(prompts.userId, uid)))
+    : [];
+
   if (existing.length > 0) {
-    const [r] = await db.update(prompts).set({ ...data, updatedAt: new Date() }).where(eq(prompts.id, safeId!)).returning();
+    const [r] = await db
+      .update(prompts)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(prompts.id, safeId!))
+      .returning();
     res.json(r);
   } else {
-    const [r] = await db.insert(prompts).values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any).returning();
+    const [r] = await db
+      .insert(prompts)
+      .values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any)
+      .returning();
     res.json(r);
   }
 };

@@ -19,12 +19,20 @@ const CATEGORIES: { key: SkillCategory; label: string; placeholder: string }[] =
 ];
 
 export function CVSkillsSection({ data, focus, onChange }: CVSkillsProps) {
-  const [inputs, setInputs] = useState<Record<SkillCategory, string>>({ technical: "", tools: "", languages: "", soft: "" });
+  const [inputs, setInputs] = useState<Record<SkillCategory, string>>({
+    technical: "",
+    tools: "",
+    languages: "",
+    soft: "",
+  });
 
   const addSkill = (cat: SkillCategory) => {
     const val = inputs[cat].trim();
     if (!val) return;
-    const skills = val.split(",").map((s) => s.trim()).filter(Boolean);
+    const skills = val
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
     const current = data[cat] || [];
     const next = [...new Set([...current, ...skills])];
     onChange({ ...data, [cat]: next });
@@ -39,7 +47,12 @@ export function CVSkillsSection({ data, focus, onChange }: CVSkillsProps) {
     if (!current.includes(skill)) onChange({ ...data, technical: [...current, skill] });
   };
 
-  const suggestions = FOCUS_KEYWORDS[focus].filter((kw) => !(data.technical || []).includes(kw) && !(data.tools || []).includes(kw) && !(data.languages || []).includes(kw));
+  const suggestions = FOCUS_KEYWORDS[focus].filter(
+    (kw) =>
+      !(data.technical || []).includes(kw) &&
+      !(data.tools || []).includes(kw) &&
+      !(data.languages || []).includes(kw),
+  );
 
   return (
     <div className="space-y-5">
@@ -48,9 +61,15 @@ export function CVSkillsSection({ data, focus, onChange }: CVSkillsProps) {
           <label className="text-xs font-medium text-muted-foreground">{label}</label>
           <div className="min-h-[44px] flex flex-wrap gap-1.5 p-2 rounded-md border border-border bg-background">
             {(data[key] || []).map((skill) => (
-              <span key={skill} className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+              <span
+                key={skill}
+                className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20"
+              >
                 {skill}
-                <button onClick={() => removeSkill(key, skill)} className="hover:text-destructive transition-colors">
+                <button
+                  onClick={() => removeSkill(key, skill)}
+                  className="hover:text-destructive transition-colors"
+                >
                   <X className="size-3" />
                 </button>
               </span>
@@ -61,11 +80,19 @@ export function CVSkillsSection({ data, focus, onChange }: CVSkillsProps) {
               type="text"
               value={inputs[key]}
               onChange={(e) => setInputs((p) => ({ ...p, [key]: e.target.value }))}
-              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addSkill(key); } }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addSkill(key);
+                }
+              }}
               placeholder={placeholder}
               className="flex-1 rounded-md border border-input bg-background px-3 py-1.5 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             />
-            <button onClick={() => addSkill(key)} className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-sm hover:opacity-90 transition-opacity">
+            <button
+              onClick={() => addSkill(key)}
+              className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-sm hover:opacity-90 transition-opacity"
+            >
               <Plus className="size-3.5" /> Add
             </button>
           </div>
@@ -79,7 +106,11 @@ export function CVSkillsSection({ data, focus, onChange }: CVSkillsProps) {
           </label>
           <div className="flex flex-wrap gap-1.5">
             {suggestions.slice(0, 12).map((kw) => (
-              <button key={kw} onClick={() => addSuggested(kw)} className="text-xs px-2 py-0.5 rounded-full border border-dashed border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+              <button
+                key={kw}
+                onClick={() => addSuggested(kw)}
+                className="text-xs px-2 py-0.5 rounded-full border border-dashed border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+              >
                 + {kw}
               </button>
             ))}

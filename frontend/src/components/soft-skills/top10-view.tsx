@@ -5,11 +5,7 @@ import { cn } from "@/lib/utils";
 import { useForge, newId } from "@/lib/store";
 import { useMemo } from "react";
 import { SUGGESTED_QUESTIONS, type Scenario, type Question } from "@/data/soft/behavioral";
-import {
-  QuestionSidebar,
-  GuideSection,
-  ScenariosSection,
-} from "./top10";
+import { QuestionSidebar, GuideSection, ScenariosSection } from "./top10";
 
 /* ─── Main View ──────────────────────────────────────────────── */
 
@@ -17,22 +13,33 @@ export function Top10QuestionsView() {
   const { interviewQuestions, upsertInterviewQuestion, deleteInterviewQuestion } = useForge();
 
   /* ── Derived question list ───────────────────────────────── */
-  const questions = useMemo<Question[]>(() =>
-    interviewQuestions
-      .filter((q) => q.area === "softskills")
-      .map((q) => ({
-        id: q.id,
-        title: q.question,
-        guide: q.answer,
-        scenarios: (q.answerDepths as any as Scenario[]) || [],
-      })),
+  const questions = useMemo<Question[]>(
+    () =>
+      interviewQuestions
+        .filter((q) => q.area === "softskills")
+        .map((q) => ({
+          id: q.id,
+          title: q.question,
+          guide: q.answer,
+          scenarios: (q.answerDepths as any as Scenario[]) || [],
+        })),
     [interviewQuestions],
   );
 
   /* ── CRUD helpers ────────────────────────────────────────── */
   const addQuestion = (title: string, guide: string) => {
     const id = newId();
-    upsertInterviewQuestion({ id, question: title.trim(), answer: guide.trim(), area: "softskills", difficulty: "mid", tags: ["behavioral"], answerDepths: [] as any, isGlobal: false, createdAt: Date.now() });
+    upsertInterviewQuestion({
+      id,
+      question: title.trim(),
+      answer: guide.trim(),
+      area: "softskills",
+      difficulty: "mid",
+      tags: ["behavioral"],
+      answerDepths: [] as any,
+      isGlobal: false,
+      createdAt: Date.now(),
+    });
     return id;
   };
 
@@ -41,7 +48,11 @@ export function Top10QuestionsView() {
   const updateQuestion = (id: string, patch: Partial<Pick<Question, "title" | "guide">>) => {
     const q = interviewQuestions.find((q) => q.id === id);
     if (!q) return;
-    upsertInterviewQuestion({ ...q, ...(patch.title !== undefined && { question: patch.title }), ...(patch.guide !== undefined && { answer: patch.guide }) });
+    upsertInterviewQuestion({
+      ...q,
+      ...(patch.title !== undefined && { question: patch.title }),
+      ...(patch.guide !== undefined && { answer: patch.guide }),
+    });
   };
 
   const addScenario = (qid: string, s: Omit<Scenario, "id" | "createdAt">) => {
@@ -51,37 +62,59 @@ export function Top10QuestionsView() {
     upsertInterviewQuestion({ ...q, answerDepths: [...(q.answerDepths || []), sc] as any });
   };
 
-  const updateScenario = (qid: string, sid: string, patch: Partial<Omit<Scenario, "id" | "createdAt">>) => {
+  const updateScenario = (
+    qid: string,
+    sid: string,
+    patch: Partial<Omit<Scenario, "id" | "createdAt">>,
+  ) => {
     const q = interviewQuestions.find((q) => q.id === qid);
     if (!q) return;
-    upsertInterviewQuestion({ ...q, answerDepths: (q.answerDepths || []).map((s: any) => s.id === sid ? { ...s, ...patch } : s) as any });
+    upsertInterviewQuestion({
+      ...q,
+      answerDepths: (q.answerDepths || []).map((s: any) =>
+        s.id === sid ? { ...s, ...patch } : s,
+      ) as any,
+    });
   };
 
   const removeScenario = (qid: string, sid: string) => {
     const q = interviewQuestions.find((q) => q.id === qid);
     if (!q) return;
-    upsertInterviewQuestion({ ...q, answerDepths: (q.answerDepths || []).filter((s: any) => s.id !== sid) as any });
+    upsertInterviewQuestion({
+      ...q,
+      answerDepths: (q.answerDepths || []).filter((s: any) => s.id !== sid) as any,
+    });
   };
 
   const addSuggested = (s: (typeof SUGGESTED_QUESTIONS)[number]) => {
     if (questions.some((q) => q.id === s.id)) return s.id;
-    upsertInterviewQuestion({ id: s.id, question: s.title, answer: s.guide, area: "softskills", difficulty: "mid", tags: ["behavioral"], answerDepths: [] as any, isGlobal: false, createdAt: Date.now() });
+    upsertInterviewQuestion({
+      id: s.id,
+      question: s.title,
+      answer: s.guide,
+      area: "softskills",
+      difficulty: "mid",
+      tags: ["behavioral"],
+      answerDepths: [] as any,
+      isGlobal: false,
+      createdAt: Date.now(),
+    });
     return s.id;
   };
 
   /* ── UI state ────────────────────────────────────────────── */
-  const [activeId, setActiveId]               = useState<string>(questions[0]?.id ?? "");
-  const [search, setSearch]                   = useState("");
-  const [showAddQ, setShowAddQ]               = useState(false);
-  const [editingTitle, setEditingTitle]       = useState(false);
-  const [titleDraft, setTitleDraft]           = useState("");
-  const [editingGuide, setEditingGuide]       = useState(false);
-  const [guideDraft, setGuideDraft]           = useState("");
-  const [guideOpen, setGuideOpen]             = useState(true);
+  const [activeId, setActiveId] = useState<string>(questions[0]?.id ?? "");
+  const [search, setSearch] = useState("");
+  const [showAddQ, setShowAddQ] = useState(false);
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleDraft, setTitleDraft] = useState("");
+  const [editingGuide, setEditingGuide] = useState(false);
+  const [guideDraft, setGuideDraft] = useState("");
+  const [guideOpen, setGuideOpen] = useState(true);
   const [showAddScenario, setShowAddScenario] = useState(false);
   const [editingScenarioId, setEditingScenarioId] = useState<string | null>(null);
-  const [confirmDeleteQ, setConfirmDeleteQ]   = useState<string | null>(null);
-  const [confirmDeleteS, setConfirmDeleteS]   = useState<string | null>(null);
+  const [confirmDeleteQ, setConfirmDeleteQ] = useState<string | null>(null);
+  const [confirmDeleteS, setConfirmDeleteS] = useState<string | null>(null);
   const titleRef = useRef<HTMLInputElement>(null);
 
   const active = questions.find((q) => q.id === activeId) ?? questions[0] ?? null;
@@ -90,8 +123,8 @@ export function Top10QuestionsView() {
     if (!active && questions.length > 0) setActiveId(questions[0].id);
   }, [questions]);
 
-  const filtered    = questions.filter((q) => q.title.toLowerCase().includes(search.toLowerCase()));
-  const addedIds    = new Set(questions.map((q) => q.id));
+  const filtered = questions.filter((q) => q.title.toLowerCase().includes(search.toLowerCase()));
+  const addedIds = new Set(questions.map((q) => q.id));
   const suggestions = SUGGESTED_QUESTIONS.filter((s) => !addedIds.has(s.id));
 
   /* title inline edit */
@@ -134,12 +167,27 @@ export function Top10QuestionsView() {
       showAddQ={showAddQ}
       confirmDeleteQ={confirmDeleteQ}
       onSearchChange={setSearch}
-      onToggleAddForm={() => { setShowAddQ((v) => !v); setConfirmDeleteQ(null); }}
-      onSelectQuestion={(id) => { setActiveId(id); setConfirmDeleteQ(null); setShowAddScenario(false); setEditingScenarioId(null); }}
-      onSaveNewQuestion={(t, g) => { const id = addQuestion(t, g); setActiveId(id); setShowAddQ(false); }}
+      onToggleAddForm={() => {
+        setShowAddQ((v) => !v);
+        setConfirmDeleteQ(null);
+      }}
+      onSelectQuestion={(id) => {
+        setActiveId(id);
+        setConfirmDeleteQ(null);
+        setShowAddScenario(false);
+        setEditingScenarioId(null);
+      }}
+      onSaveNewQuestion={(t, g) => {
+        const id = addQuestion(t, g);
+        setActiveId(id);
+        setShowAddQ(false);
+      }}
       onDeleteQuestion={handleDeleteQ}
       onCancelDelete={() => setConfirmDeleteQ(null)}
-      onAddSuggested={(s) => { const id = addSuggested(s); setActiveId(id); }}
+      onAddSuggested={(s) => {
+        const id = addSuggested(s);
+        setActiveId(id);
+      }}
     />
   );
 
@@ -153,7 +201,9 @@ export function Top10QuestionsView() {
                 <Trophy className="size-6" />
               </div>
               <p className="text-sm font-semibold text-foreground">No questions yet</p>
-              <p className="text-xs text-muted-foreground">Add a question or pick one from the suggestions.</p>
+              <p className="text-xs text-muted-foreground">
+                Add a question or pick one from the suggestions.
+              </p>
             </div>
           </div>
         ) : (
@@ -171,20 +221,35 @@ export function Top10QuestionsView() {
                         ref={titleRef}
                         value={titleDraft}
                         onChange={(e) => setTitleDraft(e.target.value)}
-                        onKeyDown={(e) => { if (e.key === "Enter") saveTitle(); if (e.key === "Escape") setEditingTitle(false); }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") saveTitle();
+                          if (e.key === "Escape") setEditingTitle(false);
+                        }}
                         className="flex-1 bg-muted/40 border border-primary/40 rounded-xl px-3 py-1.5 text-sm font-semibold outline-none focus:ring-1 focus:ring-primary/30 transition-all"
                       />
-                      <button onClick={saveTitle} className="size-7 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 flex items-center justify-center transition-all">
+                      <button
+                        onClick={saveTitle}
+                        className="size-7 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 flex items-center justify-center transition-all"
+                      >
                         <Check className="size-3.5" />
                       </button>
-                      <button onClick={() => setEditingTitle(false)} className="size-7 rounded-lg text-muted-foreground hover:bg-muted/60 flex items-center justify-center transition-all">
+                      <button
+                        onClick={() => setEditingTitle(false)}
+                        className="size-7 rounded-lg text-muted-foreground hover:bg-muted/60 flex items-center justify-center transition-all"
+                      >
                         <X className="size-3.5" />
                       </button>
                     </div>
                   ) : (
                     <div className="flex items-start gap-2">
-                      <h2 className="text-base font-bold text-foreground leading-snug flex-1">{active.title}</h2>
-                      <button onClick={startEditTitle} className="size-6 rounded-lg flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground hover:bg-muted/60 transition-all shrink-0 mt-0.5" title="Edit title">
+                      <h2 className="text-base font-bold text-foreground leading-snug flex-1">
+                        {active.title}
+                      </h2>
+                      <button
+                        onClick={startEditTitle}
+                        className="size-6 rounded-lg flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground hover:bg-muted/60 transition-all shrink-0 mt-0.5"
+                        title="Edit title"
+                      >
                         <Edit3 className="size-3" />
                       </button>
                     </div>
@@ -207,9 +272,16 @@ export function Top10QuestionsView() {
                   editingGuide={editingGuide}
                   guideDraft={guideDraft}
                   onToggleOpen={() => setGuideOpen((v) => !v)}
-                  onStartEdit={() => { setGuideDraft(active.guide); setEditingGuide(true); setGuideOpen(true); }}
+                  onStartEdit={() => {
+                    setGuideDraft(active.guide);
+                    setEditingGuide(true);
+                    setGuideOpen(true);
+                  }}
                   onDraftChange={setGuideDraft}
-                  onSave={() => { updateQuestion(active.id, { guide: guideDraft }); setEditingGuide(false); }}
+                  onSave={() => {
+                    updateQuestion(active.id, { guide: guideDraft });
+                    setEditingGuide(false);
+                  }}
                   onCancel={() => setEditingGuide(false)}
                 />
 

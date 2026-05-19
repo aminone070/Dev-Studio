@@ -54,7 +54,10 @@ export const systemDesignArea: SkillAreaData = {
     },
   ],
   checklist: [
-    { id: "sd-reqs", label: "Functional and non-functional requirements clarified before designing" },
+    {
+      id: "sd-reqs",
+      label: "Functional and non-functional requirements clarified before designing",
+    },
     { id: "sd-est", label: "Back-of-envelope estimates done (QPS, storage, bandwidth)" },
     { id: "sd-sing", label: "Single points of failure identified and eliminated" },
     { id: "sd-cache", label: "Caching strategy defined (what to cache, TTL, invalidation)" },
@@ -90,7 +93,11 @@ export const systemDesignArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "The System Design Primer — Scalability", url: "https://github.com/donnemartin/system-design-primer#scalability", desc: "Scalability chapter from the most-starred system design repo." },
+        {
+          label: "The System Design Primer — Scalability",
+          url: "https://github.com/donnemartin/system-design-primer#scalability",
+          desc: "Scalability chapter from the most-starred system design repo.",
+        },
       ],
     },
     {
@@ -119,7 +126,11 @@ export const systemDesignArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Redis Documentation", url: "https://redis.io/documentation", desc: "Full Redis reference — data types, persistence, clustering, pub/sub." },
+        {
+          label: "Redis Documentation",
+          url: "https://redis.io/documentation",
+          desc: "Full Redis reference — data types, persistence, clustering, pub/sub.",
+        },
       ],
     },
     {
@@ -148,8 +159,16 @@ export const systemDesignArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Apache Kafka Docs", url: "https://kafka.apache.org/documentation/", desc: "The de-facto standard for distributed event streaming." },
-        { label: "RabbitMQ Tutorials", url: "https://www.rabbitmq.com/tutorials", desc: "Hands-on queue patterns — work queues, pub/sub, routing, and RPC." },
+        {
+          label: "Apache Kafka Docs",
+          url: "https://kafka.apache.org/documentation/",
+          desc: "The de-facto standard for distributed event streaming.",
+        },
+        {
+          label: "RabbitMQ Tutorials",
+          url: "https://www.rabbitmq.com/tutorials",
+          desc: "Hands-on queue patterns — work queues, pub/sub, routing, and RPC.",
+        },
       ],
     },
     {
@@ -178,7 +197,11 @@ export const systemDesignArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Designing Data-Intensive Applications", url: "https://dataintensive.net", desc: "Replication, partitioning, transactions, and distributed consensus." },
+        {
+          label: "Designing Data-Intensive Applications",
+          url: "https://dataintensive.net",
+          desc: "Replication, partitioning, transactions, and distributed consensus.",
+        },
       ],
     },
     {
@@ -207,7 +230,11 @@ export const systemDesignArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "REST API Design Rulebook", url: "https://www.oreilly.com/library/view/rest-api-design/9781449317904/", desc: "Principles for designing consistent, intuitive REST APIs at scale." },
+        {
+          label: "REST API Design Rulebook",
+          url: "https://www.oreilly.com/library/view/rest-api-design/9781449317904/",
+          desc: "Principles for designing consistent, intuitive REST APIs at scale.",
+        },
       ],
     },
   ],

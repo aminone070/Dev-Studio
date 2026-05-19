@@ -5,7 +5,6 @@ import { eq } from "drizzle-orm";
 import { requireUser } from "../../middleware/auth.js";
 import { getAll, create } from "../../controllers/profile.controller.js";
 
-
 const router = Router();
 
 router.get("/", getAll);

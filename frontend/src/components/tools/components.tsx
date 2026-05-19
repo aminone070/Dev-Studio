@@ -3,11 +3,25 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useForge, newId } from "@/lib/store";
 import { usePagination } from "@/hooks/use-pagination";
 import { ListPagination } from "@/components/ui/list-pagination";
-import { Component as ComponentIcon, Plus, Trash2, Search, Code2, Monitor, Eye } from "lucide-react";
+import {
+  Component as ComponentIcon,
+  Plus,
+  Trash2,
+  Search,
+  Code2,
+  Monitor,
+  Eye,
+} from "lucide-react";
 import { toast } from "sonner";
 import type { ComponentAsset } from "@/types/tools";
 import { Field, Input, TextArea } from "./shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SplitLayout } from "../layout";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
@@ -98,14 +112,18 @@ export function Components({ selectedId }: { selectedId?: string }) {
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className={`text-xs font-medium truncate flex-1 ${active ? "text-foreground" : ""}`}>
+                  <span
+                    className={`text-xs font-medium truncate flex-1 ${active ? "text-foreground" : ""}`}
+                  >
                     {c.name}
                   </span>
                   <span className="text-[9px] text-muted-foreground font-mono px-1.5 py-0.5 rounded-lg bg-muted/60 border border-border/60 shrink-0">
                     {c.category}
                   </span>
                 </div>
-                <p className="text-[10px] text-muted-foreground line-clamp-1">{c.description || "No description"}</p>
+                <p className="text-[10px] text-muted-foreground line-clamp-1">
+                  {c.description || "No description"}
+                </p>
               </button>
             </li>
           );
@@ -116,7 +134,13 @@ export function Components({ selectedId }: { selectedId?: string }) {
           </li>
         )}
       </ul>
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
       <div className="p-2 pt-0 shrink-0">
         <button
           onClick={create}
@@ -135,10 +159,21 @@ export function Components({ selectedId }: { selectedId?: string }) {
           <div className="px-4 sm:px-8 pt-6 sm:pt-8 pb-4 border-b border-border bg-background">
             <div className="flex items-start gap-4 mb-6">
               <div className="flex-1 min-w-0">
-                <Input value={selected.name} onChange={(e) => update({ name: e.target.value })} className="text-2xl font-semibold tracking-tight bg-transparent border-none p-0 focus:ring-0" />
-                <Input value={selected.description} onChange={(e) => update({ description: e.target.value })} className="text-sm text-muted-foreground bg-transparent border-none p-0 focus:ring-0 mt-1" />
+                <Input
+                  value={selected.name}
+                  onChange={(e) => update({ name: e.target.value })}
+                  className="text-2xl font-semibold tracking-tight bg-transparent border-none p-0 focus:ring-0"
+                />
+                <Input
+                  value={selected.description}
+                  onChange={(e) => update({ description: e.target.value })}
+                  className="text-sm text-muted-foreground bg-transparent border-none p-0 focus:ring-0 mt-1"
+                />
               </div>
-              <button onClick={() => setConfirmOpen(true)} className="p-2 rounded-xl border border-border hover:bg-destructive/10">
+              <button
+                onClick={() => setConfirmOpen(true)}
+                className="p-2 rounded-xl border border-border hover:bg-destructive/10"
+              >
                 <Trash2 className="size-4 text-muted-foreground" />
               </button>
             </div>
@@ -146,17 +181,25 @@ export function Components({ selectedId }: { selectedId?: string }) {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4 text-xs">
                 <Field label="Category">
-                  <span className="px-2 py-0.5 rounded-lg bg-muted font-mono uppercase text-[9px]">{selected.category}</span>
+                  <span className="px-2 py-0.5 rounded-lg bg-muted font-mono uppercase text-[9px]">
+                    {selected.category}
+                  </span>
                 </Field>
                 <Field label="Dependencies">
                   <span className="text-muted-foreground">{selected.dependencies.join(", ")}</span>
                 </Field>
               </div>
               <div className="flex p-1 bg-muted/60 rounded-xl">
-                <button onClick={() => setPreviewMode("preview")} className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${previewMode === "preview" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground"}`}>
+                <button
+                  onClick={() => setPreviewMode("preview")}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${previewMode === "preview" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground"}`}
+                >
                   <Eye className="size-3.5" /> Preview
                 </button>
-                <button onClick={() => setPreviewMode("code")} className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${previewMode === "code" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground"}`}>
+                <button
+                  onClick={() => setPreviewMode("code")}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${previewMode === "code" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground"}`}
+                >
                   <Code2 className="size-3.5" /> Code
                 </button>
               </div>
@@ -167,8 +210,18 @@ export function Components({ selectedId }: { selectedId?: string }) {
             <div className="w-full max-w-[1400px] mx-auto h-full">
               {previewMode === "code" ? (
                 <div className="relative group h-full">
-                  <TextArea value={selected.code} onChange={(e) => update({ code: e.target.value })} className="h-full font-mono resize-none" />
-                  <button onClick={() => { navigator.clipboard.writeText(selected.code); toast.success("Code copied to clipboard"); }} className="absolute top-4 right-4 p-2 bg-background/80 border border-border rounded-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                  <TextArea
+                    value={selected.code}
+                    onChange={(e) => update({ code: e.target.value })}
+                    className="h-full font-mono resize-none"
+                  />
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(selected.code);
+                      toast.success("Code copied to clipboard");
+                    }}
+                    className="absolute top-4 right-4 p-2 bg-background/80 border border-border rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
                     <Code2 className="size-4" />
                   </button>
                 </div>
@@ -179,9 +232,13 @@ export function Components({ selectedId }: { selectedId?: string }) {
                   </div>
                   <h3 className="text-sm font-medium mb-1">Canvas Preview</h3>
                   <p className="text-xs text-muted-foreground max-w-xs">
-                    Sandbox environment for rendering <strong>{selected.name}</strong> will appear here.
+                    Sandbox environment for rendering <strong>{selected.name}</strong> will appear
+                    here.
                   </p>
-                  <button onClick={() => toast.info("Building sandbox container…")} className="mt-6 px-4 py-2 bg-primary text-primary-foreground text-xs font-medium rounded-xl hover:opacity-90">
+                  <button
+                    onClick={() => toast.info("Building sandbox container…")}
+                    className="mt-6 px-4 py-2 bg-primary text-primary-foreground text-xs font-medium rounded-xl hover:opacity-90"
+                  >
                     Mount component
                   </button>
                 </div>
@@ -193,14 +250,24 @@ export function Components({ selectedId }: { selectedId?: string }) {
         <section className="grid place-items-center p-8 text-center flex-1">
           <div>
             <ComponentIcon className="size-10 text-muted-foreground/30 mx-auto mb-3" />
-            <button onClick={create} className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors">
+            <button
+              onClick={create}
+              className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors"
+            >
               Create your first component
             </button>
           </div>
         </section>
       )}
 
-      <ConfirmDialog open={confirmOpen} onOpenChange={setConfirmOpen} title="Delete component?" description="This component will be permanently removed. This action cannot be undone." confirmLabel="Delete" onConfirm={handleDelete} />
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete component?"
+        description="This component will be permanently removed. This action cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+      />
     </SplitLayout>
   );
 }

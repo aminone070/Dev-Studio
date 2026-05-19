@@ -28,9 +28,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           ) : (
             <Eye className="size-4" aria-hidden="true" />
           )}
-          <span className="sr-only">
-            {showPassword ? "Hide password" : "Show password"}
-          </span>
+          <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
         </button>
       </div>
     );

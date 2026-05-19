@@ -3,7 +3,12 @@ import { ForgeState } from "../types";
 import * as db from "@/lib/api";
 import { toast } from "sonner";
 
-export const createCVSlice: StateCreator<ForgeState, [["zustand/persist", unknown]], [], Partial<ForgeState>> = (set, get) => ({
+export const createCVSlice: StateCreator<
+  ForgeState,
+  [["zustand/persist", unknown]],
+  [],
+  Partial<ForgeState>
+> = (set, get) => ({
   cvProfiles: [],
 
   upsertCVProfile: async (cv) => {
@@ -16,7 +21,9 @@ export const createCVSlice: StateCreator<ForgeState, [["zustand/persist", unknow
     try {
       const saved = await db.upsertCVProfile(cv);
       if (saved?.id && saved.id !== cv.id) {
-        set((s) => ({ cvProfiles: s.cvProfiles.map((x) => (x.id === cv.id ? { ...x, id: saved.id } : x)) }));
+        set((s) => ({
+          cvProfiles: s.cvProfiles.map((x) => (x.id === cv.id ? { ...x, id: saved.id } : x)),
+        }));
       }
       toast.success("CV saved!");
     } catch (err: any) {

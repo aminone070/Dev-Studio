@@ -26,7 +26,10 @@ export function InterviewSection({ data, triggerAdd }: Props) {
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (triggerAdd) { setEditingQ(null); setDialogOpen(true); }
+    if (triggerAdd) {
+      setEditingQ(null);
+      setDialogOpen(true);
+    }
   }, [triggerAdd]);
 
   const filteredQs = useMemo(
@@ -134,7 +137,9 @@ export function InterviewSection({ data, triggerAdd }: Props) {
 
       <ConfirmDialog
         open={pendingDeleteId !== null}
-        onOpenChange={(open) => { if (!open) setPendingDeleteId(null); }}
+        onOpenChange={(open) => {
+          if (!open) setPendingDeleteId(null);
+        }}
         title="Delete question?"
         description="This Q&A will be permanently removed. This action cannot be undone."
         confirmLabel="Delete"

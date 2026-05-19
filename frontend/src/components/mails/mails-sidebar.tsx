@@ -23,7 +23,6 @@ const FILTERS: { label: string; value: MailFilter }[] = [
   { label: "A–Z", value: "az" },
 ];
 
-
 const ChannelIcon = ({ channel }: { channel: string }) => {
   if (channel === "cover-letter") return <FileText className="size-3.5" />;
   if (channel === "gmail") return <Mail className="size-3.5" />;
@@ -59,9 +58,7 @@ export function MailsSidebar({
   });
 
   if (activeFilter === "az") {
-    filtered = [...filtered].sort((a, b) =>
-      (a.subject ?? "").localeCompare(b.subject ?? "")
-    );
+    filtered = [...filtered].sort((a, b) => (a.subject ?? "").localeCompare(b.subject ?? ""));
   }
 
   const { page, setPage, totalPages, paged, total, pageSize } = usePagination(filtered, 15);
@@ -135,7 +132,9 @@ export function MailsSidebar({
               onClick={() => onSelectTemplate(template.id)}
             >
               <div className="pr-6">
-                <div className={`truncate leading-snug text-xs font-medium ${activeTemplateId === template.id ? "text-foreground" : ""}`}>
+                <div
+                  className={`truncate leading-snug text-xs font-medium ${activeTemplateId === template.id ? "text-foreground" : ""}`}
+                >
                   {template.subject || "Untitled Template"}
                 </div>
                 <div className="truncate text-[10px] text-muted-foreground mt-0.5">
@@ -146,7 +145,10 @@ export function MailsSidebar({
                 </div>
               </div>
               <button
-                onClick={(e) => { e.stopPropagation(); setPendingDeleteId(template.id); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPendingDeleteId(template.id);
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                 title="Delete template"
               >
@@ -164,7 +166,13 @@ export function MailsSidebar({
         )}
       </nav>
 
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
 
       {/* Bottom Action */}
       <div className="px-2 pb-2 shrink-0">
@@ -178,7 +186,9 @@ export function MailsSidebar({
 
       <ConfirmDialog
         open={pendingDeleteId !== null}
-        onOpenChange={(open) => { if (!open) setPendingDeleteId(null); }}
+        onOpenChange={(open) => {
+          if (!open) setPendingDeleteId(null);
+        }}
         title="Delete template?"
         description="This template will be permanently removed. This action cannot be undone."
         confirmLabel="Delete"

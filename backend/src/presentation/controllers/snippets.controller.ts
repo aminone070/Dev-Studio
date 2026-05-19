@@ -16,13 +16,25 @@ export const create = async (req: Request, res: Response) => {
   const { id, ...raw } = req.body;
   const data = stripDates(raw);
   const safeId = isUUID(id) ? id : undefined;
-  const existing = safeId ? await db.select().from(snippets).where(and(eq(snippets.id, safeId), eq(snippets.userId, uid))) : [];
-  
+  const existing = safeId
+    ? await db
+        .select()
+        .from(snippets)
+        .where(and(eq(snippets.id, safeId), eq(snippets.userId, uid)))
+    : [];
+
   if (existing.length > 0) {
-    const [r] = await db.update(snippets).set({ ...data, updatedAt: new Date() }).where(eq(snippets.id, safeId!)).returning();
+    const [r] = await db
+      .update(snippets)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(snippets.id, safeId!))
+      .returning();
     res.json(r);
   } else {
-    const [r] = await db.insert(snippets).values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any).returning();
+    const [r] = await db
+      .insert(snippets)
+      .values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any)
+      .returning();
     res.json(r);
   }
 };

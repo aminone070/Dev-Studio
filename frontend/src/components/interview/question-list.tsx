@@ -10,7 +10,8 @@ import type { InterviewQuestion } from "@/types/skills";
 import { DIFFICULTIES, DOMAINS } from "@/data/tech/interview";
 
 export function QuestionList() {
-  const { interviewQuestions, deleteInterviewQuestion, toggleFavoriteInterviewQuestion } = useForge();
+  const { interviewQuestions, deleteInterviewQuestion, toggleFavoriteInterviewQuestion } =
+    useForge();
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [domain, setDomain] = useState<string>("frontend");
@@ -139,7 +140,8 @@ export function QuestionList() {
                           {q.difficulty}
                         </span>
                         <span className="text-[10px] text-muted-foreground font-mono">
-                          {DOMAINS.find((d) => d.id === q.area || d.id === q.category)?.label || q.area}
+                          {DOMAINS.find((d) => d.id === q.area || d.id === q.category)?.label ||
+                            q.area}
                         </span>
                       </div>
                       <h3 className="text-base font-semibold group-hover:text-primary transition-colors">
@@ -179,7 +181,14 @@ export function QuestionList() {
                 </button>
               </div>
             )}
-            <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} className="mt-4" />
+            <ListPagination
+              page={page}
+              totalPages={totalPages}
+              total={total}
+              pageSize={pageSize}
+              onPageChange={setPage}
+              className="mt-4"
+            />
           </div>
         </div>
       </SplitLayout>

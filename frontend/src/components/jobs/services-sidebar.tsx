@@ -13,7 +13,9 @@ interface Props {
 }
 
 const statusLabel: Record<string, string> = {
-  active: "Active", paused: "Paused", draft: "Draft",
+  active: "Active",
+  paused: "Paused",
+  draft: "Draft",
 };
 
 type ServiceFilter = "all" | "active" | "paused";
@@ -99,10 +101,14 @@ export function ServicesSidebar({ services, activeId, onSelect, onAdd }: Props) 
           <div className="flex flex-col items-center justify-center py-12 gap-2 text-center px-4">
             <Star className="size-8 text-muted-foreground/30" />
             <p className="text-xs text-muted-foreground">
-              {searchQuery || activeFilter !== "all" ? "No matching services" : "No services listed yet."}
+              {searchQuery || activeFilter !== "all"
+                ? "No matching services"
+                : "No services listed yet."}
             </p>
             {!searchQuery && activeFilter === "all" && (
-              <p className="text-[10px] text-muted-foreground/60">Add your Fiverr, Mostaql, or Khamsat gigs.</p>
+              <p className="text-[10px] text-muted-foreground/60">
+                Add your Fiverr, Mostaql, or Khamsat gigs.
+              </p>
             )}
           </div>
         )}
@@ -119,19 +125,27 @@ export function ServicesSidebar({ services, activeId, onSelect, onAdd }: Props) 
               >
                 <p className="text-xs font-medium truncate leading-snug">{svc.title}</p>
                 {svc.category && (
-                  <p className="text-[10px] text-muted-foreground truncate mt-0.5">{svc.category}</p>
+                  <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                    {svc.category}
+                  </p>
                 )}
                 <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                   {svc.platform && (
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded-lg font-medium ${PLATFORM_COLORS[svc.platform] ?? "bg-muted text-muted-foreground"}`}>
+                    <span
+                      className={`text-[9px] px-1.5 py-0.5 rounded-lg font-medium ${PLATFORM_COLORS[svc.platform] ?? "bg-muted text-muted-foreground"}`}
+                    >
                       {svc.platform}
                     </span>
                   )}
-                  <span className={`text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${STATUS_COLORS[svc.status] ?? ""}`}>
+                  <span
+                    className={`text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${STATUS_COLORS[svc.status] ?? ""}`}
+                  >
                     {statusLabel[svc.status] ?? svc.status}
                   </span>
                   {svc.price && (
-                    <span className="text-[9px] text-green-400 font-medium">{svc.price} {svc.currency}</span>
+                    <span className="text-[9px] text-green-400 font-medium">
+                      {svc.price} {svc.currency}
+                    </span>
                   )}
                 </div>
               </button>
@@ -140,7 +154,13 @@ export function ServicesSidebar({ services, activeId, onSelect, onAdd }: Props) 
         </ul>
       </div>
 
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
 
       {/* Bottom Action */}
       <div className="px-2 pb-2 shrink-0">

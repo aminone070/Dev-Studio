@@ -11,33 +11,34 @@ import { createCVSlice } from "./slices/cv";
 
 export const useForge = create<ForgeState>()(
   persist(
-    (...a) => ({
-      prompts: [],
-      agents: [],
-      components: [],
-      templates: [],
-      snippets: [],
-      interviewQuestions: [],
-      connectors: [],
-      socialDrafts: [],
-      mailTemplates: [],
-      cvProfiles: [],
-      userProgress: {},
-      isLoading: false,
-      initialized: false,
-      ...createCoreSlice(...a),
-      ...createPromptSlice(...a),
-      ...createAgentSlice(...a),
-      ...createComponentSlice(...a),
-      ...createIntegrationSlice(...a),
-      ...createInterviewSlice(...a),
-      ...createCVSlice(...a),
-    } as ForgeState),
+    (...a) =>
+      ({
+        prompts: [],
+        agents: [],
+        components: [],
+        templates: [],
+        snippets: [],
+        interviewQuestions: [],
+        connectors: [],
+        socialDrafts: [],
+        mailTemplates: [],
+        cvProfiles: [],
+        userProgress: {},
+        isLoading: false,
+        initialized: false,
+        ...createCoreSlice(...a),
+        ...createPromptSlice(...a),
+        ...createAgentSlice(...a),
+        ...createComponentSlice(...a),
+        ...createIntegrationSlice(...a),
+        ...createInterviewSlice(...a),
+        ...createCVSlice(...a),
+      }) as ForgeState,
     {
       name: "forgedev-store-v3",
       partialize: (state) => ({ userProgress: state.userProgress }),
-    }
-  )
+    },
+  ),
 );
 
 export function fillVariables(body: string, values: Record<string, string>) {

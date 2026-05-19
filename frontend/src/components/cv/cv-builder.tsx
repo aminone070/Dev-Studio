@@ -1,5 +1,9 @@
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { CVPersonal } from "./cv-personal";
 import { CVExperienceSection } from "./cv-experience";
@@ -11,7 +15,7 @@ import type { CVProfile, CVFocus } from "@/types/cv";
 import { FOCUS_LABELS } from "@/types/cv";
 import { BUILDER_TABS } from "@/constants";
 
-type BuilderTab = typeof BUILDER_TABS[number]["id"];
+type BuilderTab = (typeof BUILDER_TABS)[number]["id"];
 
 interface CVBuilderProps {
   cv: CVProfile;
@@ -25,7 +29,6 @@ export function CVBuilder({ cv, onUpdate, activeTab }: CVBuilderProps) {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-
       {/* Compact CV context bar — title input + focus select */}
       <div className="shrink-0 border-b border-border/60 bg-muted/20 px-4 py-2 flex items-center gap-2">
         <input
@@ -41,7 +44,9 @@ export function CVBuilder({ cv, onUpdate, activeTab }: CVBuilderProps) {
           </SelectTrigger>
           <SelectContent>
             {(Object.keys(FOCUS_LABELS) as CVFocus[]).map((f) => (
-              <SelectItem key={f} value={f}>{FOCUS_LABELS[f]}</SelectItem>
+              <SelectItem key={f} value={f}>
+                {FOCUS_LABELS[f]}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -57,10 +62,15 @@ export function CVBuilder({ cv, onUpdate, activeTab }: CVBuilderProps) {
           <div className="h-full overflow-y-auto scrollbar-thin">
             <div className="p-4 sm:p-6 max-w-3xl">
               {activeTab === "personal" && (
-                <Section title="Personal Information" desc="Your contact details and online presence.">
+                <Section
+                  title="Personal Information"
+                  desc="Your contact details and online presence."
+                >
                   <CVPersonal data={cv.personalInfo} onChange={(v) => patch("personalInfo", v)} />
                   <div className="mt-5 space-y-1.5">
-                    <label className="text-xs font-medium text-muted-foreground">Professional Summary</label>
+                    <label className="text-xs font-medium text-muted-foreground">
+                      Professional Summary
+                    </label>
                     <textarea
                       value={cv.summary}
                       onChange={(e) => patch("summary", e.target.value)}
@@ -69,19 +79,33 @@ export function CVBuilder({ cv, onUpdate, activeTab }: CVBuilderProps) {
                       className="w-full rounded-md border border-input bg-background px-3 py-2.5 text-sm resize-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      {cv.summary.length} characters · Aim for 300–600 characters for optimal ATS performance
+                      {cv.summary.length} characters · Aim for 300–600 characters for optimal ATS
+                      performance
                     </p>
                   </div>
                 </Section>
               )}
               {activeTab === "experience" && (
-                <Section title="Work Experience" desc="List your positions from most recent to oldest.">
-                  <CVExperienceSection data={cv.experience} onChange={(v) => patch("experience", v)} />
+                <Section
+                  title="Work Experience"
+                  desc="List your positions from most recent to oldest."
+                >
+                  <CVExperienceSection
+                    data={cv.experience}
+                    onChange={(v) => patch("experience", v)}
+                  />
                 </Section>
               )}
               {activeTab === "skills" && (
-                <Section title="Skills" desc="Add your technical and soft skills. The focus area suggests relevant keywords.">
-                  <CVSkillsSection data={cv.skills} focus={cv.focus} onChange={(v) => patch("skills", v)} />
+                <Section
+                  title="Skills"
+                  desc="Add your technical and soft skills. The focus area suggests relevant keywords."
+                >
+                  <CVSkillsSection
+                    data={cv.skills}
+                    focus={cv.focus}
+                    onChange={(v) => patch("skills", v)}
+                  />
                 </Section>
               )}
               {activeTab === "education" && (
@@ -90,7 +114,10 @@ export function CVBuilder({ cv, onUpdate, activeTab }: CVBuilderProps) {
                 </Section>
               )}
               {activeTab === "projects" && (
-                <Section title="Projects" desc="Showcase your portfolio projects and open source contributions.">
+                <Section
+                  title="Projects"
+                  desc="Showcase your portfolio projects and open source contributions."
+                >
                   <CVProjectsSection data={cv.projects} onChange={(v) => patch("projects", v)} />
                 </Section>
               )}
@@ -102,7 +129,15 @@ export function CVBuilder({ cv, onUpdate, activeTab }: CVBuilderProps) {
   );
 }
 
-function Section({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
+function Section({
+  title,
+  desc,
+  children,
+}: {
+  title: string;
+  desc?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="space-y-4">
       <div>

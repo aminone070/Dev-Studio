@@ -40,13 +40,13 @@ export function registerRoutes(app: Express) {
   app.use("/api/planner", plannerRoutes);
 
   // --- Legacy Backward Compatibility ---
-  
+
   // Progress & Interview Questions
   app.use("/api/progress", (req: Request, res: Response, next: NextFunction) => {
     req.url = "/progress" + (req.url === "/" ? "" : req.url);
     interviewRoutes(req, res, next);
   });
-  
+
   app.use("/api/interview-questions", (req: Request, res: Response, next: NextFunction) => {
     req.url = "/questions" + (req.url === "/" ? "" : req.url);
     interviewRoutes(req, res, next);
@@ -55,7 +55,7 @@ export function registerRoutes(app: Express) {
   // Social Drafts & Mail Templates
   app.use("/api/social-drafts", socialRoutes);
   app.use("/api/mail-templates", mailRoutes);
-  
+
   // Freelance & Services
   app.use("/api/freelance-offers", offerRoutes);
   app.use("/api/my-services", serviceRoutes);

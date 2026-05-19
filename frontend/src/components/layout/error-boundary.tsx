@@ -40,9 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <AlertTriangle className="size-6 text-destructive" />
             </div>
             <div className="space-y-1">
-              <h2 className="text-base font-semibold text-foreground">
-                Something went wrong
-              </h2>
+              <h2 className="text-base font-semibold text-foreground">Something went wrong</h2>
               <p className="text-sm text-muted-foreground">
                 This section ran into an unexpected error. You can try again or go back home.
               </p>

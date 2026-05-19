@@ -43,10 +43,7 @@ export function ListPagination({
 
         {pages.map((p, i) =>
           p === "..." ? (
-            <span
-              key={`e-${i}`}
-              className="text-[10px] text-muted-foreground px-0.5 leading-none"
-            >
+            <span key={`e-${i}`} className="text-[10px] text-muted-foreground px-0.5 leading-none">
               …
             </span>
           ) : (
@@ -61,7 +58,7 @@ export function ListPagination({
             >
               {p}
             </button>
-          )
+          ),
         )}
 
         <button

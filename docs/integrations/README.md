@@ -38,7 +38,9 @@ Dev Studio enforces a secure, decoupled communication pattern for all integratio
 > **Outbound Security Gate**: All outgoing API requests to third-party endpoints MUST originate server-side. Never execute direct outbound third-party API calls from client browser code.
 
 ### 📝 Step-by-Step Integration Pattern
+
 To register a new integration safely:
+
 1. **Store Tokens Privately**: Add all credentials or API keys as private keys in your root `.env` file (e.g., `GITHUB_TOKEN=...`). Never check private keys into version control.
 2. **Expose an Express Route Handler**: Build a route under `server/routes/api/` (e.g., `server/routes/api/github.ts`) that verifies the user's active session, reads the local environment variable securely using `process.env`, and performs the third-party HTTP call.
 3. **Register the Router**: Export and import your custom API router within [server/routes.ts](file:///c:/Users/Memo/Downloads/Dev%20Studio/Dev-Studio/server/routes.ts).

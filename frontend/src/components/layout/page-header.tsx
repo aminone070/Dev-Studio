@@ -30,18 +30,14 @@ export function PageHeader({
               {eyebrow}
             </p>
           )}
-          <h1 className="text-lg sm:text-xl font-semibold tracking-tight leading-tight">
-            {title}
-          </h1>
+          <h1 className="text-lg sm:text-xl font-semibold tracking-tight leading-tight">{title}</h1>
           {description && (
             <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 truncate">
               {description}
             </p>
           )}
         </div>
-        {actions && (
-          <div className="flex items-center gap-2 shrink-0">{actions}</div>
-        )}
+        {actions && <div className="flex items-center gap-2 shrink-0">{actions}</div>}
       </div>
     </div>
   );

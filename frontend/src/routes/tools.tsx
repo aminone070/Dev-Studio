@@ -52,11 +52,11 @@ function ToolsPage() {
       </PageSection>
 
       <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
-        {tab === "prompts"    && <Prompts selectedId={id} />}
-        {tab === "agents"     && <Agents selectedId={id} />}
+        {tab === "prompts" && <Prompts selectedId={id} />}
+        {tab === "agents" && <Agents selectedId={id} />}
         {tab === "components" && <Components selectedId={id} />}
-        {tab === "templates"  && <Templates selectedId={id} />}
-        {tab === "snippets"   && <Snippets selectedId={id} />}
+        {tab === "templates" && <Templates selectedId={id} />}
+        {tab === "snippets" && <Snippets selectedId={id} />}
       </div>
     </PageContainer>
   );

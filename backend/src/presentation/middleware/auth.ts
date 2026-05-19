@@ -27,7 +27,10 @@ export function requireUser(req: Request, res: Response): string | null {
 
 export function stripDates(data: Record<string, unknown>): Record<string, unknown> {
   const { createdAt, updatedAt, created_at, updated_at, ...rest } = data;
-  void createdAt; void updatedAt; void created_at; void updated_at;
+  void createdAt;
+  void updatedAt;
+  void created_at;
+  void updated_at;
   return rest;
 }
 

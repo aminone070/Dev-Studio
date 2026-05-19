@@ -26,14 +26,14 @@ export function formatCountdown(diffMin: number): string {
 export function formatTime12(time: string): string {
   const [h, m] = time.split(":").map(Number);
   const ampm = h >= 12 ? "PM" : "AM";
-  const h12  = h % 12 || 12;
+  const h12 = h % 12 || 12;
   return `${h12}:${String(m).padStart(2, "0")} ${ampm}`;
 }
 
 export function formatMinutesLabel(min: number): string {
   const h = Math.floor(min / 60) % 24;
   const m = min % 60;
-  const ap  = h >= 12 ? "PM" : "AM";
+  const ap = h >= 12 ? "PM" : "AM";
   const h12 = h % 12 || 12;
   return `${h12}:${String(m).padStart(2, "0")} ${ap}`;
 }

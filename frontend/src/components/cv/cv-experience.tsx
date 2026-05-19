@@ -9,7 +9,17 @@ interface CVExperienceProps {
 }
 
 function newExp(): CVExperience {
-  return { id: crypto.randomUUID(), company: "", role: "", start: "", end: "", current: false, description: "", bullets: [""], tags: [] };
+  return {
+    id: crypto.randomUUID(),
+    company: "",
+    role: "",
+    start: "",
+    end: "",
+    current: false,
+    description: "",
+    bullets: [""],
+    tags: [],
+  };
 }
 
 export function CVExperienceSection({ data, onChange }: CVExperienceProps) {
@@ -53,32 +63,81 @@ export function CVExperienceSection({ data, onChange }: CVExperienceProps) {
           >
             <GripVertical className="size-4 text-muted-foreground/40 shrink-0" />
             <div className="flex-1 min-w-0">
-              <div className="font-medium text-sm truncate">{exp.role || `Experience ${i + 1}`}</div>
-              {exp.company && <div className="text-xs text-muted-foreground truncate">{exp.company}{exp.start ? ` · ${exp.start} – ${exp.current ? "Present" : exp.end}` : ""}</div>}
+              <div className="font-medium text-sm truncate">
+                {exp.role || `Experience ${i + 1}`}
+              </div>
+              {exp.company && (
+                <div className="text-xs text-muted-foreground truncate">
+                  {exp.company}
+                  {exp.start ? ` · ${exp.start} – ${exp.current ? "Present" : exp.end}` : ""}
+                </div>
+              )}
             </div>
-            <button onClick={(e) => { e.stopPropagation(); remove(exp.id); }} className="p-1.5 hover:text-destructive text-muted-foreground transition-colors">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                remove(exp.id);
+              }}
+              className="p-1.5 hover:text-destructive text-muted-foreground transition-colors"
+            >
               <Trash2 className="size-3.5" />
             </button>
-            {openId === exp.id ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
+            {openId === exp.id ? (
+              <ChevronUp className="size-4 text-muted-foreground" />
+            ) : (
+              <ChevronDown className="size-4 text-muted-foreground" />
+            )}
           </div>
 
           {openId === exp.id && (
             <div className="px-4 pb-4 pt-2 border-t border-border space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label="Job Title">
-                  <Input type="text" value={exp.role} onChange={(e) => update(exp.id, { role: e.target.value })} placeholder="Senior Frontend Engineer" />
+                  <Input
+                    type="text"
+                    value={exp.role}
+                    onChange={(e) => update(exp.id, { role: e.target.value })}
+                    placeholder="Senior Frontend Engineer"
+                  />
                 </Field>
                 <Field label="Company">
-                  <Input type="text" value={exp.company} onChange={(e) => update(exp.id, { company: e.target.value })} placeholder="Acme Corp" />
+                  <Input
+                    type="text"
+                    value={exp.company}
+                    onChange={(e) => update(exp.id, { company: e.target.value })}
+                    placeholder="Acme Corp"
+                  />
                 </Field>
                 <Field label="Start Date">
-                  <Input type="text" value={exp.start} onChange={(e) => update(exp.id, { start: e.target.value })} placeholder="Jan 2022" />
+                  <Input
+                    type="text"
+                    value={exp.start}
+                    onChange={(e) => update(exp.id, { start: e.target.value })}
+                    placeholder="Jan 2022"
+                  />
                 </Field>
                 <Field label="End Date">
                   <div className="flex gap-2 items-center">
-                    <Input type="text" value={exp.current ? "Present" : exp.end} onChange={(e) => update(exp.id, { end: e.target.value })} placeholder="Dec 2024" disabled={exp.current} className="flex-1" />
+                    <Input
+                      type="text"
+                      value={exp.current ? "Present" : exp.end}
+                      onChange={(e) => update(exp.id, { end: e.target.value })}
+                      placeholder="Dec 2024"
+                      disabled={exp.current}
+                      className="flex-1"
+                    />
                     <label className="flex items-center gap-1.5 text-xs text-muted-foreground whitespace-nowrap cursor-pointer">
-                      <input type="checkbox" checked={exp.current} onChange={(e) => update(exp.id, { current: e.target.checked, end: e.target.checked ? "Present" : "" })} className="rounded" />
+                      <input
+                        type="checkbox"
+                        checked={exp.current}
+                        onChange={(e) =>
+                          update(exp.id, {
+                            current: e.target.checked,
+                            end: e.target.checked ? "Present" : "",
+                          })
+                        }
+                        className="rounded"
+                      />
                       Current
                     </label>
                   </div>
@@ -107,12 +166,18 @@ export function CVExperienceSection({ data, onChange }: CVExperienceProps) {
                         placeholder="Increased performance by 40% by..."
                         className="flex-1"
                       />
-                      <button onClick={() => removeBullet(exp.id, idx)} className="text-muted-foreground hover:text-destructive transition-colors">
+                      <button
+                        onClick={() => removeBullet(exp.id, idx)}
+                        className="text-muted-foreground hover:text-destructive transition-colors"
+                      >
                         <Trash2 className="size-3.5" />
                       </button>
                     </div>
                   ))}
-                  <button onClick={() => addBullet(exp.id)} className="flex items-center gap-1 text-xs text-primary hover:opacity-80 transition-opacity">
+                  <button
+                    onClick={() => addBullet(exp.id)}
+                    className="flex items-center gap-1 text-xs text-primary hover:opacity-80 transition-opacity"
+                  >
                     <Plus className="size-3.5" /> Add bullet
                   </button>
                 </div>
@@ -122,7 +187,14 @@ export function CVExperienceSection({ data, onChange }: CVExperienceProps) {
                 <Input
                   type="text"
                   value={exp.tags.join(", ")}
-                  onChange={(e) => update(exp.id, { tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })}
+                  onChange={(e) =>
+                    update(exp.id, {
+                      tags: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
                   placeholder="React, TypeScript, Node.js"
                 />
               </Field>
@@ -132,7 +204,11 @@ export function CVExperienceSection({ data, onChange }: CVExperienceProps) {
       ))}
 
       <button
-        onClick={() => { const e = newExp(); onChange([...data, e]); setOpenId(e.id); }}
+        onClick={() => {
+          const e = newExp();
+          onChange([...data, e]);
+          setOpenId(e.id);
+        }}
         className="flex items-center gap-2 text-sm text-primary hover:opacity-80 transition-opacity"
       >
         <Plus className="size-4" /> Add experience

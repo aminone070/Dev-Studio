@@ -87,24 +87,24 @@ graph TD
 
 ## 💻 Tech Stack Properties
 
-| Domain | Technology | Key Benefits |
-|---|---|---|
-| **Frontend Framework** | React 19 | High-performance component scheduling, stable functional hooks. |
-| **State Store** | Zustand | Absolute control of state hydration, unified actions layer, zero boilerplate. |
-| **Routing Manager** | TanStack Router | End-to-end type safety of page paths and query parameters. |
-| **Data Fetching** | TanStack Query | Automatic polling, request caching, and automated revalidation. |
-| **Styling Engine** | Tailwind CSS v4 | CSS-first configuration, theme token generation, utility speed. |
-| **Server Engine** | Express 5 | Light overhead, asynchronous request support, middleware chain. |
-| **Database Connector** | Drizzle ORM | Standard SQL querying, compiler checks, zero latency. |
-| **Database Backend** | PostgreSQL | Enterprise-grade reliability, foreign keys, query optimization. |
+| Domain                 | Technology      | Key Benefits                                                                  |
+| ---------------------- | --------------- | ----------------------------------------------------------------------------- |
+| **Frontend Framework** | React 19        | High-performance component scheduling, stable functional hooks.               |
+| **State Store**        | Zustand         | Absolute control of state hydration, unified actions layer, zero boilerplate. |
+| **Routing Manager**    | TanStack Router | End-to-end type safety of page paths and query parameters.                    |
+| **Data Fetching**      | TanStack Query  | Automatic polling, request caching, and automated revalidation.               |
+| **Styling Engine**     | Tailwind CSS v4 | CSS-first configuration, theme token generation, utility speed.               |
+| **Server Engine**      | Express 5       | Light overhead, asynchronous request support, middleware chain.               |
+| **Database Connector** | Drizzle ORM     | Standard SQL querying, compiler checks, zero latency.                         |
+| **Database Backend**   | PostgreSQL      | Enterprise-grade reliability, foreign keys, query optimization.               |
 
 ---
 
 ## 📂 Core Architecture Files
 
-* `server.ts` — Express engine bootstrapper, static SPA path resolvers, and hot module reloading middleware.
-* `server/routes.ts` — Registering API routing namespaces.
-* `server/middleware/auth.ts` — Verifying and verifying JWT cookie validity on endpoints.
-* `server/db/index.ts` — Database connector configuring pool size.
-* `shared/schema.ts` — Aggregated exports for all Drizzle model schema declarations.
-* `src/lib/store.ts` — State-of-the-art Zustand store encapsulating all state and API action logic.
+- `server.ts` — Express engine bootstrapper, static SPA path resolvers, and hot module reloading middleware.
+- `server/routes.ts` — Registering API routing namespaces.
+- `server/middleware/auth.ts` — Verifying and verifying JWT cookie validity on endpoints.
+- `server/db/index.ts` — Database connector configuring pool size.
+- `shared/schema.ts` — Aggregated exports for all Drizzle model schema declarations.
+- `src/lib/store.ts` — State-of-the-art Zustand store encapsulating all state and API action logic.

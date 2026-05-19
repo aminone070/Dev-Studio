@@ -11,7 +11,7 @@ export function PageSection({ children, className }: PageSectionProps) {
     <div
       className={cn(
         "shrink-0 rounded-2xl border border-border/60 bg-card px-4 sm:px-5 py-3.5",
-        className
+        className,
       )}
     >
       {children}

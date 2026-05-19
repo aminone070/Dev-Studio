@@ -2,7 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { Plus, X, Clock, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PlannerTask, TaskPriority, TaskCategory } from "@/types/planner";
-import { CATEGORY_LABELS, CATEGORY_ICON_COMPONENTS, CATEGORY_COLORS, DAILY_PARTS, TASK_PRIORITY_OPTIONS as PRIORITIES, TASK_TIME_OPTIONS as TIME_OPTIONS } from "@/data/planner/planner";
+import {
+  CATEGORY_LABELS,
+  CATEGORY_ICON_COMPONENTS,
+  CATEGORY_COLORS,
+  DAILY_PARTS,
+  TASK_PRIORITY_OPTIONS as PRIORITIES,
+  TASK_TIME_OPTIONS as TIME_OPTIONS,
+} from "@/data/planner/planner";
 import { formatMinutes } from "@/lib/utils/planner";
 
 interface AddTaskFormProps {
@@ -12,7 +19,6 @@ interface AddTaskFormProps {
   onCancel?: () => void;
   initialOpen?: boolean;
 }
-
 
 export function AddTaskForm({
   date,
@@ -29,7 +35,7 @@ export function AddTaskForm({
   const [estimatedMinutes, setEstimatedMinutes] = useState<number | undefined>(undefined);
   const [showCatPicker, setShowCatPicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const catRef  = useRef<HTMLDivElement>(null);
+  const catRef = useRef<HTMLDivElement>(null);
   const timeRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
 
@@ -43,7 +49,7 @@ export function AddTaskForm({
 
   useEffect(() => {
     function onOutside(e: MouseEvent) {
-      if (catRef.current  && !catRef.current.contains(e.target as Node))  setShowCatPicker(false);
+      if (catRef.current && !catRef.current.contains(e.target as Node)) setShowCatPicker(false);
       if (timeRef.current && !timeRef.current.contains(e.target as Node)) setShowTimePicker(false);
     }
     document.addEventListener("mousedown", onOutside);
@@ -51,9 +57,14 @@ export function AddTaskForm({
   }, []);
 
   const reset = () => {
-    setTitle(""); setDescription(""); setPriority("medium");
-    setCategory(defaultCategory); setEstimatedMinutes(undefined);
-    setOpen(false); setShowCatPicker(false); setShowTimePicker(false);
+    setTitle("");
+    setDescription("");
+    setPriority("medium");
+    setCategory(defaultCategory);
+    setEstimatedMinutes(undefined);
+    setOpen(false);
+    setShowCatPicker(false);
+    setShowTimePicker(false);
     onCancel?.();
   };
 
@@ -61,14 +72,19 @@ export function AddTaskForm({
     e.preventDefault();
     if (!title.trim()) return;
     onAdd({
-      date, title: title.trim(),
+      date,
+      title: title.trim(),
       description: description.trim() || undefined,
-      priority, status: "todo", category,
+      priority,
+      status: "todo",
+      category,
       estimatedMinutes,
       order: Date.now(),
     });
-    setTitle(""); setDescription("");
-    setPriority("medium"); setCategory(defaultCategory);
+    setTitle("");
+    setDescription("");
+    setPriority("medium");
+    setCategory(defaultCategory);
     setEstimatedMinutes(undefined);
     setOpen(false);
   };
@@ -85,7 +101,12 @@ export function AddTaskForm({
         </div>
         <span className="text-xs">Add a task…</span>
         {defaultCategory !== "general" && (
-          <span className={cn("ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded-md flex items-center gap-1", CATEGORY_COLORS[defaultCategory])}>
+          <span
+            className={cn(
+              "ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded-md flex items-center gap-1",
+              CATEGORY_COLORS[defaultCategory],
+            )}
+          >
             <DefIcon className="size-3" />
             {CATEGORY_LABELS[defaultCategory]}
           </span>
@@ -133,7 +154,7 @@ export function AddTaskForm({
                 "flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all",
                 priority === p.value
                   ? "bg-background text-foreground shadow-sm border border-border/60"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               <span className={cn("size-1.5 rounded-full shrink-0", p.dot)} />
@@ -146,7 +167,10 @@ export function AddTaskForm({
         <div className="relative" ref={catRef}>
           <button
             type="button"
-            onClick={() => { setShowCatPicker((v) => !v); setShowTimePicker(false); }}
+            onClick={() => {
+              setShowCatPicker((v) => !v);
+              setShowTimePicker(false);
+            }}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-muted/40 border border-border/40 hover:bg-muted/60 text-[11px] font-medium transition-all text-foreground"
           >
             <SelIcon className="size-3.5" />
@@ -161,12 +185,15 @@ export function AddTaskForm({
                   <button
                     key={c}
                     type="button"
-                    onClick={() => { setCategory(c); setShowCatPicker(false); }}
+                    onClick={() => {
+                      setCategory(c);
+                      setShowCatPicker(false);
+                    }}
                     className={cn(
                       "w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-colors text-left",
                       category === c
                         ? "bg-primary/10 text-primary"
-                        : "hover:bg-muted/60 text-foreground"
+                        : "hover:bg-muted/60 text-foreground",
                     )}
                   >
                     <CIcon className="size-4" />
@@ -184,12 +211,15 @@ export function AddTaskForm({
         <div className="relative" ref={timeRef}>
           <button
             type="button"
-            onClick={() => { setShowTimePicker((v) => !v); setShowCatPicker(false); }}
+            onClick={() => {
+              setShowTimePicker((v) => !v);
+              setShowCatPicker(false);
+            }}
             className={cn(
               "flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-[11px] font-medium transition-all",
               estimatedMinutes
                 ? "bg-primary/10 border-primary/20 text-primary"
-                : "bg-muted/40 border-border/40 hover:bg-muted/60 text-muted-foreground hover:text-foreground"
+                : "bg-muted/40 border-border/40 hover:bg-muted/60 text-muted-foreground hover:text-foreground",
             )}
           >
             <Clock className="size-3" />
@@ -199,10 +229,15 @@ export function AddTaskForm({
             <div className="absolute top-full left-0 mt-1.5 z-50 bg-popover border border-border rounded-2xl shadow-lg overflow-hidden p-1.5 w-36">
               <button
                 type="button"
-                onClick={() => { setEstimatedMinutes(undefined); setShowTimePicker(false); }}
+                onClick={() => {
+                  setEstimatedMinutes(undefined);
+                  setShowTimePicker(false);
+                }}
                 className={cn(
                   "w-full px-3 py-1.5 rounded-xl text-xs font-medium transition-colors text-left",
-                  !estimatedMinutes ? "bg-primary/10 text-primary" : "hover:bg-muted/60 text-muted-foreground"
+                  !estimatedMinutes
+                    ? "bg-primary/10 text-primary"
+                    : "hover:bg-muted/60 text-muted-foreground",
                 )}
               >
                 No estimate
@@ -211,12 +246,15 @@ export function AddTaskForm({
                 <button
                   key={t.value}
                   type="button"
-                  onClick={() => { setEstimatedMinutes(t.value); setShowTimePicker(false); }}
+                  onClick={() => {
+                    setEstimatedMinutes(t.value);
+                    setShowTimePicker(false);
+                  }}
                   className={cn(
                     "w-full px-3 py-1.5 rounded-xl text-xs font-medium transition-colors text-left",
                     estimatedMinutes === t.value
                       ? "bg-primary/10 text-primary"
-                      : "hover:bg-muted/60 text-foreground"
+                      : "hover:bg-muted/60 text-foreground",
                   )}
                 >
                   {t.label}

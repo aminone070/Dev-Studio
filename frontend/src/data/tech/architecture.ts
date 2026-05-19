@@ -53,9 +53,18 @@ export const architectureArea: SkillAreaData = {
     { id: "arch-bound", label: "Bounded contexts defined with clear interfaces between them" },
     { id: "arch-fitness", label: "Fitness functions in CI checking key architectural properties" },
     { id: "arch-adr", label: "Architecture Decision Records (ADRs) written for major choices" },
-    { id: "arch-modular", label: "Modules/packages enforce their own boundaries (no spaghetti imports)" },
-    { id: "arch-testable", label: "Core business logic testable without starting a server or database" },
-    { id: "arch-evolvable", label: "Strangler fig or anti-corruption layer used when migrating legacy code" },
+    {
+      id: "arch-modular",
+      label: "Modules/packages enforce their own boundaries (no spaghetti imports)",
+    },
+    {
+      id: "arch-testable",
+      label: "Core business logic testable without starting a server or database",
+    },
+    {
+      id: "arch-evolvable",
+      label: "Strangler fig or anti-corruption layer used when migrating legacy code",
+    },
   ],
   subAreas: [
     {
@@ -84,8 +93,16 @@ export const architectureArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Clean Architecture — Robert C. Martin", url: "https://www.oreilly.com/library/view/clean-architecture/9780134494272/", desc: "The book that defines the clean architecture model." },
-        { label: "Architecture Patterns with Python", url: "https://www.cosmicpython.com", desc: "TDD, DDD, and clean architecture with Python — freely available online." },
+        {
+          label: "Clean Architecture — Robert C. Martin",
+          url: "https://www.oreilly.com/library/view/clean-architecture/9780134494272/",
+          desc: "The book that defines the clean architecture model.",
+        },
+        {
+          label: "Architecture Patterns with Python",
+          url: "https://www.cosmicpython.com",
+          desc: "TDD, DDD, and clean architecture with Python — freely available online.",
+        },
       ],
     },
     {
@@ -114,8 +131,16 @@ export const architectureArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Event-Driven Architecture — Martin Fowler", url: "https://martinfowler.com/articles/201701-event-driven.html", desc: "Fowler's authoritative breakdown of event notification, sourcing, and CQRS." },
-        { label: "Kafka Documentation", url: "https://kafka.apache.org/documentation/", desc: "The de-facto standard for event streaming at scale." },
+        {
+          label: "Event-Driven Architecture — Martin Fowler",
+          url: "https://martinfowler.com/articles/201701-event-driven.html",
+          desc: "Fowler's authoritative breakdown of event notification, sourcing, and CQRS.",
+        },
+        {
+          label: "Kafka Documentation",
+          url: "https://kafka.apache.org/documentation/",
+          desc: "The de-facto standard for event streaming at scale.",
+        },
       ],
     },
     {
@@ -144,7 +169,11 @@ export const architectureArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Hexagonal Architecture — Alistair Cockburn", url: "https://alistair.cockburn.us/hexagonal-architecture/", desc: "The original article that defined ports and adapters." },
+        {
+          label: "Hexagonal Architecture — Alistair Cockburn",
+          url: "https://alistair.cockburn.us/hexagonal-architecture/",
+          desc: "The original article that defined ports and adapters.",
+        },
       ],
     },
     {
@@ -173,8 +202,16 @@ export const architectureArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Domain-Driven Design — Eric Evans", url: "https://www.oreilly.com/library/view/domain-driven-design-tackling/0321125215/", desc: "The original DDD blue book — bounded contexts, aggregates, repositories." },
-        { label: "DDD Quickly (free PDF)", url: "https://www.infoq.com/minibooks/domain-driven-design-quickly/", desc: "A free condensed summary of the core DDD concepts." },
+        {
+          label: "Domain-Driven Design — Eric Evans",
+          url: "https://www.oreilly.com/library/view/domain-driven-design-tackling/0321125215/",
+          desc: "The original DDD blue book — bounded contexts, aggregates, repositories.",
+        },
+        {
+          label: "DDD Quickly (free PDF)",
+          url: "https://www.infoq.com/minibooks/domain-driven-design-quickly/",
+          desc: "A free condensed summary of the core DDD concepts.",
+        },
       ],
     },
     {
@@ -203,8 +240,16 @@ export const architectureArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "AWS Lambda Docs", url: "https://docs.aws.amazon.com/lambda/", desc: "Official Lambda documentation — functions, layers, triggers." },
-        { label: "Serverless Framework", url: "https://www.serverless.com/framework/docs", desc: "Deploy serverless apps to any cloud with a single config." },
+        {
+          label: "AWS Lambda Docs",
+          url: "https://docs.aws.amazon.com/lambda/",
+          desc: "Official Lambda documentation — functions, layers, triggers.",
+        },
+        {
+          label: "Serverless Framework",
+          url: "https://www.serverless.com/framework/docs",
+          desc: "Deploy serverless apps to any cloud with a single config.",
+        },
       ],
     },
   ],

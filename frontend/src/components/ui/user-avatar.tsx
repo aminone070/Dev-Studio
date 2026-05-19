@@ -23,7 +23,10 @@ export function UserAvatar({ name, avatarUrl, size = "md", className = "" }: Use
         className={cls}
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).style.display = "none";
-          (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "grid");
+          (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty(
+            "display",
+            "grid",
+          );
         }}
       />
     );

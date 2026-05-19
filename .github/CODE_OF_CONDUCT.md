@@ -10,20 +10,24 @@
 We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
 ### 👍 Acceptable Behavior
+
 Examples of behavior that contributes to a positive environment for our community include:
-* **Demonstrating empathy and kindness** toward other people.
-* **Being respectful** of differing opinions, viewpoints, and experiences.
-* **Giving and gracefully accepting** constructive feedback.
-* **Accepting responsibility** and apologizing to those affected by our mistakes, and learning from the experience.
-* **Focusing on what is best** not just for us as individuals, but for the overall community.
+
+- **Demonstrating empathy and kindness** toward other people.
+- **Being respectful** of differing opinions, viewpoints, and experiences.
+- **Giving and gracefully accepting** constructive feedback.
+- **Accepting responsibility** and apologizing to those affected by our mistakes, and learning from the experience.
+- **Focusing on what is best** not just for us as individuals, but for the overall community.
 
 ### 👎 Unacceptable Behavior
+
 Examples of unacceptable behavior include:
-* The use of **sexualized language or imagery**, and sexual attention or advances of any kind.
-* **Trolling**, insulting or derogatory comments, and personal or political attacks.
-* **Public or private harassment** in any form.
-* **Publishing others' private information**, such as a physical or email address, without their explicit permission.
-* Other conduct which could reasonably be considered **inappropriate in a professional setting**.
+
+- The use of **sexualized language or imagery**, and sexual attention or advances of any kind.
+- **Trolling**, insulting or derogatory comments, and personal or political attacks.
+- **Public or private harassment** in any form.
+- **Publishing others' private information**, such as a physical or email address, without their explicit permission.
+- Other conduct which could reasonably be considered **inappropriate in a professional setting**.
 
 ---
 
@@ -38,6 +42,7 @@ Community leaders have the right and responsibility to remove, edit, or reject c
 ## 🔍 Scope
 
 This Code of Conduct applies within all community spaces, and also applies when an individual is officially representing the community in public spaces. Examples of representing our community include:
+
 - Using an official email address
 - Posting via an official social media account
 - Acting as an appointed representative at an online or offline event
@@ -58,12 +63,12 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 Community leaders will follow these Community Impact Guidelines in determining the consequences for any action they deem in violation of this Code of Conduct:
 
-| Severity | Level | Community Impact | Consequence |
-|---|---|---|---|
-| 🟡 | **1. Correction** | Use of inappropriate language or other behavior deemed unprofessional or unwelcome. | A private, written warning from community leaders, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested. |
-| 🟠 | **2. Warning** | A violation through a single incident or series of actions. | A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes external channels. |
-| 🔴 | **3. Temporary Ban** | A serious violation of community standards, including sustained inappropriate behavior. | A temporary ban from any sort of interaction or public communication with the community for a specified period of time. |
-| 🚫 | **4. Permanent Ban** | Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment, or aggression toward individuals. | A permanent ban from any sort of public interaction within the community. |
+| Severity | Level                | Community Impact                                                                                                                                       | Consequence                                                                                                                                                                                                                               |
+| -------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🟡       | **1. Correction**    | Use of inappropriate language or other behavior deemed unprofessional or unwelcome.                                                                    | A private, written warning from community leaders, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.                                      |
+| 🟠       | **2. Warning**       | A violation through a single incident or series of actions.                                                                                            | A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes external channels. |
+| 🔴       | **3. Temporary Ban** | A serious violation of community standards, including sustained inappropriate behavior.                                                                | A temporary ban from any sort of interaction or public communication with the community for a specified period of time.                                                                                                                   |
+| 🚫       | **4. Permanent Ban** | Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment, or aggression toward individuals. | A permanent ban from any sort of public interaction within the community.                                                                                                                                                                 |
 
 ---
 

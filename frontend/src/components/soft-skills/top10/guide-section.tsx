@@ -39,17 +39,21 @@ export function GuideSection({
         <div className="flex items-center gap-1">
           {!editingGuide && (
             <button
-              onClick={(e) => { e.stopPropagation(); onStartEdit(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onStartEdit();
+              }}
               className="size-5 rounded flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground transition-all"
               title="Edit guide"
             >
               <Edit3 className="size-3" />
             </button>
           )}
-          {guideOpen
-            ? <ChevronUp className="size-3.5 text-muted-foreground" />
-            : <ChevronDown className="size-3.5 text-muted-foreground" />
-          }
+          {guideOpen ? (
+            <ChevronUp className="size-3.5 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="size-3.5 text-muted-foreground" />
+          )}
         </div>
       </div>
 
@@ -81,7 +85,11 @@ export function GuideSection({
             </div>
           ) : (
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {guide || <em className="text-muted-foreground/40">No guide written yet. Click the pencil to add one.</em>}
+              {guide || (
+                <em className="text-muted-foreground/40">
+                  No guide written yet. Click the pencil to add one.
+                </em>
+              )}
             </p>
           )}
         </div>

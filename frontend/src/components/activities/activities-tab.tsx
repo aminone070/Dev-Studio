@@ -1,22 +1,56 @@
 import { useState } from "react";
 import {
-  MapPin, RefreshCw, Clock, Dumbbell, Utensils,
-  Sparkles, Plus, Check, ChevronDown, Flame, Bath,
-  Timer, AlertCircle, Activity, Moon,
-  Coffee, Salad, Footprints, HeartPulse,
-  Droplets, BedDouble, UtensilsCrossed,
-  Briefcase, BookOpen, LucideIcon, Monitor, FileCode2,
+  MapPin,
+  RefreshCw,
+  Clock,
+  Dumbbell,
+  Utensils,
+  Sparkles,
+  Plus,
+  Check,
+  ChevronDown,
+  Flame,
+  Bath,
+  Timer,
+  AlertCircle,
+  Activity,
+  Moon,
+  Coffee,
+  Salad,
+  Footprints,
+  HeartPulse,
+  Droplets,
+  BedDouble,
+  UtensilsCrossed,
+  Briefcase,
+  BookOpen,
+  LucideIcon,
+  Monitor,
+  FileCode2,
   MessageSquare,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { usePrayerTimes, type PrayerTime } from "@/hooks/use-prayer-times";
-import { toDateStr, to24hMin, formatCountdown, formatTime12, formatMinutesLabel } from "@/lib/planner-utils";
 import {
-  INNER_TABS, WORKING_SUGGESTIONS, LEARNING_SUGGESTIONS,
-  PRESET_FOOD, PRESET_SPORTS, PRESET_CARE, PRESET_WORKING, PRESET_LEARNING,
-  ACTIVITIES_STORAGE_KEY, PRAYER_TRACKER_KEY,
+  toDateStr,
+  to24hMin,
+  formatCountdown,
+  formatTime12,
+  formatMinutesLabel,
+} from "@/lib/planner-utils";
+import {
+  INNER_TABS,
+  WORKING_SUGGESTIONS,
+  LEARNING_SUGGESTIONS,
+  PRESET_FOOD,
+  PRESET_SPORTS,
+  PRESET_CARE,
+  PRESET_WORKING,
+  PRESET_LEARNING,
+  ACTIVITIES_STORAGE_KEY,
+  PRAYER_TRACKER_KEY,
 } from "@/data/planner/activities";
 import type { ActivityItem, ActivitySuggestion, InnerTab } from "@/data/planner/activities";
 
@@ -29,45 +63,130 @@ function getPrayerSuggestions(prayers: PrayerTime[]): {
   if (prayers.length === 0) {
     return {
       food: [
-        { Icon: Coffee,          label: "Breakfast",  bestTime: "06:30 – 08:00", reason: "After Fajr prayer" },
-        { Icon: Salad,           label: "Lunch",      bestTime: "12:30 – 13:30", reason: "After Dhuhr prayer" },
-        { Icon: UtensilsCrossed, label: "Dinner",     bestTime: "19:30 – 20:30", reason: "After Maghrib prayer" },
+        {
+          Icon: Coffee,
+          label: "Breakfast",
+          bestTime: "06:30 – 08:00",
+          reason: "After Fajr prayer",
+        },
+        { Icon: Salad, label: "Lunch", bestTime: "12:30 – 13:30", reason: "After Dhuhr prayer" },
+        {
+          Icon: UtensilsCrossed,
+          label: "Dinner",
+          bestTime: "19:30 – 20:30",
+          reason: "After Maghrib prayer",
+        },
       ],
       sports: [
-        { Icon: Dumbbell,   label: "Morning workout",    bestTime: "08:00 – 10:00", reason: "After breakfast, high energy" },
-        { Icon: Footprints, label: "Afternoon walk",     bestTime: "15:30 – 17:00", reason: "Before Maghrib, cooler air" },
-        { Icon: HeartPulse, label: "Yoga / stretch",     bestTime: "05:30 – 06:00", reason: "Before Fajr, peaceful time" },
+        {
+          Icon: Dumbbell,
+          label: "Morning workout",
+          bestTime: "08:00 – 10:00",
+          reason: "After breakfast, high energy",
+        },
+        {
+          Icon: Footprints,
+          label: "Afternoon walk",
+          bestTime: "15:30 – 17:00",
+          reason: "Before Maghrib, cooler air",
+        },
+        {
+          Icon: HeartPulse,
+          label: "Yoga / stretch",
+          bestTime: "05:30 – 06:00",
+          reason: "Before Fajr, peaceful time",
+        },
       ],
       care: [
-        { Icon: Sparkles, label: "Morning grooming", bestTime: "06:00 – 06:30", reason: "Before Fajr, fresh start" },
-        { Icon: Droplets, label: "Evening shower",   bestTime: "20:00 – 21:00", reason: "After Maghrib, wind down" },
-        { Icon: BedDouble, label: "Sleep prep",      bestTime: "22:00 – 23:00", reason: "After Isha, restful night" },
+        {
+          Icon: Sparkles,
+          label: "Morning grooming",
+          bestTime: "06:00 – 06:30",
+          reason: "Before Fajr, fresh start",
+        },
+        {
+          Icon: Droplets,
+          label: "Evening shower",
+          bestTime: "20:00 – 21:00",
+          reason: "After Maghrib, wind down",
+        },
+        {
+          Icon: BedDouble,
+          label: "Sleep prep",
+          bestTime: "22:00 – 23:00",
+          reason: "After Isha, restful night",
+        },
       ],
     };
   }
 
-  const fajrMin    = to24hMin(prayers.find((p) => p.name === "Fajr")?.time    ?? "05:00");
-  const dhuhrMin   = to24hMin(prayers.find((p) => p.name === "Dhuhr")?.time   ?? "12:00");
-  const asrMin     = to24hMin(prayers.find((p) => p.name === "Asr")?.time     ?? "15:30");
+  const fajrMin = to24hMin(prayers.find((p) => p.name === "Fajr")?.time ?? "05:00");
+  const dhuhrMin = to24hMin(prayers.find((p) => p.name === "Dhuhr")?.time ?? "12:00");
+  const asrMin = to24hMin(prayers.find((p) => p.name === "Asr")?.time ?? "15:30");
   const maghribMin = to24hMin(prayers.find((p) => p.name === "Maghrib")?.time ?? "18:30");
-  const ishaMin    = to24hMin(prayers.find((p) => p.name === "Isha")?.time    ?? "20:00");
+  const ishaMin = to24hMin(prayers.find((p) => p.name === "Isha")?.time ?? "20:00");
   const f = formatMinutesLabel;
 
   return {
     food: [
-      { Icon: Coffee,          label: "Breakfast", bestTime: `${f(fajrMin + 20)} – ${f(fajrMin + 60)}`,       reason: "20–60 min after Fajr" },
-      { Icon: Salad,           label: "Lunch",     bestTime: `${f(dhuhrMin + 15)} – ${f(dhuhrMin + 75)}`,     reason: "After Dhuhr prayer" },
-      { Icon: UtensilsCrossed, label: "Dinner",    bestTime: `${f(maghribMin + 15)} – ${f(maghribMin + 75)}`, reason: "After Maghrib prayer" },
+      {
+        Icon: Coffee,
+        label: "Breakfast",
+        bestTime: `${f(fajrMin + 20)} – ${f(fajrMin + 60)}`,
+        reason: "20–60 min after Fajr",
+      },
+      {
+        Icon: Salad,
+        label: "Lunch",
+        bestTime: `${f(dhuhrMin + 15)} – ${f(dhuhrMin + 75)}`,
+        reason: "After Dhuhr prayer",
+      },
+      {
+        Icon: UtensilsCrossed,
+        label: "Dinner",
+        bestTime: `${f(maghribMin + 15)} – ${f(maghribMin + 75)}`,
+        reason: "After Maghrib prayer",
+      },
     ],
     sports: [
-      { Icon: Dumbbell,   label: "Strength training", bestTime: `${f(fajrMin + 70)} – ${f(dhuhrMin - 60)}`,  reason: "Post-breakfast energy peak" },
-      { Icon: Footprints, label: "Walk / cardio",     bestTime: `${f(asrMin + 20)} – ${f(maghribMin - 20)}`, reason: "Asr → Maghrib window, cool air" },
-      { Icon: HeartPulse, label: "Yoga / stretch",    bestTime: `${f(fajrMin + 5)} – ${f(fajrMin + 35)}`,    reason: "Right after Fajr, peaceful" },
+      {
+        Icon: Dumbbell,
+        label: "Strength training",
+        bestTime: `${f(fajrMin + 70)} – ${f(dhuhrMin - 60)}`,
+        reason: "Post-breakfast energy peak",
+      },
+      {
+        Icon: Footprints,
+        label: "Walk / cardio",
+        bestTime: `${f(asrMin + 20)} – ${f(maghribMin - 20)}`,
+        reason: "Asr → Maghrib window, cool air",
+      },
+      {
+        Icon: HeartPulse,
+        label: "Yoga / stretch",
+        bestTime: `${f(fajrMin + 5)} – ${f(fajrMin + 35)}`,
+        reason: "Right after Fajr, peaceful",
+      },
     ],
     care: [
-      { Icon: Sparkles,  label: "Morning grooming", bestTime: `${f(fajrMin - 20)} – ${f(fajrMin)}`,           reason: "Before Fajr, fresh start" },
-      { Icon: Droplets,  label: "Shower / bath",    bestTime: `${f(maghribMin + 20)} – ${f(maghribMin + 50)}`,reason: "After Maghrib, relax" },
-      { Icon: BedDouble, label: "Sleep routine",    bestTime: `${f(ishaMin + 60)} – ${f(ishaMin + 90)}`,      reason: "90 min after Isha, quality sleep" },
+      {
+        Icon: Sparkles,
+        label: "Morning grooming",
+        bestTime: `${f(fajrMin - 20)} – ${f(fajrMin)}`,
+        reason: "Before Fajr, fresh start",
+      },
+      {
+        Icon: Droplets,
+        label: "Shower / bath",
+        bestTime: `${f(maghribMin + 20)} – ${f(maghribMin + 50)}`,
+        reason: "After Maghrib, relax",
+      },
+      {
+        Icon: BedDouble,
+        label: "Sleep routine",
+        bestTime: `${f(ishaMin + 60)} – ${f(ishaMin + 90)}`,
+        reason: "90 min after Isha, quality sleep",
+      },
     ],
   };
 }
@@ -77,7 +196,9 @@ function loadActivities(key: string): ActivityItem[] {
   try {
     const raw = localStorage.getItem(`${ACTIVITIES_STORAGE_KEY}-${key}`);
     return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+  } catch {
+    return [];
+  }
 }
 function saveActivities(key: string, items: ActivityItem[]) {
   try {
@@ -89,8 +210,16 @@ function saveActivities(key: string, items: ActivityItem[]) {
 
 /* ── ActivitySection ─────────────────────────────── */
 function ActivitySection({
-  icon: Icon, title, color, bgColor, borderColor,
-  suggestions, items, presets, onToggle, onAdd,
+  icon: Icon,
+  title,
+  color,
+  bgColor,
+  borderColor,
+  suggestions,
+  items,
+  presets,
+  onToggle,
+  onAdd,
 }: {
   icon: LucideIcon;
   title: string;
@@ -105,13 +234,19 @@ function ActivitySection({
 }) {
   const [showPresets, setShowPresets] = useState(false);
   const [customInput, setCustomInput] = useState("");
-  const done  = items.filter((i) => i.done).length;
+  const done = items.filter((i) => i.done).length;
   const total = items.length;
 
   return (
     <div className={cn("rounded-2xl border overflow-visible", borderColor)}>
       <div className={cn("px-4 py-3 flex items-center gap-3 rounded-t-2xl", bgColor)}>
-        <div className={cn("size-8 rounded-xl flex items-center justify-center border", bgColor, borderColor)}>
+        <div
+          className={cn(
+            "size-8 rounded-xl flex items-center justify-center border",
+            bgColor,
+            borderColor,
+          )}
+        >
           <Icon className={cn("size-4", color)} />
         </div>
         <div className="flex-1">
@@ -148,7 +283,9 @@ function ActivitySection({
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold">{s.label}</p>
-                  <p className="text-[10px] text-muted-foreground">{s.bestTime} · {s.reason}</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    {s.bestTime} · {s.reason}
+                  </p>
                 </div>
                 <Plus className="size-3.5 text-muted-foreground/40 group-hover:text-primary shrink-0 transition-colors" />
               </button>
@@ -158,7 +295,9 @@ function ActivitySection({
 
         {items.length > 0 && (
           <div className="space-y-1.5 pt-2 border-t border-border/40">
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50 mb-2">Your activities</p>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50 mb-2">
+              Your activities
+            </p>
             {items.map((item) => (
               <button
                 key={item.id}
@@ -167,17 +306,24 @@ function ActivitySection({
                   "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all text-left",
                   item.done
                     ? "bg-emerald-500/8 border-emerald-500/20 opacity-70"
-                    : "bg-background border-border/40 hover:border-primary/30 hover:bg-primary/5"
+                    : "bg-background border-border/40 hover:border-primary/30 hover:bg-primary/5",
                 )}
               >
-                <div className={cn(
-                  "size-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all",
-                  item.done ? "bg-emerald-500 border-emerald-500" : "border-border"
-                )}>
+                <div
+                  className={cn(
+                    "size-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all",
+                    item.done ? "bg-emerald-500 border-emerald-500" : "border-border",
+                  )}
+                >
                   {item.done && <Check className="size-3 text-white" strokeWidth={3} />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={cn("text-xs font-medium", item.done && "line-through text-muted-foreground")}>
+                  <p
+                    className={cn(
+                      "text-xs font-medium",
+                      item.done && "line-through text-muted-foreground",
+                    )}
+                  >
                     {item.title}
                   </p>
                   {item.time && (
@@ -212,11 +358,13 @@ function ActivitySection({
                 "shrink-0 h-8 px-2.5 rounded-xl border flex items-center gap-1.5 text-xs font-medium transition-colors whitespace-nowrap",
                 showPresets
                   ? "bg-primary/10 border-primary/20 text-primary"
-                  : "border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                  : "border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted/60",
               )}
             >
               Quick add
-              <ChevronDown className={cn("size-3 transition-transform", showPresets && "rotate-180")} />
+              <ChevronDown
+                className={cn("size-3 transition-transform", showPresets && "rotate-180")}
+              />
             </button>
           </div>
 
@@ -227,7 +375,10 @@ function ActivitySection({
                 .map((p) => (
                   <button
                     key={p.title}
-                    onClick={() => { onAdd(p.title); setShowPresets(false); }}
+                    onClick={() => {
+                      onAdd(p.title);
+                      setShowPresets(false);
+                    }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted/60 text-left transition-colors border-b border-border/30 last:border-0"
                   >
                     <Plus className="size-3 text-muted-foreground/50 shrink-0" />
@@ -235,7 +386,9 @@ function ActivitySection({
                   </button>
                 ))}
               {presets.filter((p) => !items.find((i) => i.title === p.title)).length === 0 && (
-                <p className="px-3 py-2 text-xs text-muted-foreground/50 text-center">All presets added</p>
+                <p className="px-3 py-2 text-xs text-muted-foreground/50 text-center">
+                  All presets added
+                </p>
               )}
             </div>
           )}
@@ -247,7 +400,14 @@ function ActivitySection({
 
 /* ── ActivityPanel — state wrapper for one tab ───── */
 function ActivityPanel({
-  storeKey, presets, suggestions, icon, title, color, bgColor, borderColor,
+  storeKey,
+  presets,
+  suggestions,
+  icon,
+  title,
+  color,
+  bgColor,
+  borderColor,
 }: {
   storeKey: string;
   presets: Omit<ActivityItem, "id" | "done">[];
@@ -262,7 +422,7 @@ function ActivityPanel({
   const [items, setItems] = useState<ActivityItem[]>(() => loadActivities(`${today}-${storeKey}`));
 
   const handleToggle = (id: string) => {
-    const updated = items.map((i) => i.id === id ? { ...i, done: !i.done } : i);
+    const updated = items.map((i) => (i.id === id ? { ...i, done: !i.done } : i));
     setItems(updated);
     saveActivities(`${today}-${storeKey}`, updated);
   };
@@ -275,7 +435,7 @@ function ActivityPanel({
     toast.success(`Added "${title}"`);
   };
 
-  const done  = items.filter((i) => i.done).length;
+  const done = items.filter((i) => i.done).length;
   const total = items.length;
 
   return (
@@ -283,17 +443,28 @@ function ActivityPanel({
       {total > 0 && (
         <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-muted/30 border border-border/40">
           <Activity className="size-3.5 text-muted-foreground shrink-0" />
-          <span className="text-xs text-muted-foreground flex-1">{done} of {total} done today</span>
+          <span className="text-xs text-muted-foreground flex-1">
+            {done} of {total} done today
+          </span>
           <div className="w-20 h-1.5 rounded-full bg-muted overflow-hidden">
-            <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${total > 0 ? (done / total) * 100 : 0}%` }} />
+            <div
+              className="h-full rounded-full bg-primary transition-all"
+              style={{ width: `${total > 0 ? (done / total) * 100 : 0}%` }}
+            />
           </div>
         </div>
       )}
       <ActivitySection
-        icon={icon} title={title}
-        color={color} bgColor={bgColor} borderColor={borderColor}
-        suggestions={suggestions} items={items} presets={presets}
-        onToggle={handleToggle} onAdd={handleAdd}
+        icon={icon}
+        title={title}
+        color={color}
+        bgColor={bgColor}
+        borderColor={borderColor}
+        suggestions={suggestions}
+        items={items}
+        presets={presets}
+        onToggle={handleToggle}
+        onAdd={handleAdd}
       />
     </div>
   );
@@ -301,7 +472,11 @@ function ActivityPanel({
 
 /* ── Prayer tracker storage ──────────────────────── */
 function loadPrayerTracker(dateKey: string): Record<string, boolean> {
-  try { return JSON.parse(localStorage.getItem(`${PRAYER_TRACKER_KEY}-${dateKey}`) ?? "{}"); } catch { return {}; }
+  try {
+    return JSON.parse(localStorage.getItem(`${PRAYER_TRACKER_KEY}-${dateKey}`) ?? "{}");
+  } catch {
+    return {};
+  }
 }
 function savePrayerTracker(dateKey: string, data: Record<string, boolean>) {
   try {
@@ -317,8 +492,8 @@ function PrayerPanel() {
   const today = toDateStr(new Date());
   const [prayed, setPrayed] = useState<Record<string, boolean>>(() => loadPrayerTracker(today));
 
-  const nextPrayer   = nextIdx >= 0 ? prayers[nextIdx] : null;
-  const diffMin      = nextPrayer ? to24hMin(nextPrayer.time) - nowMin : 0;
+  const nextPrayer = nextIdx >= 0 ? prayers[nextIdx] : null;
+  const diffMin = nextPrayer ? to24hMin(nextPrayer.time) - nowMin : 0;
   const adjustedDiff = diffMin < 0 ? diffMin + 24 * 60 : diffMin;
 
   const togglePrayed = (name: string) => {
@@ -331,7 +506,6 @@ function PrayerPanel() {
 
   return (
     <div className="p-4 space-y-5">
-
       {/* ── Timer card ── */}
       <div className="rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-6 text-center space-y-3 shadow-sm">
         <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm">
@@ -356,13 +530,17 @@ function PrayerPanel() {
         {!loading && !error && nextPrayer && (
           <>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/60 mb-2">Next Prayer</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/60 mb-2">
+                Next Prayer
+              </p>
               <div className="flex items-center justify-center gap-3">
-                <div className={cn(
-                  "size-12 rounded-2xl flex items-center justify-center border",
-                  nextPrayer.iconColor.replace("text-", "bg-") + "/10",
-                  nextPrayer.iconColor.replace("text-", "border-") + "/20",
-                )}>
+                <div
+                  className={cn(
+                    "size-12 rounded-2xl flex items-center justify-center border",
+                    nextPrayer.iconColor.replace("text-", "bg-") + "/10",
+                    nextPrayer.iconColor.replace("text-", "border-") + "/20",
+                  )}
+                >
                   <nextPrayer.Icon className={cn("size-6", nextPrayer.iconColor)} />
                 </div>
                 <div className="text-left">
@@ -378,7 +556,9 @@ function PrayerPanel() {
               </p>
               <div className="h-12 w-px bg-border" />
               <div className="text-center">
-                <p className="text-3xl font-bold font-mono tabular-nums">{formatCountdown(adjustedDiff)}</p>
+                <p className="text-3xl font-bold font-mono tabular-nums">
+                  {formatCountdown(adjustedDiff)}
+                </p>
                 <p className="text-xs text-muted-foreground flex items-center gap-1 justify-center mt-0.5">
                   <Timer className="size-3" /> remaining
                 </p>
@@ -406,12 +586,16 @@ function PrayerPanel() {
               <span className="text-sm font-semibold">Prayer Tracker</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[11px] font-bold text-indigo-500">{prayedCount}/{prayers.length}</span>
+              <span className="text-[11px] font-bold text-indigo-500">
+                {prayedCount}/{prayers.length}
+              </span>
               {/* mini progress bar */}
               <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
                 <div
                   className="h-full rounded-full bg-indigo-500 transition-all duration-500"
-                  style={{ width: `${prayers.length > 0 ? (prayedCount / prayers.length) * 100 : 0}%` }}
+                  style={{
+                    width: `${prayers.length > 0 ? (prayedCount / prayers.length) * 100 : 0}%`,
+                  }}
                 />
               </div>
             </div>
@@ -419,11 +603,11 @@ function PrayerPanel() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {prayers.map((prayer, i) => {
-              const isNext    = i === nextIdx;
-              const isPast    = to24hMin(prayer.time) < nowMin && !isNext;
-              const isDone    = !!prayed[prayer.name];
-              const isMissed  = isPast && !isDone;
-              const PIcon     = prayer.Icon;
+              const isNext = i === nextIdx;
+              const isPast = to24hMin(prayer.time) < nowMin && !isNext;
+              const isDone = !!prayed[prayer.name];
+              const isMissed = isPast && !isDone;
+              const PIcon = prayer.Icon;
 
               return (
                 <button
@@ -434,10 +618,10 @@ function PrayerPanel() {
                     isDone
                       ? "bg-emerald-500/10 border-emerald-500/30 shadow-sm ring-1 ring-emerald-500/20"
                       : isMissed
-                      ? "bg-amber-500/5 border-amber-500/20 opacity-70 hover:opacity-100 hover:border-amber-500/40"
-                      : isNext
-                      ? "bg-primary/8 border-primary/25 shadow-sm hover:bg-primary/12"
-                      : "border-border/40 bg-muted/20 hover:bg-muted/40 hover:border-border/60"
+                        ? "bg-amber-500/5 border-amber-500/20 opacity-70 hover:opacity-100 hover:border-amber-500/40"
+                        : isNext
+                          ? "bg-primary/8 border-primary/25 shadow-sm hover:bg-primary/12"
+                          : "border-border/40 bg-muted/20 hover:bg-muted/40 hover:border-border/60",
                   )}
                 >
                   {/* Done checkmark badge */}
@@ -451,37 +635,47 @@ function PrayerPanel() {
                     <span className="absolute top-2.5 right-2.5 size-1.5 rounded-full bg-primary animate-pulse" />
                   )}
 
-                  <div className={cn(
-                    "size-10 rounded-xl flex items-center justify-center shrink-0 transition-all",
-                    isDone
-                      ? "bg-emerald-500/15"
-                      : prayer.iconColor.replace("text-", "bg-") + "/10"
-                  )}>
-                    <PIcon className={cn(
-                      "size-5 transition-all",
-                      isDone ? "text-emerald-600" : prayer.iconColor
-                    )} />
+                  <div
+                    className={cn(
+                      "size-10 rounded-xl flex items-center justify-center shrink-0 transition-all",
+                      isDone
+                        ? "bg-emerald-500/15"
+                        : prayer.iconColor.replace("text-", "bg-") + "/10",
+                    )}
+                  >
+                    <PIcon
+                      className={cn(
+                        "size-5 transition-all",
+                        isDone ? "text-emerald-600" : prayer.iconColor,
+                      )}
+                    />
                   </div>
 
                   <div className="space-y-0.5">
-                    <p className={cn(
-                      "text-sm font-bold leading-tight",
-                      isDone ? "text-emerald-700 dark:text-emerald-400" : "text-foreground"
-                    )}>
+                    <p
+                      className={cn(
+                        "text-sm font-bold leading-tight",
+                        isDone ? "text-emerald-700 dark:text-emerald-400" : "text-foreground",
+                      )}
+                    >
                       {prayer.name}
                     </p>
-                    <p className={cn(
-                      "text-[11px] font-medium",
-                      isDone ? "text-emerald-600/70" : "text-muted-foreground"
-                    )}>
+                    <p
+                      className={cn(
+                        "text-[11px] font-medium",
+                        isDone ? "text-emerald-600/70" : "text-muted-foreground",
+                      )}
+                    >
                       {prayer.arabicName}
                     </p>
                   </div>
 
-                  <p className={cn(
-                    "text-sm font-bold font-mono tabular-nums",
-                    isDone ? "text-emerald-600" : prayer.iconColor
-                  )}>
+                  <p
+                    className={cn(
+                      "text-sm font-bold font-mono tabular-nums",
+                      isDone ? "text-emerald-600" : prayer.iconColor,
+                    )}
+                  >
                     {formatTime12(prayer.time)}
                   </p>
 
@@ -544,7 +738,7 @@ export function ActivitiesTab() {
                   "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap shrink-0",
                   active
                     ? "bg-background text-foreground shadow-sm border border-border/50"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/40",
                 )}
               >
                 <Icon className={cn("size-3.5", active && t.color)} />
@@ -562,8 +756,11 @@ export function ActivitiesTab() {
         {innerTab === "sports" && (
           <ActivityPanel
             storeKey="sports"
-            icon={Dumbbell} title="Training & Sports"
-            color="text-blue-600" bgColor="bg-blue-500/5" borderColor="border-blue-500/20"
+            icon={Dumbbell}
+            title="Training & Sports"
+            color="text-blue-600"
+            bgColor="bg-blue-500/5"
+            borderColor="border-blue-500/20"
             suggestions={suggestions.sports}
             presets={PRESET_SPORTS}
           />
@@ -572,8 +769,11 @@ export function ActivitiesTab() {
         {innerTab === "care" && (
           <ActivityPanel
             storeKey="care"
-            icon={Bath} title="Self-Care & Hygiene"
-            color="text-rose-600" bgColor="bg-rose-500/5" borderColor="border-rose-500/20"
+            icon={Bath}
+            title="Self-Care & Hygiene"
+            color="text-rose-600"
+            bgColor="bg-rose-500/5"
+            borderColor="border-rose-500/20"
             suggestions={suggestions.care}
             presets={PRESET_CARE}
           />
@@ -582,8 +782,11 @@ export function ActivitiesTab() {
         {innerTab === "food" && (
           <ActivityPanel
             storeKey="food"
-            icon={Utensils} title="Food & Nutrition"
-            color="text-amber-600" bgColor="bg-amber-500/5" borderColor="border-amber-500/20"
+            icon={Utensils}
+            title="Food & Nutrition"
+            color="text-amber-600"
+            bgColor="bg-amber-500/5"
+            borderColor="border-amber-500/20"
             suggestions={suggestions.food}
             presets={PRESET_FOOD}
           />
@@ -599,8 +802,11 @@ export function WorkingTab() {
     <div className="flex-1 overflow-y-auto scrollbar-thin">
       <ActivityPanel
         storeKey="working"
-        icon={Briefcase} title="Working Sessions"
-        color="text-violet-600" bgColor="bg-violet-500/5" borderColor="border-violet-500/20"
+        icon={Briefcase}
+        title="Working Sessions"
+        color="text-violet-600"
+        bgColor="bg-violet-500/5"
+        borderColor="border-violet-500/20"
         suggestions={WORKING_SUGGESTIONS}
         presets={PRESET_WORKING}
       />
@@ -613,8 +819,11 @@ export function LearningTab() {
     <div className="flex-1 overflow-y-auto scrollbar-thin">
       <ActivityPanel
         storeKey="learning"
-        icon={BookOpen} title="Learning & Study"
-        color="text-emerald-600" bgColor="bg-emerald-500/5" borderColor="border-emerald-500/20"
+        icon={BookOpen}
+        title="Learning & Study"
+        color="text-emerald-600"
+        bgColor="bg-emerald-500/5"
+        borderColor="border-emerald-500/20"
         suggestions={LEARNING_SUGGESTIONS}
         presets={PRESET_LEARNING}
       />

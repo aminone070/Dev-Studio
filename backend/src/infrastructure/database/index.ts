@@ -15,7 +15,10 @@ const connectionString = rawUrl
   .replace(/\?$/, "");
 
 if (!process.env.DATABASE_URL) {
-  console.warn("\x1b[33m%s\x1b[0m", "WARNING: DATABASE_URL is not set. Database operations will fail if called.");
+  console.warn(
+    "\x1b[33m%s\x1b[0m",
+    "WARNING: DATABASE_URL is not set. Database operations will fail if called.",
+  );
 }
 
 export const pool = new Pool({

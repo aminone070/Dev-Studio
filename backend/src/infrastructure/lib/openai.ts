@@ -13,7 +13,7 @@ export function getOpenAI(): OpenAI {
 
   if (!apiKey) {
     throw new Error(
-      "OpenAI API key is missing. Please configure OPENAI_API_KEY in your local environment variables or .env file."
+      "OpenAI API key is missing. Please configure OPENAI_API_KEY in your local environment variables or .env file.",
     );
   }
 

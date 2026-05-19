@@ -14,9 +14,7 @@ export function AuthGate() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const router = useRouter();
 
-  const isPublic = PUBLIC_ROUTES.some(
-    (r) => pathname === r || pathname.startsWith(r + "/"),
-  );
+  const isPublic = PUBLIC_ROUTES.some((r) => pathname === r || pathname.startsWith(r + "/"));
 
   const [loadingTime, setLoadingTime] = useState(0);
 
@@ -63,7 +61,11 @@ export function AuthGate() {
   }
 
   if (isPublic) {
-    return <ErrorBoundary><Outlet /></ErrorBoundary>;
+    return (
+      <ErrorBoundary>
+        <Outlet />
+      </ErrorBoundary>
+    );
   }
 
   if (!user) {

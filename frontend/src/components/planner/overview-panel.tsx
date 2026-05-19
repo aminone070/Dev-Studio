@@ -32,32 +32,63 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
   const todayTasks = tasks.filter((t) => t.date === today);
   const todayDone = todayTasks.filter((t) => t.status === "done").length;
 
-  const categoryBreakdown = (Object.keys(CATEGORY_LABELS) as (keyof typeof CATEGORY_LABELS)[]).map((cat) => {
-    const catTasks = tasks.filter((t) => t.category === cat);
-    const catDone = catTasks.filter((t) => t.status === "done").length;
-    return { cat, total: catTasks.length, done: catDone };
-  }).filter((c) => c.total > 0).sort((a, b) => b.total - a.total);
+  const categoryBreakdown = (Object.keys(CATEGORY_LABELS) as (keyof typeof CATEGORY_LABELS)[])
+    .map((cat) => {
+      const catTasks = tasks.filter((t) => t.category === cat);
+      const catDone = catTasks.filter((t) => t.status === "done").length;
+      return { cat, total: catTasks.length, done: catDone };
+    })
+    .filter((c) => c.total > 0)
+    .sort((a, b) => b.total - a.total);
 
   const stats = [
-    { label: "Total", value: totalTasks, icon: Circle, color: "text-foreground", bg: "bg-muted/60" },
-    { label: "Done", value: totalDone, icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-500/10" },
-    { label: "Active", value: totalInProgress, icon: Clock, color: "text-primary", bg: "bg-primary/10" },
-    { label: "Todo", value: totalTodo, icon: Target, color: "text-muted-foreground", bg: "bg-muted/60" },
+    {
+      label: "Total",
+      value: totalTasks,
+      icon: Circle,
+      color: "text-foreground",
+      bg: "bg-muted/60",
+    },
+    {
+      label: "Done",
+      value: totalDone,
+      icon: CheckCircle2,
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/10",
+    },
+    {
+      label: "Active",
+      value: totalInProgress,
+      icon: Clock,
+      color: "text-primary",
+      bg: "bg-primary/10",
+    },
+    {
+      label: "Todo",
+      value: totalTodo,
+      icon: Target,
+      color: "text-muted-foreground",
+      bg: "bg-muted/60",
+    },
   ];
 
   return (
     <div className="flex-1 overflow-y-auto scrollbar-thin p-4 sm:p-6">
       <div className="space-y-5">
-
         {/* Stats grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-2xl bg-card border border-border/60 p-4 flex flex-col items-center gap-1.5">
+            <div
+              key={s.label}
+              className="rounded-2xl bg-card border border-border/60 p-4 flex flex-col items-center gap-1.5"
+            >
               <div className={cn("size-9 rounded-xl flex items-center justify-center", s.bg)}>
                 <s.icon className={cn("size-4.5", s.color)} />
               </div>
               <p className="text-2xl font-bold tracking-tight">{s.value}</p>
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">{s.label}</p>
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+                {s.label}
+              </p>
             </div>
           ))}
         </div>
@@ -78,7 +109,9 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
             />
           </div>
           <div className="flex items-center justify-between mt-2.5">
-            <p className="text-xs text-muted-foreground">{totalDone} of {totalTasks} tasks completed</p>
+            <p className="text-xs text-muted-foreground">
+              {totalDone} of {totalTasks} tasks completed
+            </p>
             {highPriority > 0 && (
               <div className="flex items-center gap-1 text-[10px] font-semibold text-red-500">
                 <Flame className="size-3" />
@@ -93,12 +126,16 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
           <div className="rounded-2xl bg-primary/5 border border-primary/20 p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs font-bold uppercase tracking-widest text-primary/60">Today</p>
-              <span className="text-xs font-mono font-semibold text-primary">{todayDone}/{todayTasks.length}</span>
+              <span className="text-xs font-mono font-semibold text-primary">
+                {todayDone}/{todayTasks.length}
+              </span>
             </div>
             <div className="h-1.5 rounded-full bg-primary/10 overflow-hidden">
               <div
                 className="h-full rounded-full bg-primary transition-all"
-                style={{ width: `${todayTasks.length > 0 ? Math.round((todayDone / todayTasks.length) * 100) : 0}%` }}
+                style={{
+                  width: `${todayTasks.length > 0 ? Math.round((todayDone / todayTasks.length) * 100) : 0}%`,
+                }}
               />
             </div>
           </div>
@@ -123,7 +160,7 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
                       <div
                         className={cn(
                           "absolute bottom-0 left-0 right-0 rounded-xl transition-all duration-500",
-                          isToday ? "bg-primary" : "bg-primary/50"
+                          isToday ? "bg-primary" : "bg-primary/50",
                         )}
                         style={{ height: `${Math.max(pct * 100, 8)}%` }}
                       />
@@ -137,11 +174,15 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
                       </div>
                     )}
                   </div>
-                  <p className="text-[10px] font-mono text-muted-foreground">{done}/{total}</p>
-                  <p className={cn(
-                    "text-[10px] font-bold",
-                    isToday ? "text-primary" : "text-muted-foreground"
-                  )}>
+                  <p className="text-[10px] font-mono text-muted-foreground">
+                    {done}/{total}
+                  </p>
+                  <p
+                    className={cn(
+                      "text-[10px] font-bold",
+                      isToday ? "text-primary" : "text-muted-foreground",
+                    )}
+                  >
                     {d.getDate()}
                   </p>
                 </div>
@@ -162,10 +203,12 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
                 const CatIcon = CATEGORY_ICON_COMPONENTS[cat];
                 return (
                   <div key={cat} className="flex items-center gap-3">
-                    <div className={cn(
-                      "text-[10px] font-semibold px-2 py-1 rounded-lg flex items-center gap-1 shrink-0 w-28",
-                      CATEGORY_COLORS[cat]
-                    )}>
+                    <div
+                      className={cn(
+                        "text-[10px] font-semibold px-2 py-1 rounded-lg flex items-center gap-1 shrink-0 w-28",
+                        CATEGORY_COLORS[cat],
+                      )}
+                    >
                       <CatIcon className="size-3.5" />
                       {CATEGORY_LABELS[cat]}
                     </div>
@@ -189,7 +232,9 @@ export function OverviewPanel({ tasks, weekStart }: OverviewPanelProps) {
           <div className="text-center py-16 text-muted-foreground">
             <TrendingUp className="size-10 mx-auto mb-3 opacity-20" />
             <p className="text-sm font-medium">No tasks this week yet</p>
-            <p className="text-xs mt-1 opacity-60">Add tasks from the Schedule tab to track your progress here</p>
+            <p className="text-xs mt-1 opacity-60">
+              Add tasks from the Schedule tab to track your progress here
+            </p>
           </div>
         )}
       </div>

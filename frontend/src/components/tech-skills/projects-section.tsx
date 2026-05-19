@@ -13,8 +13,11 @@ interface SkillProject {
 }
 
 function loadProjects(areaId: string): SkillProject[] {
-  try { return JSON.parse(localStorage.getItem(`ds-skill-projects-${areaId}`) ?? "[]"); }
-  catch { return []; }
+  try {
+    return JSON.parse(localStorage.getItem(`ds-skill-projects-${areaId}`) ?? "[]");
+  } catch {
+    return [];
+  }
 }
 function saveProjects(areaId: string, projects: SkillProject[]) {
   try {
@@ -42,25 +45,48 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
   }, [data.id]);
 
   useEffect(() => {
-    if (triggerAdd) { setShowForm(true); setEditingId(null); setForm(EMPTY_FORM()); }
+    if (triggerAdd) {
+      setShowForm(true);
+      setEditingId(null);
+      setForm(EMPTY_FORM());
+    }
   }, [triggerAdd]);
 
-  const persist = (next: SkillProject[]) => { setProjects(next); saveProjects(data.id, next); };
+  const persist = (next: SkillProject[]) => {
+    setProjects(next);
+    saveProjects(data.id, next);
+  };
 
   const submit = () => {
     if (!form.title.trim()) return;
-    const tags = form.tags.split(",").map(t => t.trim()).filter(Boolean);
+    const tags = form.tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
     if (editingId) {
-      persist(projects.map(p =>
-        p.id === editingId ? { ...p, title: form.title.trim(), desc: form.desc.trim(), url: form.url.trim(), tags } : p
-      ));
+      persist(
+        projects.map((p) =>
+          p.id === editingId
+            ? { ...p, title: form.title.trim(), desc: form.desc.trim(), url: form.url.trim(), tags }
+            : p,
+        ),
+      );
     } else {
       persist([
         ...projects,
-        { id: crypto.randomUUID(), title: form.title.trim(), desc: form.desc.trim(), url: form.url.trim(), tags, createdAt: Date.now() },
+        {
+          id: crypto.randomUUID(),
+          title: form.title.trim(),
+          desc: form.desc.trim(),
+          url: form.url.trim(),
+          tags,
+          createdAt: Date.now(),
+        },
       ]);
     }
-    setShowForm(false); setEditingId(null); setForm(EMPTY_FORM());
+    setShowForm(false);
+    setEditingId(null);
+    setForm(EMPTY_FORM());
   };
 
   const startEdit = (p: SkillProject) => {
@@ -69,8 +95,12 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
     setShowForm(true);
   };
 
-  const remove = (id: string) => persist(projects.filter(p => p.id !== id));
-  const cancel = () => { setShowForm(false); setEditingId(null); setForm(EMPTY_FORM()); };
+  const remove = (id: string) => persist(projects.filter((p) => p.id !== id));
+  const cancel = () => {
+    setShowForm(false);
+    setEditingId(null);
+    setForm(EMPTY_FORM());
+  };
 
   return (
     <div className="space-y-6">
@@ -83,7 +113,11 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
         </div>
         {!showForm && (
           <button
-            onClick={() => { setShowForm(true); setEditingId(null); setForm(EMPTY_FORM()); }}
+            onClick={() => {
+              setShowForm(true);
+              setEditingId(null);
+              setForm(EMPTY_FORM());
+            }}
             className="shrink-0 inline-flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 rounded-lg text-sm font-medium hover:opacity-90 shadow-sm"
           >
             <Plus className="size-4" /> Add Project
@@ -99,27 +133,27 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
           <input
             autoFocus
             value={form.title}
-            onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            onKeyDown={e => e.key === "Escape" && cancel()}
+            onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+            onKeyDown={(e) => e.key === "Escape" && cancel()}
             placeholder="Project title…"
             className="w-full bg-background border border-border/60 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"
           />
           <textarea
             value={form.desc}
-            onChange={e => setForm(f => ({ ...f, desc: e.target.value }))}
+            onChange={(e) => setForm((f) => ({ ...f, desc: e.target.value }))}
             placeholder="Description — what this project demonstrates or achieves…"
             rows={3}
             className="w-full bg-background border border-border/60 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 resize-none transition-all"
           />
           <input
             value={form.url}
-            onChange={e => setForm(f => ({ ...f, url: e.target.value }))}
+            onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
             placeholder="Link — GitHub, live URL… (optional)"
             className="w-full bg-background border border-border/60 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"
           />
           <input
             value={form.tags}
-            onChange={e => setForm(f => ({ ...f, tags: e.target.value }))}
+            onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))}
             placeholder="Tags, comma-separated — e.g. React, TypeScript, API"
             className="w-full bg-background border border-border/60 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"
           />
@@ -143,7 +177,7 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
 
       {projects.length > 0 ? (
         <div className="grid sm:grid-cols-2 gap-4">
-          {projects.map(p => (
+          {projects.map((p) => (
             <div
               key={p.id}
               className="group relative p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all shadow-sm"
@@ -185,7 +219,7 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
 
               {p.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
-                  {p.tags.map(tag => (
+                  {p.tags.map((tag) => (
                     <span
                       key={tag}
                       className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-medium"
@@ -204,7 +238,9 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
                   className="mt-3 inline-flex items-center gap-1 text-[11px] text-muted-foreground hover:text-primary transition-colors"
                 >
                   <ExternalLink className="size-3" />
-                  <span className="truncate max-w-[180px]">{p.url.replace(/^https?:\/\//, "")}</span>
+                  <span className="truncate max-w-[180px]">
+                    {p.url.replace(/^https?:\/\//, "")}
+                  </span>
                 </a>
               )}
             </div>
@@ -216,7 +252,11 @@ export function ProjectsSection({ data, triggerAdd }: Props) {
           <p className="text-sm text-muted-foreground">No projects yet — add your first one</p>
           {!showForm && (
             <button
-              onClick={() => { setShowForm(true); setEditingId(null); setForm(EMPTY_FORM()); }}
+              onClick={() => {
+                setShowForm(true);
+                setEditingId(null);
+                setForm(EMPTY_FORM());
+              }}
               className="mt-3 text-xs text-primary hover:underline"
             >
               Add a project

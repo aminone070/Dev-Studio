@@ -4,14 +4,19 @@ import * as db from "@/lib/api";
 import { toast } from "sonner";
 import { Difficulty } from "@/types/common";
 
-export const createInterviewSlice: StateCreator<ForgeState, [["zustand/persist", unknown]], [], Partial<ForgeState>> = (set, get) => ({
+export const createInterviewSlice: StateCreator<
+  ForgeState,
+  [["zustand/persist", unknown]],
+  [],
+  Partial<ForgeState>
+> = (set, get) => ({
   toggleProgress: async (itemId, areaId) => {
     const current = !!get().userProgress[itemId];
     set((s) => ({
       userProgress: {
         ...s.userProgress,
-        [itemId]: !current
-      }
+        [itemId]: !current,
+      },
     }));
     try {
       await db.toggleProgress(itemId, areaId, !current);
@@ -21,8 +26,8 @@ export const createInterviewSlice: StateCreator<ForgeState, [["zustand/persist",
       set((s) => ({
         userProgress: {
           ...s.userProgress,
-          [itemId]: current
-        }
+          [itemId]: current,
+        },
       }));
     }
   },
@@ -30,9 +35,9 @@ export const createInterviewSlice: StateCreator<ForgeState, [["zustand/persist",
   upsertInterviewQuestion: async (q) => {
     const previous = get().interviewQuestions;
     set((s) => ({
-      interviewQuestions: s.interviewQuestions.some(x => x.id === q.id)
-        ? s.interviewQuestions.map((x: any) => x.id === q.id ? q : x)
-        : [q, ...s.interviewQuestions]
+      interviewQuestions: s.interviewQuestions.some((x) => x.id === q.id)
+        ? s.interviewQuestions.map((x: any) => (x.id === q.id ? q : x))
+        : [q, ...s.interviewQuestions],
     }));
     try {
       const saved = await db.upsertInterviewQuestion({
@@ -40,9 +45,13 @@ export const createInterviewSlice: StateCreator<ForgeState, [["zustand/persist",
         isGlobal: false,
       });
       if (saved?.id && saved.id !== q.id) {
-        set((s) => ({ interviewQuestions: s.interviewQuestions.map(x => x.id === q.id ? { ...x, id: saved.id as string } : x) }));
+        set((s) => ({
+          interviewQuestions: s.interviewQuestions.map((x) =>
+            x.id === q.id ? { ...x, id: saved.id as string } : x,
+          ),
+        }));
       }
-      toast.success('Question saved!');
+      toast.success("Question saved!");
     } catch (err: any) {
       set({ interviewQuestions: previous });
       toast.error(`Failed to save: ${err.message}`);
@@ -50,22 +59,19 @@ export const createInterviewSlice: StateCreator<ForgeState, [["zustand/persist",
   },
   deleteInterviewQuestion: async (id) => {
     const previous = get().interviewQuestions;
-    set((s) => ({ interviewQuestions: s.interviewQuestions.filter(x => x.id !== id) }));
+    set((s) => ({ interviewQuestions: s.interviewQuestions.filter((x) => x.id !== id) }));
 
-    toast.promise(
-      db.deleteInterviewQuestion(id),
-      {
-        loading: 'Deleting question...',
-        success: 'Question deleted!',
-        error: (err) => {
-          set({ interviewQuestions: previous });
-          return `Failed to delete: ${err.message}`;
-        }
-      }
-    );
+    toast.promise(db.deleteInterviewQuestion(id), {
+      loading: "Deleting question...",
+      success: "Question deleted!",
+      error: (err) => {
+        set({ interviewQuestions: previous });
+        return `Failed to delete: ${err.message}`;
+      },
+    });
   },
   toggleFavoriteInterviewQuestion: async (id) => {
-    const q = get().interviewQuestions.find(x => x.id === id);
+    const q = get().interviewQuestions.find((x) => x.id === id);
     if (q) await get().upsertInterviewQuestion({ ...q, favorite: !q.favorite });
   },
 });

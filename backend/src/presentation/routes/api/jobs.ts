@@ -9,8 +9,13 @@ import { scrapeIndeedRSS } from "../../../infrastructure/lib/scrapers/indeed.js"
 import { scrapeWuzzuf } from "../../../infrastructure/lib/scrapers/wuzzuf.js";
 import { scrapeBayt } from "../../../infrastructure/lib/scrapers/bayt.js";
 import { scrapeRemoteOKTagged } from "../../../infrastructure/lib/scrapers/remoteok.js";
-import { getSaved, postSaved, deleteSavedById, getRemote, getScrape } from "../../controllers/jobs.controller.js";
-
+import {
+  getSaved,
+  postSaved,
+  deleteSavedById,
+  getRemote,
+  getScrape,
+} from "../../controllers/jobs.controller.js";
 
 const router = Router();
 

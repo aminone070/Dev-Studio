@@ -52,7 +52,10 @@ export const securityArea: SkillAreaData = {
     { id: "sec-owasp", label: "OWASP Top 10 reviewed and mitigations applied" },
     { id: "sec-input", label: "All user input validated and sanitized server-side" },
     { id: "sec-sql", label: "Parameterized queries used everywhere — no SQL string concatenation" },
-    { id: "sec-headers", label: "Security headers set: HSTS, CSP, X-Frame-Options, Referrer-Policy" },
+    {
+      id: "sec-headers",
+      label: "Security headers set: HSTS, CSP, X-Frame-Options, Referrer-Policy",
+    },
     { id: "sec-auth", label: "Passwords hashed with bcrypt/argon2 — never MD5 or SHA-1" },
     { id: "sec-secrets", label: "Secrets in environment variables / vault — never in source code" },
     { id: "sec-deps", label: "Dependencies audited for CVEs on every build (npm audit / snyk)" },
@@ -91,8 +94,16 @@ export const securityArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "OWASP Top 10", url: "https://owasp.org/www-project-top-ten/", desc: "The 10 most critical web application security risks." },
-        { label: "PortSwigger Web Security Academy", url: "https://portswigger.net/web-security", desc: "Free hands-on labs for every major web vulnerability." },
+        {
+          label: "OWASP Top 10",
+          url: "https://owasp.org/www-project-top-ten/",
+          desc: "The 10 most critical web application security risks.",
+        },
+        {
+          label: "PortSwigger Web Security Academy",
+          url: "https://portswigger.net/web-security",
+          desc: "Free hands-on labs for every major web vulnerability.",
+        },
       ],
     },
     {
@@ -125,8 +136,16 @@ export const securityArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "OWASP Authentication Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html", desc: "Complete guide to secure authentication implementation." },
-        { label: "JWT.io", url: "https://jwt.io", desc: "Decode, verify, and generate JWT tokens — with library references." },
+        {
+          label: "OWASP Authentication Cheat Sheet",
+          url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+          desc: "Complete guide to secure authentication implementation.",
+        },
+        {
+          label: "JWT.io",
+          url: "https://jwt.io",
+          desc: "Decode, verify, and generate JWT tokens — with library references.",
+        },
       ],
     },
     {
@@ -155,8 +174,16 @@ export const securityArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Crypto 101 (free book)", url: "https://www.crypto101.io", desc: "Free cryptography primer — block ciphers, hashing, TLS, and public-key infrastructure." },
-        { label: "SSL Labs Server Test", url: "https://www.ssllabs.com/ssltest/", desc: "Grade your TLS configuration and find weak cipher suites." },
+        {
+          label: "Crypto 101 (free book)",
+          url: "https://www.crypto101.io",
+          desc: "Free cryptography primer — block ciphers, hashing, TLS, and public-key infrastructure.",
+        },
+        {
+          label: "SSL Labs Server Test",
+          url: "https://www.ssllabs.com/ssltest/",
+          desc: "Grade your TLS configuration and find weak cipher suites.",
+        },
       ],
     },
     {
@@ -185,8 +212,16 @@ export const securityArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "OWASP API Security Top 10", url: "https://owasp.org/www-project-api-security/", desc: "The API-specific version of the OWASP Top 10." },
-        { label: "OWASP API Security Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html", desc: "REST API security best practices from OWASP." },
+        {
+          label: "OWASP API Security Top 10",
+          url: "https://owasp.org/www-project-api-security/",
+          desc: "The API-specific version of the OWASP Top 10.",
+        },
+        {
+          label: "OWASP API Security Cheat Sheet",
+          url: "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+          desc: "REST API security best practices from OWASP.",
+        },
       ],
     },
     {
@@ -215,8 +250,16 @@ export const securityArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "HackTheBox", url: "https://www.hackthebox.com", desc: "Hands-on security labs — CTF challenges and career paths for developers." },
-        { label: "AWS Security Best Practices", url: "https://docs.aws.amazon.com/security/", desc: "AWS security documentation — IAM, VPC, encryption, compliance." },
+        {
+          label: "HackTheBox",
+          url: "https://www.hackthebox.com",
+          desc: "Hands-on security labs — CTF challenges and career paths for developers.",
+        },
+        {
+          label: "AWS Security Best Practices",
+          url: "https://docs.aws.amazon.com/security/",
+          desc: "AWS security documentation — IAM, VPC, encryption, compliance.",
+        },
       ],
     },
   ],

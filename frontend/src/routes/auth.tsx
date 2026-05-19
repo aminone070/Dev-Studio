@@ -33,7 +33,9 @@ function AuthPage() {
     }
   }, [isReady, user, navigate]);
 
-  const errorMessage = error ? (ERROR_MESSAGES[error] ?? "Something went wrong. Please try again.") : undefined;
+  const errorMessage = error
+    ? (ERROR_MESSAGES[error] ?? "Something went wrong. Please try again.")
+    : undefined;
 
   return (
     <AuthLayout showBackHome={false}>

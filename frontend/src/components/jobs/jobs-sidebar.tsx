@@ -13,8 +13,11 @@ interface Props {
 }
 
 const statusLabel: Record<string, string> = {
-  saved: "Saved", applied: "Applied", interview: "Interview",
-  offer: "Offer", rejected: "Rejected",
+  saved: "Saved",
+  applied: "Applied",
+  interview: "Interview",
+  offer: "Offer",
+  rejected: "Rejected",
 };
 
 type JobFilter = "all" | "applied" | "interview";
@@ -39,10 +42,13 @@ export function JobsSidebar({ jobs, activeId, onSelect, onAdd }: Props) {
 
   const { page, setPage, totalPages, paged, total, pageSize } = usePagination(filtered, 20);
 
-  const grouped = JOB_STATUSES.reduce<Record<string, SavedJob[]>>((acc, s) => {
-    acc[s] = paged.filter((j) => j.status === s);
-    return acc;
-  }, {} as Record<string, SavedJob[]>);
+  const grouped = JOB_STATUSES.reduce<Record<string, SavedJob[]>>(
+    (acc, s) => {
+      acc[s] = paged.filter((j) => j.status === s);
+      return acc;
+    },
+    {} as Record<string, SavedJob[]>,
+  );
 
   return (
     <div className="flex flex-col h-full min-h-0">
@@ -108,7 +114,9 @@ export function JobsSidebar({ jobs, activeId, onSelect, onAdd }: Props) {
               {searchQuery || activeFilter !== "all" ? "No matching jobs" : "No jobs tracked yet."}
             </p>
             {!searchQuery && activeFilter === "all" && (
-              <p className="text-[10px] text-muted-foreground/60">Browse live jobs or add one manually.</p>
+              <p className="text-[10px] text-muted-foreground/60">
+                Browse live jobs or add one manually.
+              </p>
             )}
           </div>
         )}
@@ -133,14 +141,20 @@ export function JobsSidebar({ jobs, activeId, onSelect, onAdd }: Props) {
                     >
                       <p className="text-xs font-medium truncate leading-snug">{job.title}</p>
                       {job.company && (
-                        <p className="text-[10px] text-muted-foreground truncate mt-0.5">{job.company}</p>
+                        <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                          {job.company}
+                        </p>
                       )}
                       <div className="flex items-center gap-1.5 mt-1">
-                        <span className={`text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${STATUS_COLORS[job.status] ?? ""}`}>
+                        <span
+                          className={`text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${STATUS_COLORS[job.status] ?? ""}`}
+                        >
                           {statusLabel[job.status] ?? job.status}
                         </span>
                         {job.platform && (
-                          <span className="text-[9px] text-muted-foreground truncate">{job.platform}</span>
+                          <span className="text-[9px] text-muted-foreground truncate">
+                            {job.platform}
+                          </span>
                         )}
                       </div>
                     </button>
@@ -152,7 +166,13 @@ export function JobsSidebar({ jobs, activeId, onSelect, onAdd }: Props) {
         })}
       </div>
 
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
 
       {/* Bottom Action */}
       <div className="px-2 pb-2 shrink-0">

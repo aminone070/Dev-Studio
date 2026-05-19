@@ -23,12 +23,18 @@ export const Route = createFileRoute("/jobs")({
 
 import { JOBS_TABS } from "@/constants";
 
-
 function mapJob(x: any): SavedJob {
   return {
-    id: x.id, title: x.title, company: x.company ?? "", location: x.location ?? "",
-    url: x.url ?? "", platform: x.platform ?? "", status: x.status ?? "saved",
-    salary: x.salary ?? "", remote: x.remote ?? false, tags: x.tags ?? [],
+    id: x.id,
+    title: x.title,
+    company: x.company ?? "",
+    location: x.location ?? "",
+    url: x.url ?? "",
+    platform: x.platform ?? "",
+    status: x.status ?? "saved",
+    salary: x.salary ?? "",
+    remote: x.remote ?? false,
+    tags: x.tags ?? [],
     notes: x.notes ?? "",
     createdAt: x.created_at ? new Date(x.created_at).getTime() : Date.now(),
     updatedAt: x.updated_at ? new Date(x.updated_at).getTime() : Date.now(),
@@ -36,25 +42,40 @@ function mapJob(x: any): SavedJob {
 }
 function mapOffer(x: any): FreelanceOffer {
   return {
-    id: x.id, title: x.title, client: x.client ?? "", platform: x.platform ?? "",
-    budget: x.budget ?? "", currency: x.currency ?? "USD", status: x.status ?? "new",
-    description: x.description ?? "", url: x.url ?? "", deadline: x.deadline ?? "",
-    tags: x.tags ?? [], notes: x.notes ?? "",
+    id: x.id,
+    title: x.title,
+    client: x.client ?? "",
+    platform: x.platform ?? "",
+    budget: x.budget ?? "",
+    currency: x.currency ?? "USD",
+    status: x.status ?? "new",
+    description: x.description ?? "",
+    url: x.url ?? "",
+    deadline: x.deadline ?? "",
+    tags: x.tags ?? [],
+    notes: x.notes ?? "",
     createdAt: x.created_at ? new Date(x.created_at).getTime() : Date.now(),
     updatedAt: x.updated_at ? new Date(x.updated_at).getTime() : Date.now(),
   };
 }
 function mapService(x: any): MyService {
   return {
-    id: x.id, title: x.title, platform: x.platform ?? "", url: x.url ?? "",
-    category: x.category ?? "", price: x.price ?? "", currency: x.currency ?? "USD",
-    status: x.status ?? "active", description: x.description ?? "",
-    deliveryDays: x.delivery_days ?? 3, tags: x.tags ?? [], notes: x.notes ?? "",
+    id: x.id,
+    title: x.title,
+    platform: x.platform ?? "",
+    url: x.url ?? "",
+    category: x.category ?? "",
+    price: x.price ?? "",
+    currency: x.currency ?? "USD",
+    status: x.status ?? "active",
+    description: x.description ?? "",
+    deliveryDays: x.delivery_days ?? 3,
+    tags: x.tags ?? [],
+    notes: x.notes ?? "",
     createdAt: x.created_at ? new Date(x.created_at).getTime() : Date.now(),
     updatedAt: x.updated_at ? new Date(x.updated_at).getTime() : Date.now(),
   };
 }
-
 
 function JobsPage() {
   const { tab = "jobs" } = Route.useSearch();
@@ -98,25 +119,36 @@ function JobsPage() {
     }
   }, []);
 
-  useEffect(() => { loadJobs(); loadOffers(); loadServices(); }, [loadJobs, loadOffers, loadServices]);
+  useEffect(() => {
+    loadJobs();
+    loadOffers();
+    loadServices();
+  }, [loadJobs, loadOffers, loadServices]);
 
   useEffect(() => {
-    setActiveJobId(null); setNewJob(false);
-    setActiveOfferId(null); setNewOffer(false);
-    setActiveServiceId(null); setNewService(false);
+    setActiveJobId(null);
+    setNewJob(false);
+    setActiveOfferId(null);
+    setNewOffer(false);
+    setActiveServiceId(null);
+    setNewService(false);
   }, [tab]);
 
   const handleSaveJob = async (data: Partial<SavedJob>) => {
     const body = activeJobId ? { ...data, id: activeJobId } : data;
     const r = await fetch("/api/jobs/saved", {
-      method: "POST", headers: { "Content-Type": "application/json" },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!r.ok) { toast.error("Failed to save."); return; }
+    if (!r.ok) {
+      toast.error("Failed to save.");
+      return;
+    }
     const saved = mapJob(await r.json());
     setJobs((prev) => {
       const idx = prev.findIndex((j) => j.id === saved.id);
-      return idx >= 0 ? prev.map((j) => j.id === saved.id ? saved : j) : [...prev, saved];
+      return idx >= 0 ? prev.map((j) => (j.id === saved.id ? saved : j)) : [...prev, saved];
     });
     setActiveJobId(saved.id);
     setNewJob(false);
@@ -134,14 +166,18 @@ function JobsPage() {
   const handleSaveOffer = async (data: Partial<FreelanceOffer>) => {
     const body = activeOfferId ? { ...data, id: activeOfferId } : data;
     const r = await fetch("/api/jobs/offers", {
-      method: "POST", headers: { "Content-Type": "application/json" },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!r.ok) { toast.error("Failed to save."); return; }
+    if (!r.ok) {
+      toast.error("Failed to save.");
+      return;
+    }
     const saved = mapOffer(await r.json());
     setOffers((prev) => {
       const idx = prev.findIndex((o) => o.id === saved.id);
-      return idx >= 0 ? prev.map((o) => o.id === saved.id ? saved : o) : [...prev, saved];
+      return idx >= 0 ? prev.map((o) => (o.id === saved.id ? saved : o)) : [...prev, saved];
     });
     setActiveOfferId(saved.id);
     setNewOffer(false);
@@ -159,14 +195,18 @@ function JobsPage() {
   const handleSaveService = async (data: Partial<MyService>) => {
     const body = activeServiceId ? { ...data, id: activeServiceId } : data;
     const r = await fetch("/api/jobs/services", {
-      method: "POST", headers: { "Content-Type": "application/json" },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!r.ok) { toast.error("Failed to save."); return; }
+    if (!r.ok) {
+      toast.error("Failed to save.");
+      return;
+    }
     const saved = mapService(await r.json());
     setServices((prev) => {
       const idx = prev.findIndex((s) => s.id === saved.id);
-      return idx >= 0 ? prev.map((s) => s.id === saved.id ? saved : s) : [...prev, saved];
+      return idx >= 0 ? prev.map((s) => (s.id === saved.id ? saved : s)) : [...prev, saved];
     });
     setActiveServiceId(saved.id);
     setNewService(false);
@@ -181,8 +221,8 @@ function JobsPage() {
     toast.success("Service removed.");
   };
 
-  const activeJob     = jobs.find((j) => j.id === activeJobId) ?? null;
-  const activeOffer   = offers.find((o) => o.id === activeOfferId) ?? null;
+  const activeJob = jobs.find((j) => j.id === activeJobId) ?? null;
+  const activeOffer = offers.find((o) => o.id === activeOfferId) ?? null;
   const activeService = services.find((s) => s.id === activeServiceId) ?? null;
 
   return (
@@ -197,7 +237,12 @@ function JobsPage() {
         <TabNav
           tabs={JOBS_TABS.map((t) => ({
             ...t,
-            badge: t.id === "jobs" ? jobs.length : t.id === "offers" ? offers.length : services.length || undefined,
+            badge:
+              t.id === "jobs"
+                ? jobs.length
+                : t.id === "offers"
+                  ? offers.length
+                  : services.length || undefined,
             onClick: () => navigate({ search: { tab: t.id } }),
           }))}
           activeTab={tab}
@@ -211,8 +256,14 @@ function JobsPage() {
               <JobsSidebar
                 jobs={jobs}
                 activeId={activeJobId}
-                onSelect={(id) => { setActiveJobId(id); setNewJob(false); }}
-                onAdd={() => { setActiveJobId(null); setNewJob(true); }}
+                onSelect={(id) => {
+                  setActiveJobId(id);
+                  setNewJob(false);
+                }}
+                onAdd={() => {
+                  setActiveJobId(null);
+                  setNewJob(true);
+                }}
               />
             }
           >
@@ -222,7 +273,10 @@ function JobsPage() {
               onSave={handleSaveJob}
               onDelete={handleDeleteJob}
               onSaveRemote={handleSaveJob}
-              onBack={() => { setActiveJobId(null); setNewJob(false); }}
+              onBack={() => {
+                setActiveJobId(null);
+                setNewJob(false);
+              }}
             />
           </SplitLayout>
         )}
@@ -233,8 +287,14 @@ function JobsPage() {
               <OffersSidebar
                 offers={offers}
                 activeId={activeOfferId}
-                onSelect={(id) => { setActiveOfferId(id); setNewOffer(false); }}
-                onAdd={() => { setActiveOfferId(null); setNewOffer(true); }}
+                onSelect={(id) => {
+                  setActiveOfferId(id);
+                  setNewOffer(false);
+                }}
+                onAdd={() => {
+                  setActiveOfferId(null);
+                  setNewOffer(true);
+                }}
               />
             }
           >
@@ -253,8 +313,14 @@ function JobsPage() {
               <ServicesSidebar
                 services={services}
                 activeId={activeServiceId}
-                onSelect={(id) => { setActiveServiceId(id); setNewService(false); }}
-                onAdd={() => { setActiveServiceId(null); setNewService(true); }}
+                onSelect={(id) => {
+                  setActiveServiceId(id);
+                  setNewService(false);
+                }}
+                onAdd={() => {
+                  setActiveServiceId(null);
+                  setNewService(true);
+                }}
               />
             }
           >

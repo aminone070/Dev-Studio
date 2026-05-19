@@ -81,14 +81,26 @@ export const timeManagementSubArea: SubArea = {
   ],
   checklist: [
     { id: "time-block-week", label: "Next week's deep work blocks scheduled" },
-    { id: "frog-identified",  label: "Most important task identified for tomorrow" },
+    { id: "frog-identified", label: "Most important task identified for tomorrow" },
     { id: "distractions-blocked", label: "Notifications off during focus sessions" },
-    { id: "weekly-review",   label: "Weekly review completed every Friday" },
+    { id: "weekly-review", label: "Weekly review completed every Friday" },
   ],
   resources: [
-    { label: "Deep Work — Cal Newport",       url: "https://calnewport.com/deep-work/",  desc: "The definitive case for focused, distraction-free work and how to cultivate it." },
-    { label: "Getting Things Done — David Allen", url: "https://gettingthingsdone.com/", desc: "Trusted productivity system for capturing and processing all your commitments." },
-    { label: "The Eisenhower Matrix",          url: "https://todoist.com/productivity-methods/eisenhower-matrix", desc: "Visual guide to the 4-quadrant prioritisation framework." },
+    {
+      label: "Deep Work — Cal Newport",
+      url: "https://calnewport.com/deep-work/",
+      desc: "The definitive case for focused, distraction-free work and how to cultivate it.",
+    },
+    {
+      label: "Getting Things Done — David Allen",
+      url: "https://gettingthingsdone.com/",
+      desc: "Trusted productivity system for capturing and processing all your commitments.",
+    },
+    {
+      label: "The Eisenhower Matrix",
+      url: "https://todoist.com/productivity-methods/eisenhower-matrix",
+      desc: "Visual guide to the 4-quadrant prioritisation framework.",
+    },
   ],
 };
 
@@ -122,8 +134,16 @@ export const growthMindsetSubArea: SubArea = {
     },
   ],
   resources: [
-    { label: "Mindset — Carol Dweck", url: "https://www.mindsetonline.com/",   desc: "The original research on fixed vs growth mindset and how it shapes achievement." },
-    { label: "Grit — Angela Duckworth", url: "https://angeladuckworth.com/grit-book/", desc: "How passion + perseverance outperforms raw talent over long time horizons." },
+    {
+      label: "Mindset — Carol Dweck",
+      url: "https://www.mindsetonline.com/",
+      desc: "The original research on fixed vs growth mindset and how it shapes achievement.",
+    },
+    {
+      label: "Grit — Angela Duckworth",
+      url: "https://angeladuckworth.com/grit-book/",
+      desc: "How passion + perseverance outperforms raw talent over long time horizons.",
+    },
   ],
 };
 
@@ -161,7 +181,15 @@ export const mentalModelsSubArea: SubArea = {
     },
   ],
   resources: [
-    { label: "The Great Mental Models — Farnam Street", url: "https://fs.blog/tgmm/",   desc: "A curated collection of the most useful mental models across disciplines." },
-    { label: "Poor Charlie's Almanack",   url: "https://www.stripe.press/poor-charlies-almanack", desc: "Charlie Munger's worldly wisdom through mental models." },
+    {
+      label: "The Great Mental Models — Farnam Street",
+      url: "https://fs.blog/tgmm/",
+      desc: "A curated collection of the most useful mental models across disciplines.",
+    },
+    {
+      label: "Poor Charlie's Almanack",
+      url: "https://www.stripe.press/poor-charlies-almanack",
+      desc: "Charlie Munger's worldly wisdom through mental models.",
+    },
   ],
 };

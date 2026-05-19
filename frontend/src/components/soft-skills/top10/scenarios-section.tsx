@@ -46,7 +46,10 @@ export function ScenariosSection({
         </div>
         {!showAddScenario && (
           <button
-            onClick={() => { onShowAdd(); onSetEditing(null); }}
+            onClick={() => {
+              onShowAdd();
+              onSetEditing(null);
+            }}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-all"
           >
             <Plus className="size-3" /> Add Scenario
@@ -62,8 +65,8 @@ export function ScenariosSection({
           <span className="text-blue-400 font-medium">Situation</span>,{" "}
           <span className="text-amber-400 font-medium">Task</span>,{" "}
           <span className="text-primary font-medium">Action</span>,{" "}
-          <span className="text-emerald-400 font-medium">Result</span>.
-          Prepare 2–3 per question for flexibility.
+          <span className="text-emerald-400 font-medium">Result</span>. Prepare 2–3 per question for
+          flexibility.
         </p>
       </div>
 
@@ -71,7 +74,10 @@ export function ScenariosSection({
       {showAddScenario && (
         <div className="mb-4">
           <ScenarioForm
-            onSave={(data) => { onAddScenario(data); onHideAdd(); }}
+            onSave={(data) => {
+              onAddScenario(data);
+              onHideAdd();
+            }}
             onCancel={onHideAdd}
           />
         </div>
@@ -84,18 +90,27 @@ export function ScenariosSection({
             <div key={sc.id}>
               <ScenarioForm
                 initial={sc}
-                onSave={(data) => { onUpdateScenario(sc.id, data); onSetEditing(null); }}
+                onSave={(data) => {
+                  onUpdateScenario(sc.id, data);
+                  onSetEditing(null);
+                }}
                 onCancel={() => onSetEditing(null)}
               />
             </div>
           ) : confirmDeleteS === sc.id ? (
-            <div key={sc.id} className="rounded-2xl border border-red-500/30 bg-red-500/5 p-4 flex items-center gap-3">
+            <div
+              key={sc.id}
+              className="rounded-2xl border border-red-500/30 bg-red-500/5 p-4 flex items-center gap-3"
+            >
               <AlertCircle className="size-4 text-red-400 shrink-0" />
               <p className="flex-1 text-xs text-muted-foreground">
                 Delete <span className="font-semibold text-foreground">"{sc.title}"</span>?
               </p>
               <button
-                onClick={() => { onDeleteScenario(sc.id); onSetConfirmDelete(null); }}
+                onClick={() => {
+                  onDeleteScenario(sc.id);
+                  onSetConfirmDelete(null);
+                }}
                 className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all"
               >
                 <Trash2 className="size-3" /> Delete
@@ -111,7 +126,10 @@ export function ScenariosSection({
             <ScenarioCard
               key={sc.id}
               scenario={sc}
-              onEdit={() => { onSetEditing(sc.id); onHideAdd(); }}
+              onEdit={() => {
+                onSetEditing(sc.id);
+                onHideAdd();
+              }}
               onDelete={() => onSetConfirmDelete(sc.id)}
             />
           ),

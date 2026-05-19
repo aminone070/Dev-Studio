@@ -18,12 +18,12 @@
 
 ### 🌿 Branch Naming Style
 
-| Type | Branch Pattern | Example |
-|---|---|---|
-| ✨ **Feature** | `feature/short-description` | `feature/prompt-versioning` |
-| 🐛 **Bug Fix** | `fix/short-description` | `fix/date-serialization` |
-| 📝 **Documentation** | `docs/short-description` | `docs/update-architecture` |
-| ⚡ **Refactoring** | `refactor/short-description` | `refactor/clean-routes` |
+| Type                 | Branch Pattern               | Example                     |
+| -------------------- | ---------------------------- | --------------------------- |
+| ✨ **Feature**       | `feature/short-description`  | `feature/prompt-versioning` |
+| 🐛 **Bug Fix**       | `fix/short-description`      | `fix/date-serialization`    |
+| 📝 **Documentation** | `docs/short-description`     | `docs/update-architecture`  |
+| ⚡ **Refactoring**   | `refactor/short-description` | `refactor/clean-routes`     |
 
 ---
 
@@ -43,9 +43,9 @@ chore: upgrade package dependencies
 
 ## 💅 Code Quality & Standards
 
-* **100% Type-Safe**: Use strict TypeScript definitions across the entire workspace. Avoid using `any` whenever possible.
-* **Component Cohesion**: Keep frontend components focused, small, and reusable. Avoid bloat.
-* **Pre-commit Formatting**: Always format and check code style using Prettier and ESLint.
+- **100% Type-Safe**: Use strict TypeScript definitions across the entire workspace. Avoid using `any` whenever possible.
+- **Component Cohesion**: Keep frontend components focused, small, and reusable. Avoid bloat.
+- **Pre-commit Formatting**: Always format and check code style using Prettier and ESLint.
 
 ---
 

@@ -1,23 +1,34 @@
-import { Mic, Handshake, Swords, Wifi, Terminal, GitPullRequest, Clock, Sparkles, Brain, Repeat2 } from "lucide-react";
+import {
+  Mic,
+  Handshake,
+  Swords,
+  Wifi,
+  Terminal,
+  GitPullRequest,
+  Clock,
+  Sparkles,
+  Brain,
+  Repeat2,
+} from "lucide-react";
 import { SkillArea } from "@/components/tech-skills/skill-area";
 import { SOFT_SKILLS_DATA } from "@/data/soft";
 
 export const SOFT_SKILL_GROUPS: Record<string, { id: string; label: string; icon: any }[]> = {
   communication: [
-    { id: "speaking",    label: "Public Speaking", icon: Mic },
-    { id: "negotiation", label: "Negotiation",     icon: Handshake },
+    { id: "speaking", label: "Public Speaking", icon: Mic },
+    { id: "negotiation", label: "Negotiation", icon: Handshake },
   ],
   leadership: [
-    { id: "time",          label: "Time Management", icon: Clock },
-    { id: "growth",        label: "Growth Mindset",  icon: Sparkles },
-    { id: "mental-models", label: "Mental Models",   icon: Brain },
+    { id: "time", label: "Time Management", icon: Clock },
+    { id: "growth", label: "Growth Mindset", icon: Sparkles },
+    { id: "mental-models", label: "Mental Models", icon: Brain },
   ],
   teamwork: [
-    { id: "conflict",      label: "Conflict Resolution",  icon: Swords },
-    { id: "remote",        label: "Remote Collaboration",  icon: Wifi },
-    { id: "pairing",       label: "Pair Programming",      icon: Terminal },
-    { id: "code-review",   label: "Code Review Culture",   icon: GitPullRequest },
-    { id: "agile",         label: "Agile / Scrum",         icon: Repeat2 },
+    { id: "conflict", label: "Conflict Resolution", icon: Swords },
+    { id: "remote", label: "Remote Collaboration", icon: Wifi },
+    { id: "pairing", label: "Pair Programming", icon: Terminal },
+    { id: "code-review", label: "Code Review Culture", icon: GitPullRequest },
+    { id: "agile", label: "Agile / Scrum", icon: Repeat2 },
   ],
 };
 

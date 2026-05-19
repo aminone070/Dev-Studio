@@ -21,7 +21,6 @@ export const Route = createFileRoute("/connectors")({
   component: ConnectorsPage,
 });
 
-
 function ConnectorsPage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
@@ -55,7 +54,7 @@ function ConnectorsPage() {
   };
 
   const handleUpdateConnector = (updates: Partial<Connector>) => {
-    const current = connectors.find(c => c.id === activeConnectorId);
+    const current = connectors.find((c) => c.id === activeConnectorId);
     if (!current) return;
     upsertConnector({ ...current, ...updates, updatedAt: Date.now() });
   };
@@ -65,11 +64,7 @@ function ConnectorsPage() {
   return (
     <PageContainer>
       <PageSection>
-        <PageHeader
-          icon={Users}
-          title="Connectors"
-          className="mb-4"
-        />
+        <PageHeader icon={Users} title="Connectors" className="mb-4" />
         <TabNav
           tabs={CONNECTORS_TABS.map((t) => ({
             ...t,

@@ -89,9 +89,21 @@ export const performanceArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "web.dev — Performance", url: "https://web.dev/performance/", desc: "Core Web Vitals, rendering, and browser performance from Google." },
-        { label: "Chrome DevTools Performance", url: "https://developer.chrome.com/docs/devtools/performance/", desc: "How to profile, flame charts, long tasks, and memory leaks." },
-        { label: "Lighthouse Docs", url: "https://developer.chrome.com/docs/lighthouse/", desc: "Automated auditing for performance, accessibility, SEO, and best practices." },
+        {
+          label: "web.dev — Performance",
+          url: "https://web.dev/performance/",
+          desc: "Core Web Vitals, rendering, and browser performance from Google.",
+        },
+        {
+          label: "Chrome DevTools Performance",
+          url: "https://developer.chrome.com/docs/devtools/performance/",
+          desc: "How to profile, flame charts, long tasks, and memory leaks.",
+        },
+        {
+          label: "Lighthouse Docs",
+          url: "https://developer.chrome.com/docs/lighthouse/",
+          desc: "Automated auditing for performance, accessibility, SEO, and best practices.",
+        },
       ],
     },
     {
@@ -120,7 +132,11 @@ export const performanceArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Systems Performance — Brendan Gregg", url: "https://www.brendangregg.com/systems-performance.html", desc: "CPU, memory, storage, and network performance analysis using flame graphs." },
+        {
+          label: "Systems Performance — Brendan Gregg",
+          url: "https://www.brendangregg.com/systems-performance.html",
+          desc: "CPU, memory, storage, and network performance analysis using flame graphs.",
+        },
       ],
     },
     {
@@ -149,8 +165,16 @@ export const performanceArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Use The Index, Luke", url: "https://use-the-index-luke.com", desc: "SQL performance explained — how indexes really work, query plans, and tuning." },
-        { label: "PostgreSQL EXPLAIN documentation", url: "https://www.postgresql.org/docs/current/using-explain.html", desc: "Official guide to reading query plans in Postgres." },
+        {
+          label: "Use The Index, Luke",
+          url: "https://use-the-index-luke.com",
+          desc: "SQL performance explained — how indexes really work, query plans, and tuning.",
+        },
+        {
+          label: "PostgreSQL EXPLAIN documentation",
+          url: "https://www.postgresql.org/docs/current/using-explain.html",
+          desc: "Official guide to reading query plans in Postgres.",
+        },
       ],
     },
     {
@@ -179,8 +203,16 @@ export const performanceArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "High Performance Browser Networking", url: "https://hpbn.co", desc: "TCP, TLS, HTTP/2, WebSockets — how the network works and how to optimize it." },
-        { label: "WebPageTest", url: "https://www.webpagetest.org", desc: "Deep performance testing from real browsers and locations." },
+        {
+          label: "High Performance Browser Networking",
+          url: "https://hpbn.co",
+          desc: "TCP, TLS, HTTP/2, WebSockets — how the network works and how to optimize it.",
+        },
+        {
+          label: "WebPageTest",
+          url: "https://www.webpagetest.org",
+          desc: "Deep performance testing from real browsers and locations.",
+        },
       ],
     },
   ],

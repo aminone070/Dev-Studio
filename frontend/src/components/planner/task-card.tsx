@@ -1,6 +1,11 @@
 import { Check, Trash2, ChevronRight, Clock, Pencil, GripVertical } from "lucide-react";
 import type { PlannerTask } from "@/types/planner";
-import { PRIORITY_COLORS, CATEGORY_LABELS, CATEGORY_COLORS, CATEGORY_ICON_COMPONENTS } from "@/data/planner/planner";
+import {
+  PRIORITY_COLORS,
+  CATEGORY_LABELS,
+  CATEGORY_COLORS,
+  CATEGORY_ICON_COMPONENTS,
+} from "@/data/planner/planner";
 import { formatMinutes } from "@/lib/utils/planner";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
@@ -41,14 +46,9 @@ export function TaskCard({ task, onToggle, onDelete, onEdit, dragOverlay }: Task
   const cfg = STATUS_CONFIG[task.status];
   const CatIcon = CATEGORY_ICON_COMPONENTS[task.category];
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: task.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: task.id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -64,7 +64,7 @@ export function TaskCard({ task, onToggle, onDelete, onEdit, dragOverlay }: Task
         cfg.bg,
         isDone && "opacity-55",
         isDragging && "opacity-40 scale-[0.98]",
-        dragOverlay && "shadow-xl ring-2 ring-primary/20 rotate-1 opacity-100"
+        dragOverlay && "shadow-xl ring-2 ring-primary/20 rotate-1 opacity-100",
       )}
     >
       {/* Drag handle */}
@@ -84,7 +84,7 @@ export function TaskCard({ task, onToggle, onDelete, onEdit, dragOverlay }: Task
         title="Cycle status"
         className={cn(
           "mt-0.5 shrink-0 size-5 rounded-md border-2 flex items-center justify-center transition-all duration-200",
-          cfg.ring
+          cfg.ring,
         )}
       >
         {cfg.check}
@@ -93,10 +93,12 @@ export function TaskCard({ task, onToggle, onDelete, onEdit, dragOverlay }: Task
       {/* Content */}
       <div className="flex-1 min-w-0">
         <button onClick={() => onEdit(task)} className="w-full text-left group/title">
-          <p className={cn(
-            "text-sm font-medium leading-snug group-hover/title:text-primary transition-colors",
-            isDone && "line-through text-muted-foreground"
-          )}>
+          <p
+            className={cn(
+              "text-sm font-medium leading-snug group-hover/title:text-primary transition-colors",
+              isDone && "line-through text-muted-foreground",
+            )}
+          >
             {task.title}
           </p>
           {task.description && !isDone && (
@@ -108,17 +110,21 @@ export function TaskCard({ task, onToggle, onDelete, onEdit, dragOverlay }: Task
 
         {/* Meta row */}
         <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-          <span className={cn(
-            "text-[10px] font-semibold px-1.5 py-0.5 rounded-md border capitalize",
-            PRIORITY_COLORS[task.priority]
-          )}>
+          <span
+            className={cn(
+              "text-[10px] font-semibold px-1.5 py-0.5 rounded-md border capitalize",
+              PRIORITY_COLORS[task.priority],
+            )}
+          >
             {task.priority}
           </span>
 
-          <span className={cn(
-            "text-[10px] font-medium px-1.5 py-0.5 rounded-md flex items-center gap-1",
-            CATEGORY_COLORS[task.category]
-          )}>
+          <span
+            className={cn(
+              "text-[10px] font-medium px-1.5 py-0.5 rounded-md flex items-center gap-1",
+              CATEGORY_COLORS[task.category],
+            )}
+          >
             <CatIcon className="size-3" />
             {CATEGORY_LABELS[task.category]}
           </span>

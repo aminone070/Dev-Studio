@@ -49,6 +49,5 @@ export const backendArea: SkillAreaData = {
       accent: "border-primary/30",
       tags: ["go"],
     },
-
   ],
 };

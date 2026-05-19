@@ -8,7 +8,9 @@ interface PageContainerProps {
 
 export function PageContainer({ children, className }: PageContainerProps) {
   return (
-    <div className={cn("flex flex-col flex-1 overflow-hidden p-2 sm:p-3 gap-2 sm:gap-3", className)}>
+    <div
+      className={cn("flex flex-col flex-1 overflow-hidden p-2 sm:p-3 gap-2 sm:gap-3", className)}
+    >
       {children}
     </div>
   );

@@ -7,7 +7,13 @@ import { Bot, Plus, Trash2, Play, Search } from "lucide-react";
 import { toast } from "sonner";
 import type { Agent } from "@/types/tools";
 import { Field, StatusDot, Input, TextArea } from "./shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SplitLayout } from "../layout";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
@@ -99,7 +105,9 @@ export function Agents({ selectedId }: { selectedId?: string }) {
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className={`text-xs font-medium truncate flex-1 ${active ? "text-foreground" : ""}`}>
+                  <span
+                    className={`text-xs font-medium truncate flex-1 ${active ? "text-foreground" : ""}`}
+                  >
                     {a.name}
                   </span>
                   <StatusDot status={a.status} />
@@ -115,7 +123,13 @@ export function Agents({ selectedId }: { selectedId?: string }) {
           </li>
         )}
       </ul>
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
       <div className="p-2 pt-0 shrink-0">
         <button
           onClick={create}
@@ -137,18 +151,34 @@ export function Agents({ selectedId }: { selectedId?: string }) {
                 <Bot className="size-6 text-primary-foreground" />
               </div>
               <div className="flex-1 min-w-0">
-                <Input value={selected.name} onChange={(e) => update({ name: e.target.value })} className="w-full text-2xl font-semibold tracking-tight bg-transparent focus:outline-none border-none p-0 h-auto" />
-                <Input value={selected.role} onChange={(e) => update({ role: e.target.value })} className="w-full text-sm text-muted-foreground bg-transparent focus:outline-none border-none p-0 h-auto mt-1" />
+                <Input
+                  value={selected.name}
+                  onChange={(e) => update({ name: e.target.value })}
+                  className="w-full text-2xl font-semibold tracking-tight bg-transparent focus:outline-none border-none p-0 h-auto"
+                />
+                <Input
+                  value={selected.role}
+                  onChange={(e) => update({ role: e.target.value })}
+                  className="w-full text-sm text-muted-foreground bg-transparent focus:outline-none border-none p-0 h-auto mt-1"
+                />
               </div>
-              <button onClick={() => setConfirmOpen(true)} className="p-2 rounded-xl border border-border hover:bg-destructive/10 self-end sm:self-auto">
+              <button
+                onClick={() => setConfirmOpen(true)}
+                className="p-2 rounded-xl border border-border hover:bg-destructive/10 self-end sm:self-auto"
+              >
                 <Trash2 className="size-4 text-muted-foreground" />
               </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
               <Field label="Status">
-                <Select value={selected.status} onValueChange={(value) => update({ status: value as Agent["status"] })}>
-                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select status" /></SelectTrigger>
+                <Select
+                  value={selected.status}
+                  onValueChange={(value) => update({ status: value as Agent["status"] })}
+                >
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="draft">draft</SelectItem>
                     <SelectItem value="idle">idle</SelectItem>
@@ -156,24 +186,69 @@ export function Agents({ selectedId }: { selectedId?: string }) {
                   </SelectContent>
                 </Select>
               </Field>
-              <Field label="Model"><Input value={selected.model} onChange={(e) => update({ model: e.target.value })} className="font-mono" /></Field>
-              <Field label="Temperature"><Input type="number" step="0.1" min="0" max="2" value={selected.temperature} onChange={(e) => update({ temperature: parseFloat(e.target.value) || 0 })} className="font-mono" /></Field>
-              <Field label="Tools"><Input value={selected.tools.join(", ")} onChange={(e) => update({ tools: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })} className="font-mono" /></Field>
+              <Field label="Model">
+                <Input
+                  value={selected.model}
+                  onChange={(e) => update({ model: e.target.value })}
+                  className="font-mono"
+                />
+              </Field>
+              <Field label="Temperature">
+                <Input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="2"
+                  value={selected.temperature}
+                  onChange={(e) => update({ temperature: parseFloat(e.target.value) || 0 })}
+                  className="font-mono"
+                />
+              </Field>
+              <Field label="Tools">
+                <Input
+                  value={selected.tools.join(", ")}
+                  onChange={(e) =>
+                    update({
+                      tools: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                  className="font-mono"
+                />
+              </Field>
             </div>
 
             <div className="border-t border-border pt-6">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 block mb-2">System prompt</label>
-              <TextArea value={selected.systemPrompt} onChange={(e) => update({ systemPrompt: e.target.value })} rows={10} className="font-mono" />
+              <label className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 block mb-2">
+                System prompt
+              </label>
+              <TextArea
+                value={selected.systemPrompt}
+                onChange={(e) => update({ systemPrompt: e.target.value })}
+                rows={10}
+                className="font-mono"
+              />
             </div>
 
             <div className="rounded-xl border border-border/60 bg-muted/20 p-4">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60">Playground</p>
-                <button onClick={() => toast.info("Connect Lovable AI to run the agent")} className="inline-flex items-center gap-1.5 text-xs bg-primary text-primary-foreground px-3 py-1 rounded-xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60">
+                  Playground
+                </p>
+                <button
+                  onClick={() => toast.info("Connect Lovable AI to run the agent")}
+                  className="inline-flex items-center gap-1.5 text-xs bg-primary text-primary-foreground px-3 py-1 rounded-xl"
+                >
                   <Play className="size-3.5" /> Run
                 </button>
               </div>
-              <TextArea rows={4} placeholder="Send a test message to this agent…" className="bg-background" />
+              <TextArea
+                rows={4}
+                placeholder="Send a test message to this agent…"
+                className="bg-background"
+              />
             </div>
           </div>
         </section>
@@ -181,14 +256,24 @@ export function Agents({ selectedId }: { selectedId?: string }) {
         <section className="grid place-items-center p-8 text-center flex-1">
           <div>
             <Bot className="size-10 text-muted-foreground/30 mx-auto mb-3" />
-            <button onClick={create} className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors">
+            <button
+              onClick={create}
+              className="text-xs font-semibold uppercase tracking-wider border border-border px-3 py-2 rounded-xl hover:bg-muted/60 transition-colors"
+            >
               Provision your first agent
             </button>
           </div>
         </section>
       )}
 
-      <ConfirmDialog open={confirmOpen} onOpenChange={setConfirmOpen} title="Delete agent?" description="This agent will be permanently removed. This action cannot be undone." confirmLabel="Delete" onConfirm={handleDelete} />
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Delete agent?"
+        description="This agent will be permanently removed. This action cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+      />
     </SplitLayout>
   );
 }

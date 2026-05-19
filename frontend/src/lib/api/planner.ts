@@ -22,7 +22,7 @@ export async function deletePlannerTask(id: string): Promise<void> {
 
 export async function getAISuggestions(
   date: string,
-  tasks: PlannerTask[]
+  tasks: PlannerTask[],
 ): Promise<{ suggestions: string[]; schedule: string }> {
   return apiFetch("/api/planner/suggest", {
     method: "POST",

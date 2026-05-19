@@ -44,9 +44,7 @@ export function TabNav({ tabs, activeTab, className = "" }: TabNavProps) {
                 {tab.badge != null && tab.badge !== 0 && (
                   <span
                     className={`min-w-[16px] text-center text-[10px] leading-none px-1 py-0.5 rounded-full ${
-                      active
-                        ? "bg-primary/20 text-primary"
-                        : "bg-muted text-muted-foreground"
+                      active ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
                     }`}
                   >
                     {tab.badge}

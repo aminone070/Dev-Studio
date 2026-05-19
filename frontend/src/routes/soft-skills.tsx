@@ -9,14 +9,7 @@ import { z } from "zod";
 
 const searchSchema = z.object({
   tab: z
-    .enum([
-      "top-10",
-      "communication",
-      "leadership",
-      "problem-solving",
-      "teamwork",
-      "ai-mock",
-    ])
+    .enum(["top-10", "communication", "leadership", "problem-solving", "teamwork", "ai-mock"])
     .optional()
     .default("top-10"),
 });
@@ -26,7 +19,10 @@ export const Route = createFileRoute("/soft-skills")({
   head: () => ({
     meta: [
       { title: "Soft Skills Hub — Dev Studio" },
-      { name: "description", content: "Master communication, leadership, and human engineering with our unified hub." },
+      {
+        name: "description",
+        content: "Master communication, leadership, and human engineering with our unified hub.",
+      },
     ],
   }),
   component: SoftSkillsPage,
@@ -38,11 +34,7 @@ function SoftSkillsPage() {
   return (
     <PageContainer>
       <PageSection>
-        <PageHeader
-          icon={Heart}
-          title="Communication & Soft Skills"
-          className="mb-4"
-        />
+        <PageHeader icon={Heart} title="Communication & Soft Skills" className="mb-4" />
         <SoftSkillTabs />
       </PageSection>
 

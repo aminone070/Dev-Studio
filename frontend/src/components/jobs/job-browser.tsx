@@ -1,6 +1,12 @@
 import { useState } from "react";
 import {
-  Search, Loader2, RefreshCw, Bookmark, ExternalLink, AlertCircle, MapPin,
+  Search,
+  Loader2,
+  RefreshCw,
+  Bookmark,
+  ExternalLink,
+  AlertCircle,
+  MapPin,
 } from "lucide-react";
 import { toast } from "sonner";
 import type { SavedJob } from "./types";
@@ -35,35 +41,39 @@ function timeAgo(iso: string): string {
 
 export function JobBrowser({ onSaveJob }: Props) {
   const [category, setCategory] = useState("fullstack");
-  const [query,    setQuery]    = useState("full stack developer");
+  const [query, setQuery] = useState("full stack developer");
   const [location, setLocation] = useState("");
-  const [days,     setDays]     = useState(1);
-  const [sources,  setSources]  = useState(["indeed", "wuzzuf", "bayt", "remoteok"]);
+  const [days, setDays] = useState(1);
+  const [sources, setSources] = useState(["indeed", "wuzzuf", "bayt", "remoteok"]);
 
-  const [results,  setResults]  = useState<ScrapedJob[]>([]);
-  const [loading,  setLoading]  = useState(false);
-  const [errors,   setErrors]   = useState<string[]>([]);
-  const [fetched,  setFetched]  = useState(false);
+  const [results, setResults] = useState<ScrapedJob[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [fetched, setFetched] = useState(false);
   const [savingId, setSavingId] = useState<string | null>(null);
 
-  const pickCategory = (cat: typeof CATEGORIES[0]) => {
+  const pickCategory = (cat: (typeof CATEGORIES)[0]) => {
     setCategory(cat.id);
     setQuery(cat.query);
   };
 
   const toggleSource = (id: string) =>
-    setSources((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    );
+    setSources((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
 
   const handleSearch = async () => {
-    if (!sources.length) { toast.error("Select at least one source."); return; }
+    if (!sources.length) {
+      toast.error("Select at least one source.");
+      return;
+    }
     setLoading(true);
     setFetched(true);
     setErrors([]);
     try {
       const params = new URLSearchParams({
-        q: query, location, days: String(days), sources: sources.join(","),
+        q: query,
+        location,
+        days: String(days),
+        sources: sources.join(","),
       });
       const r = await fetch(`/api/jobs/scrape?${params}`);
       const data = await r.json();
@@ -83,11 +93,17 @@ export function JobBrowser({ onSaveJob }: Props) {
     setSavingId(job.id);
     try {
       await onSaveJob({
-        title: job.title, company: job.company, location: job.location,
-        url: job.url, status: "saved",
-        platform: { indeed: "Indeed", wuzzuf: "Wuzzuf", bayt: "Bayt", remoteok: "RemoteOK" }[job.source] ?? job.source,
+        title: job.title,
+        company: job.company,
+        location: job.location,
+        url: job.url,
+        status: "saved",
+        platform:
+          { indeed: "Indeed", wuzzuf: "Wuzzuf", bayt: "Bayt", remoteok: "RemoteOK" }[job.source] ??
+          job.source,
         remote: job.source === "remoteok",
-        tags: job.tags ?? [], salary: job.salary ?? "",
+        tags: job.tags ?? [],
+        salary: job.salary ?? "",
       });
     } finally {
       setSavingId(null);
@@ -98,10 +114,8 @@ export function JobBrowser({ onSaveJob }: Props) {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-
       {/* ── Controls ── */}
       <div className="shrink-0 border-b border-border bg-background p-4 space-y-3">
-
         {/* Category pills */}
         <div className="flex flex-wrap gap-1.5">
           {CATEGORIES.map((cat) => (
@@ -126,7 +140,10 @@ export function JobBrowser({ onSaveJob }: Props) {
             <input
               type="text"
               value={query}
-              onChange={(e) => { setQuery(e.target.value); setCategory(""); }}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setCategory("");
+              }}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               placeholder="Job title or skills…"
               className="w-full pl-8 pr-3 py-2 text-sm rounded-md border border-border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
@@ -197,7 +214,11 @@ export function JobBrowser({ onSaveJob }: Props) {
             disabled={loading || !sources.length}
             className="ml-auto flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-md hover:opacity-90 disabled:opacity-50 transition-opacity shrink-0"
           >
-            {loading ? <Loader2 className="size-3.5 animate-spin" /> : <RefreshCw className="size-3.5" />}
+            {loading ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : (
+              <RefreshCw className="size-3.5" />
+            )}
             {fetched ? "Refresh" : "Search Jobs"}
           </button>
         </div>
@@ -206,14 +227,16 @@ export function JobBrowser({ onSaveJob }: Props) {
         {errors.length > 0 && (
           <div className="flex items-center gap-1.5 text-[11px] text-yellow-400 bg-yellow-500/10 border border-yellow-500/20 rounded-md px-2.5 py-1.5">
             <AlertCircle className="size-3.5 shrink-0" />
-            <span>Could not reach: <strong>{errors.join(", ")}</strong>. Results shown from other sources.</span>
+            <span>
+              Could not reach: <strong>{errors.join(", ")}</strong>. Results shown from other
+              sources.
+            </span>
           </div>
         )}
       </div>
 
       {/* ── Results ── */}
       <div className="flex-1 overflow-y-auto p-4">
-
         {!fetched && (
           <div className="flex flex-col items-center justify-center h-full gap-3 text-center">
             <div className="size-14 rounded-2xl bg-primary/10 grid place-items-center">
@@ -221,8 +244,9 @@ export function JobBrowser({ onSaveJob }: Props) {
             </div>
             <p className="text-sm font-semibold">Browse Jobs from Top Sites</p>
             <p className="text-xs text-muted-foreground max-w-sm leading-relaxed">
-              Search across <strong>Indeed</strong>, <strong>Wuzzuf</strong>, <strong>Bayt</strong>, and <strong>RemoteOK</strong> at once.
-              Default: <em>Full Stack Developer</em> — last 24 hours.
+              Search across <strong>Indeed</strong>, <strong>Wuzzuf</strong>, <strong>Bayt</strong>,
+              and <strong>RemoteOK</strong> at once. Default: <em>Full Stack Developer</em> — last
+              24 hours.
             </p>
             <button
               onClick={handleSearch}
@@ -243,7 +267,9 @@ export function JobBrowser({ onSaveJob }: Props) {
         {!loading && fetched && results.length === 0 && (
           <div className="text-center py-12">
             <p className="text-sm text-muted-foreground">No jobs found.</p>
-            <p className="text-xs text-muted-foreground/60 mt-1">Try different keywords, a wider time range, or more sources.</p>
+            <p className="text-xs text-muted-foreground/60 mt-1">
+              Try different keywords, a wider time range, or more sources.
+            </p>
           </div>
         )}
 
@@ -251,7 +277,9 @@ export function JobBrowser({ onSaveJob }: Props) {
           <div className="space-y-2.5">
             <p className="text-[11px] text-muted-foreground">
               {results.length} job{results.length !== 1 ? "s" : ""} found
-              {errors.length > 0 && <span className="ml-1 text-yellow-400/80">({errors.join(", ")} unavailable)</span>}
+              {errors.length > 0 && (
+                <span className="ml-1 text-yellow-400/80">({errors.join(", ")} unavailable)</span>
+              )}
             </p>
 
             {results.map((job) => (
@@ -265,7 +293,9 @@ export function JobBrowser({ onSaveJob }: Props) {
                       src={job.logo}
                       alt={job.company}
                       className="size-8 rounded-md object-contain bg-muted border border-border shrink-0"
-                      onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = "none")}
+                      onError={(e) =>
+                        ((e.currentTarget as HTMLImageElement).style.display = "none")
+                      }
                     />
                   )}
                   <div className="flex-1 min-w-0">
@@ -273,14 +303,20 @@ export function JobBrowser({ onSaveJob }: Props) {
                       <div className="min-w-0">
                         <p className="text-sm font-medium leading-snug line-clamp-1">{job.title}</p>
                         <p className="text-xs text-muted-foreground mt-0.5 truncate">
-                          {job.company}{job.company && job.location ? " · " : ""}{job.location}
+                          {job.company}
+                          {job.company && job.location ? " · " : ""}
+                          {job.location}
                         </p>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${SOURCE_BADGE[job.source] ?? "bg-muted text-muted-foreground"}`}>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${SOURCE_BADGE[job.source] ?? "bg-muted text-muted-foreground"}`}
+                        >
                           {job.source}
                         </span>
-                        <span className="text-[10px] text-muted-foreground">{timeAgo(job.postedAt)}</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          {timeAgo(job.postedAt)}
+                        </span>
                       </div>
                     </div>
 
@@ -288,12 +324,19 @@ export function JobBrowser({ onSaveJob }: Props) {
                       {job.tags && job.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 flex-1">
                           {job.tags.slice(0, 5).map((t) => (
-                            <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{t}</span>
+                            <span
+                              key={t}
+                              className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground"
+                            >
+                              {t}
+                            </span>
                           ))}
                         </div>
                       )}
                       {job.salary && (
-                        <span className="text-[11px] text-green-400 font-medium whitespace-nowrap">{job.salary}</span>
+                        <span className="text-[11px] text-green-400 font-medium whitespace-nowrap">
+                          {job.salary}
+                        </span>
                       )}
                       <div className="flex items-center gap-1 ml-auto shrink-0">
                         <a
@@ -310,7 +353,11 @@ export function JobBrowser({ onSaveJob }: Props) {
                           disabled={savingId === job.id}
                           className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium bg-primary/10 text-primary hover:bg-primary/20 rounded transition-colors disabled:opacity-50"
                         >
-                          {savingId === job.id ? <Loader2 className="size-3 animate-spin" /> : <Bookmark className="size-3" />}
+                          {savingId === job.id ? (
+                            <Loader2 className="size-3 animate-spin" />
+                          ) : (
+                            <Bookmark className="size-3" />
+                          )}
                           Save
                         </button>
                       </div>

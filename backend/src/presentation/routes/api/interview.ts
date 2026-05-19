@@ -3,8 +3,14 @@ import { db } from "../../../infrastructure/database/index.js";
 import { interviewQuestions, userProgress } from "../../../domain/schema.js";
 import { eq, and, or } from "drizzle-orm";
 import { requireUser, stripDates, isUUID } from "../../middleware/auth.js";
-import { getQuestions, postQuestions, postQuestionsBulk, deleteQuestionsById, getProgress, postProgressToggle } from "../../controllers/interview.controller.js";
-
+import {
+  getQuestions,
+  postQuestions,
+  postQuestionsBulk,
+  deleteQuestionsById,
+  getProgress,
+  postProgressToggle,
+} from "../../controllers/interview.controller.js";
 
 const router = Router();
 

@@ -12,8 +12,11 @@ interface SkillTask {
 }
 
 function loadTasks(areaId: string): SkillTask[] {
-  try { return JSON.parse(localStorage.getItem(`ds-skill-tasks-${areaId}`) ?? "[]"); }
-  catch { return []; }
+  try {
+    return JSON.parse(localStorage.getItem(`ds-skill-tasks-${areaId}`) ?? "[]");
+  } catch {
+    return [];
+  }
 }
 function saveTasks(areaId: string, tasks: SkillTask[]) {
   try {
@@ -40,27 +43,41 @@ export function TasksSection({ data, triggerAdd }: Props) {
   }, [data.id]);
 
   useEffect(() => {
-    if (triggerAdd) { setShowForm(true); }
+    if (triggerAdd) {
+      setShowForm(true);
+    }
   }, [triggerAdd]);
 
-  const persist = (next: SkillTask[]) => { setTasks(next); saveTasks(data.id, next); };
+  const persist = (next: SkillTask[]) => {
+    setTasks(next);
+    saveTasks(data.id, next);
+  };
 
   const add = () => {
     if (!title.trim()) return;
     persist([
       ...tasks,
-      { id: crypto.randomUUID(), title: title.trim(), notes: notes.trim(), done: false, createdAt: Date.now() },
+      {
+        id: crypto.randomUUID(),
+        title: title.trim(),
+        notes: notes.trim(),
+        done: false,
+        createdAt: Date.now(),
+      },
     ]);
-    setTitle(""); setNotes(""); setShowForm(false);
+    setTitle("");
+    setNotes("");
+    setShowForm(false);
   };
 
-  const toggle = (id: string) => persist(tasks.map(t => t.id === id ? { ...t, done: !t.done } : t));
-  const remove = (id: string) => persist(tasks.filter(t => t.id !== id));
+  const toggle = (id: string) =>
+    persist(tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+  const remove = (id: string) => persist(tasks.filter((t) => t.id !== id));
 
-  const filtered = tasks.filter(t =>
-    filter === "all" ? true : filter === "todo" ? !t.done : t.done
+  const filtered = tasks.filter((t) =>
+    filter === "all" ? true : filter === "todo" ? !t.done : t.done,
   );
-  const doneCount = tasks.filter(t => t.done).length;
+  const doneCount = tasks.filter((t) => t.done).length;
 
   return (
     <div className="space-y-6">
@@ -82,7 +99,7 @@ export function TasksSection({ data, triggerAdd }: Props) {
       </div>
 
       <div className="flex gap-2">
-        {(["all", "todo", "done"] as const).map(f => (
+        {(["all", "todo", "done"] as const).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
@@ -90,7 +107,7 @@ export function TasksSection({ data, triggerAdd }: Props) {
               "px-3 py-1 rounded-full text-xs font-semibold border transition-all capitalize",
               filter === f
                 ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                : "border-border/60 text-muted-foreground hover:border-border hover:text-foreground"
+                : "border-border/60 text-muted-foreground hover:border-border hover:text-foreground",
             )}
           >
             {f}
@@ -103,14 +120,21 @@ export function TasksSection({ data, triggerAdd }: Props) {
           <input
             autoFocus
             value={title}
-            onChange={e => setTitle(e.target.value)}
-            onKeyDown={e => { if (e.key === "Enter") add(); if (e.key === "Escape") { setShowForm(false); setTitle(""); setNotes(""); } }}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") add();
+              if (e.key === "Escape") {
+                setShowForm(false);
+                setTitle("");
+                setNotes("");
+              }
+            }}
             placeholder="Task title…"
             className="w-full bg-background border border-border/60 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"
           />
           <textarea
             value={notes}
-            onChange={e => setNotes(e.target.value)}
+            onChange={(e) => setNotes(e.target.value)}
             placeholder="Notes (optional)…"
             rows={2}
             className="w-full bg-background border border-border/60 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 resize-none transition-all"
@@ -123,7 +147,11 @@ export function TasksSection({ data, triggerAdd }: Props) {
               Add
             </button>
             <button
-              onClick={() => { setShowForm(false); setTitle(""); setNotes(""); }}
+              onClick={() => {
+                setShowForm(false);
+                setTitle("");
+                setNotes("");
+              }}
               className="px-4 py-1.5 rounded-lg text-sm text-muted-foreground hover:bg-muted/60 transition-colors"
             >
               Cancel
@@ -134,26 +162,31 @@ export function TasksSection({ data, triggerAdd }: Props) {
 
       {filtered.length > 0 ? (
         <div className="rounded-xl border border-border bg-card divide-y divide-border/60 overflow-hidden shadow-sm">
-          {filtered.map(task => (
+          {filtered.map((task) => (
             <div
               key={task.id}
               className="flex items-start gap-3 p-4 group hover:bg-muted/30 transition-colors"
             >
               <button onClick={() => toggle(task.id)} className="mt-0.5 shrink-0">
-                {task.done
-                  ? <CheckCircle2 className="size-5 text-primary" />
-                  : <Circle className="size-5 text-muted-foreground/40 hover:text-primary/60 transition-colors" />
-                }
+                {task.done ? (
+                  <CheckCircle2 className="size-5 text-primary" />
+                ) : (
+                  <Circle className="size-5 text-muted-foreground/40 hover:text-primary/60 transition-colors" />
+                )}
               </button>
               <div className="flex-1 min-w-0">
-                <p className={cn(
-                  "text-sm font-medium leading-snug",
-                  task.done && "line-through text-muted-foreground/60"
-                )}>
+                <p
+                  className={cn(
+                    "text-sm font-medium leading-snug",
+                    task.done && "line-through text-muted-foreground/60",
+                  )}
+                >
                   {task.title}
                 </p>
                 {task.notes && (
-                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{task.notes}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                    {task.notes}
+                  </p>
                 )}
               </div>
               <button

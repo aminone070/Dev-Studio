@@ -9,7 +9,16 @@ interface CVEducationProps {
 }
 
 function newEdu(): CVEducation {
-  return { id: crypto.randomUUID(), institution: "", degree: "", field: "", start: "", end: "", grade: "", notes: "" };
+  return {
+    id: crypto.randomUUID(),
+    institution: "",
+    degree: "",
+    field: "",
+    start: "",
+    end: "",
+    grade: "",
+    notes: "",
+  };
 }
 
 export function CVEducationSection({ data, onChange }: CVEducationProps) {
@@ -34,35 +43,83 @@ export function CVEducationSection({ data, onChange }: CVEducationProps) {
           >
             <GripVertical className="size-4 text-muted-foreground/40 shrink-0" />
             <div className="flex-1 min-w-0">
-              <div className="font-medium text-sm truncate">{edu.degree || `Education ${i + 1}`}{edu.field ? ` in ${edu.field}` : ""}</div>
-              {edu.institution && <div className="text-xs text-muted-foreground truncate">{edu.institution}{edu.start ? ` · ${edu.start}–${edu.end}` : ""}</div>}
+              <div className="font-medium text-sm truncate">
+                {edu.degree || `Education ${i + 1}`}
+                {edu.field ? ` in ${edu.field}` : ""}
+              </div>
+              {edu.institution && (
+                <div className="text-xs text-muted-foreground truncate">
+                  {edu.institution}
+                  {edu.start ? ` · ${edu.start}–${edu.end}` : ""}
+                </div>
+              )}
             </div>
-            <button onClick={(e) => { e.stopPropagation(); remove(edu.id); }} className="p-1.5 hover:text-destructive text-muted-foreground transition-colors">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                remove(edu.id);
+              }}
+              className="p-1.5 hover:text-destructive text-muted-foreground transition-colors"
+            >
               <Trash2 className="size-3.5" />
             </button>
-            {openId === edu.id ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
+            {openId === edu.id ? (
+              <ChevronUp className="size-4 text-muted-foreground" />
+            ) : (
+              <ChevronDown className="size-4 text-muted-foreground" />
+            )}
           </div>
 
           {openId === edu.id && (
             <div className="px-4 pb-4 pt-2 border-t border-border space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label="Institution">
-                  <Input type="text" value={edu.institution} onChange={(e) => update(edu.id, { institution: e.target.value })} placeholder="MIT" />
+                  <Input
+                    type="text"
+                    value={edu.institution}
+                    onChange={(e) => update(edu.id, { institution: e.target.value })}
+                    placeholder="MIT"
+                  />
                 </Field>
                 <Field label="Degree">
-                  <Input type="text" value={edu.degree} onChange={(e) => update(edu.id, { degree: e.target.value })} placeholder="B.Sc. / M.Sc. / Ph.D." />
+                  <Input
+                    type="text"
+                    value={edu.degree}
+                    onChange={(e) => update(edu.id, { degree: e.target.value })}
+                    placeholder="B.Sc. / M.Sc. / Ph.D."
+                  />
                 </Field>
                 <Field label="Field of Study">
-                  <Input type="text" value={edu.field} onChange={(e) => update(edu.id, { field: e.target.value })} placeholder="Computer Science" />
+                  <Input
+                    type="text"
+                    value={edu.field}
+                    onChange={(e) => update(edu.id, { field: e.target.value })}
+                    placeholder="Computer Science"
+                  />
                 </Field>
                 <Field label="Grade / GPA">
-                  <Input type="text" value={edu.grade || ""} onChange={(e) => update(edu.id, { grade: e.target.value })} placeholder="3.8/4.0 or First Class" />
+                  <Input
+                    type="text"
+                    value={edu.grade || ""}
+                    onChange={(e) => update(edu.id, { grade: e.target.value })}
+                    placeholder="3.8/4.0 or First Class"
+                  />
                 </Field>
                 <Field label="Start Year">
-                  <Input type="text" value={edu.start} onChange={(e) => update(edu.id, { start: e.target.value })} placeholder="2018" />
+                  <Input
+                    type="text"
+                    value={edu.start}
+                    onChange={(e) => update(edu.id, { start: e.target.value })}
+                    placeholder="2018"
+                  />
                 </Field>
                 <Field label="End Year">
-                  <Input type="text" value={edu.end} onChange={(e) => update(edu.id, { end: e.target.value })} placeholder="2022" />
+                  <Input
+                    type="text"
+                    value={edu.end}
+                    onChange={(e) => update(edu.id, { end: e.target.value })}
+                    placeholder="2022"
+                  />
                 </Field>
               </div>
               <Field label="Notes">
@@ -80,7 +137,11 @@ export function CVEducationSection({ data, onChange }: CVEducationProps) {
       ))}
 
       <button
-        onClick={() => { const e = newEdu(); onChange([...data, e]); setOpenId(e.id); }}
+        onClick={() => {
+          const e = newEdu();
+          onChange([...data, e]);
+          setOpenId(e.id);
+        }}
         className="flex items-center gap-2 text-sm text-primary hover:opacity-80 transition-opacity"
       >
         <Plus className="size-4" /> Add education

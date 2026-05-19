@@ -18,7 +18,13 @@ const FILTERS: { label: string; value: CVFocus | "all" }[] = [
   { label: "Fullstack", value: "fullstack" },
 ];
 
-export function CVSidebar({ cvProfiles, activeCVId, onSelectCV, onNewCV, onDeleteCV }: CVSidebarProps) {
+export function CVSidebar({
+  cvProfiles,
+  activeCVId,
+  onSelectCV,
+  onNewCV,
+  onDeleteCV,
+}: CVSidebarProps) {
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<CVFocus | "all">("all");
@@ -98,11 +104,15 @@ export function CVSidebar({ cvProfiles, activeCVId, onSelectCV, onNewCV, onDelet
               onClick={() => onSelectCV(cv.id)}
             >
               <div className="pr-6">
-                <div className={`truncate leading-snug text-xs font-medium ${activeCVId === cv.id ? "text-foreground" : ""}`}>
+                <div
+                  className={`truncate leading-snug text-xs font-medium ${activeCVId === cv.id ? "text-foreground" : ""}`}
+                >
                   {cv.title || "Untitled CV"}
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className={`inline-flex items-center text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${FOCUS_COLORS[cv.focus]}`}>
+                  <span
+                    className={`inline-flex items-center text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${FOCUS_COLORS[cv.focus]}`}
+                  >
                     {FOCUS_LABELS[cv.focus]}
                   </span>
                   <span className="text-[9px] text-muted-foreground/60">
@@ -111,7 +121,10 @@ export function CVSidebar({ cvProfiles, activeCVId, onSelectCV, onNewCV, onDelet
                 </div>
               </div>
               <button
-                onClick={(e) => { e.stopPropagation(); setPendingDeleteId(cv.id); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPendingDeleteId(cv.id);
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
               >
                 <Trash2 className="size-3.5" />
@@ -123,7 +136,9 @@ export function CVSidebar({ cvProfiles, activeCVId, onSelectCV, onNewCV, onDelet
             <div className="size-8 rounded-xl bg-muted/30 grid place-items-center">
               <Plus className="size-4 opacity-50" />
             </div>
-            {searchQuery || activeFilter !== "all" ? "No matching profiles" : "No CVs yet — create your first one"}
+            {searchQuery || activeFilter !== "all"
+              ? "No matching profiles"
+              : "No CVs yet — create your first one"}
           </div>
         )}
       </nav>
@@ -140,7 +155,9 @@ export function CVSidebar({ cvProfiles, activeCVId, onSelectCV, onNewCV, onDelet
 
       <ConfirmDialog
         open={pendingDeleteId !== null}
-        onOpenChange={(open) => { if (!open) setPendingDeleteId(null); }}
+        onOpenChange={(open) => {
+          if (!open) setPendingDeleteId(null);
+        }}
         title="Delete CV?"
         description="This CV profile will be permanently removed."
         confirmLabel="Delete"

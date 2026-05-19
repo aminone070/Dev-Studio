@@ -3,7 +3,14 @@ import type { Difficulty, FocusArea } from "@/types/common";
 
 export const DIFFICULTIES: Difficulty[] = ["junior", "mid", "senior"];
 
-export const FOCUS_AREAS: FocusArea[] = ["frontend", "backend", "devops", "testing", "database", "general"];
+export const FOCUS_AREAS: FocusArea[] = [
+  "frontend",
+  "backend",
+  "devops",
+  "testing",
+  "database",
+  "general",
+];
 
 export const DEPTH_LABEL_PRESETS = [
   "Deep dive",

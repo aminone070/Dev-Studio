@@ -9,7 +9,7 @@ export function ChecklistSection({ data }: Props) {
   const { userProgress, toggleProgress } = useForge();
 
   const areaItems = data.checklist;
-  const doneCount = areaItems.filter(item => !!userProgress[item.id]).length;
+  const doneCount = areaItems.filter((item) => !!userProgress[item.id]).length;
   const total = areaItems.length;
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
 
@@ -54,15 +54,11 @@ export function ChecklistSection({ data }: Props) {
                     : "border-muted-foreground/30 group-hover:border-primary/50"
                 }`}
               >
-                {isCompleted && (
-                  <div className="size-1.5 rounded-full bg-primary-foreground" />
-                )}
+                {isCompleted && <div className="size-1.5 rounded-full bg-primary-foreground" />}
               </div>
               <span
                 className={`text-sm transition-all ${
-                  isCompleted
-                    ? "text-muted-foreground line-through opacity-60"
-                    : "text-foreground"
+                  isCompleted ? "text-muted-foreground line-through opacity-60" : "text-foreground"
                 }`}
               >
                 {item.label}

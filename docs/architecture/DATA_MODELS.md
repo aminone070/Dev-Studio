@@ -8,6 +8,7 @@
 ## 🗃️ Core Entity Schemas
 
 ### 🧑‍💻 1. Authentication User (`auth_users`)
+
 Stores user profiles, login credentials, and OAuth tokens.
 
 ```typescript
@@ -22,6 +23,7 @@ export const authUsers = pgTable("auth_users", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `auth_users_email_idx` on `email`
   - `auth_users_google_id_idx` on `googleId`
@@ -29,6 +31,7 @@ export const authUsers = pgTable("auth_users", {
 ---
 
 ### 📝 2. Prompt Template (`prompts`)
+
 Contains versioned prompts, customizable template variables, and usage analytics.
 
 ```typescript
@@ -49,12 +52,14 @@ export const prompts = pgTable("prompts", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `prompts_user_id_idx` on `userId`
 
 ---
 
 ### 🤖 3. AI Agent (`agents`)
+
 Configures autonomous LLM assistants with system prompts, parameters, and tool access list.
 
 ```typescript
@@ -73,12 +78,14 @@ export const agents = pgTable("agents", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `agents_user_id_idx` on `userId`
 
 ---
 
 ### 🧩 4. Reusable Code Component (`components`)
+
 Holds code blocks with pre-defined styles, category filters, and required package dependency tracking.
 
 ```typescript
@@ -97,12 +104,14 @@ export const components = pgTable("components", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `components_user_id_idx` on `userId`
 
 ---
 
 ### 📦 5. Starter Project Template (`templates`)
+
 Describes complete technology stack lists, folder directory layouts, and configuration notes.
 
 ```typescript
@@ -119,12 +128,14 @@ export const templates = pgTable("templates", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `templates_user_id_idx` on `userId`
 
 ---
 
 ### 📎 6. Code Snippet (`snippets`)
+
 Organizes smaller, non-component code templates by language and title tags.
 
 ```typescript
@@ -140,12 +151,14 @@ export const snippets = pgTable("snippets", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `snippets_user_id_idx` on `userId`
 
 ---
 
 ### 🧠 7. Interview Q&A Bank (`interview_questions`)
+
 A repository of interview preparation assets containing questions, target answers, difficulties, and tech domains.
 
 ```typescript
@@ -161,6 +174,7 @@ export const interviewQuestions = pgTable("interview_questions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 ```
+
 - **Indexes**:
   - `interview_questions_domain_idx` on `domain`
   - `interview_questions_user_id_idx` on `userId`
@@ -170,6 +184,7 @@ export const interviewQuestions = pgTable("interview_questions", {
 ## 📈 Database Best Practices
 
 > [!TIP]
+>
 > - **Self-Generating Identifiers**: All main schema tables use PostgreSQL `gen_random_uuid()` to assign strong primary keys automatically at write time.
 > - **Date Handlers**: Database row creations default their `created_at` and `updated_at` timestamps using database-native `NOW()`.
 > - **Automatic Query Indexing**: Every single table is index-optimized on the `user_id` query criteria to guarantee instant lookup speeds even as data tables scale.

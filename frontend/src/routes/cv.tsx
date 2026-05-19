@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import {
-  PageContainer, PageSection, PageHeader, TabNav, SplitLayout,
-} from "@/components/layout";
+import { PageContainer, PageSection, PageHeader, TabNav, SplitLayout } from "@/components/layout";
 import { FileText, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForge, newId } from "@/lib/store";
@@ -18,15 +16,23 @@ export const Route = createFileRoute("/cv")({
   component: CVPage,
 });
 
-type BuilderTab = typeof BUILDER_TABS[number]["id"];
-
+type BuilderTab = (typeof BUILDER_TABS)[number]["id"];
 
 function defaultCV(id: string): CVProfile {
   return {
     id,
     title: "My CV",
     focus: "frontend",
-    personalInfo: { name: "", email: "", phone: "", location: "", linkedin: "", github: "", website: "", title: "" },
+    personalInfo: {
+      name: "",
+      email: "",
+      phone: "",
+      location: "",
+      linkedin: "",
+      github: "",
+      website: "",
+      title: "",
+    },
     summary: "",
     experience: [],
     skills: { technical: [], soft: [], tools: [], languages: [] },
@@ -131,7 +137,9 @@ function CVPage() {
                 </div>
                 <div>
                   <p className="text-sm font-medium">No CV selected</p>
-                  <p className="text-xs mt-1 opacity-70">Create a new CV from the sidebar to get started</p>
+                  <p className="text-xs mt-1 opacity-70">
+                    Create a new CV from the sidebar to get started
+                  </p>
                 </div>
               </div>
             )}

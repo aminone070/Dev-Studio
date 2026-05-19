@@ -14,7 +14,7 @@ export function AuthForm() {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
+
   // Verification states
   const [verifyEmail, setVerifyEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
@@ -42,9 +42,7 @@ export function AuthForm() {
     setLoading(true);
     try {
       const endpoint = tab === "login" ? "/api/auth/login" : "/api/auth/register";
-      const body = tab === "login"
-        ? { email, password }
-        : { email, password, displayName };
+      const body = tab === "login" ? { email, password } : { email, password, displayName };
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -128,7 +126,8 @@ export function AuthForm() {
           <div className="text-center space-y-1">
             <h3 className="text-lg font-semibold text-foreground">Verify your email</h3>
             <p className="text-xs text-muted-foreground">
-              We sent a verification code to <span className="font-medium text-foreground">{verifyEmail}</span>.
+              We sent a verification code to{" "}
+              <span className="font-medium text-foreground">{verifyEmail}</span>.
             </p>
           </div>
 
@@ -136,7 +135,9 @@ export function AuthForm() {
             <div className="p-3 bg-muted rounded-md border border-border text-xs space-y-1">
               <div className="font-semibold text-foreground flex items-center justify-between">
                 <span>[Dev Mode] Verification Code:</span>
-                <span className="bg-background px-2 py-0.5 rounded border font-mono text-primary font-bold">{devCodeHint}</span>
+                <span className="bg-background px-2 py-0.5 rounded border font-mono text-primary font-bold">
+                  {devCodeHint}
+                </span>
               </div>
               <p className="text-muted-foreground text-[11px]">
                 In a production environment, this code would be sent via email.
@@ -163,7 +164,9 @@ export function AuthForm() {
               </p>
             )}
             {error && (
-              <p className="text-xs text-destructive bg-destructive/10 rounded-md px-3 py-2">{error}</p>
+              <p className="text-xs text-destructive bg-destructive/10 rounded-md px-3 py-2">
+                {error}
+              </p>
             )}
 
             <button
@@ -185,7 +188,11 @@ export function AuthForm() {
             </button>
             <button
               type="button"
-              onClick={() => { setStep("form"); setError(null); setSuccessMessage(null); }}
+              onClick={() => {
+                setStep("form");
+                setError(null);
+                setSuccessMessage(null);
+              }}
               className="text-muted-foreground hover:text-foreground"
             >
               Back to sign in
@@ -200,7 +207,10 @@ export function AuthForm() {
               <button
                 key={t}
                 type="button"
-                onClick={() => { setTab(t); setError(null); }}
+                onClick={() => {
+                  setTab(t);
+                  setError(null);
+                }}
                 className={`flex-1 py-1.5 text-sm font-medium rounded-sm transition-colors ${
                   tab === t
                     ? "bg-background text-foreground shadow-sm"
@@ -260,7 +270,9 @@ export function AuthForm() {
             </div>
 
             {error && (
-              <p className="text-xs text-destructive bg-destructive/10 rounded-md px-3 py-2">{error}</p>
+              <p className="text-xs text-destructive bg-destructive/10 rounded-md px-3 py-2">
+                {error}
+              </p>
             )}
 
             <button
@@ -269,8 +281,12 @@ export function AuthForm() {
               className="w-full rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors disabled:opacity-60"
             >
               {loading
-                ? tab === "login" ? "Signing in…" : "Creating account…"
-                : tab === "login" ? "Sign in" : "Create account"}
+                ? tab === "login"
+                  ? "Signing in…"
+                  : "Creating account…"
+                : tab === "login"
+                  ? "Sign in"
+                  : "Create account"}
             </button>
           </form>
 

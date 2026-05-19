@@ -85,7 +85,11 @@ export const microservicesArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Monolith to Microservices — Sam Newman", url: "https://samnewman.io/books/monolith-to-microservices/", desc: "Step-by-step decomposition strategies with real patterns." },
+        {
+          label: "Monolith to Microservices — Sam Newman",
+          url: "https://samnewman.io/books/monolith-to-microservices/",
+          desc: "Step-by-step decomposition strategies with real patterns.",
+        },
       ],
     },
     {
@@ -114,8 +118,16 @@ export const microservicesArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "gRPC Documentation", url: "https://grpc.io/docs/", desc: "High-performance RPC framework for inter-service communication." },
-        { label: "Istio Service Mesh Docs", url: "https://istio.io/latest/docs/", desc: "Traffic management, mTLS, observability for microservice fleets." },
+        {
+          label: "gRPC Documentation",
+          url: "https://grpc.io/docs/",
+          desc: "High-performance RPC framework for inter-service communication.",
+        },
+        {
+          label: "Istio Service Mesh Docs",
+          url: "https://istio.io/latest/docs/",
+          desc: "Traffic management, mTLS, observability for microservice fleets.",
+        },
       ],
     },
     {
@@ -144,7 +156,11 @@ export const microservicesArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Resilience4j Docs", url: "https://resilience4j.readme.io/docs", desc: "Lightweight fault tolerance library — circuit breaker, retry, bulkhead." },
+        {
+          label: "Resilience4j Docs",
+          url: "https://resilience4j.readme.io/docs",
+          desc: "Lightweight fault tolerance library — circuit breaker, retry, bulkhead.",
+        },
       ],
     },
     {
@@ -173,7 +189,11 @@ export const microservicesArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "Microservices Patterns — Chris Richardson", url: "https://microservices.io/book", desc: "Saga, CQRS, and data management patterns with trade-off analysis." },
+        {
+          label: "Microservices Patterns — Chris Richardson",
+          url: "https://microservices.io/book",
+          desc: "Saga, CQRS, and data management patterns with trade-off analysis.",
+        },
       ],
     },
     {
@@ -202,8 +222,16 @@ export const microservicesArea: SkillAreaData = {
         },
       ],
       resources: [
-        { label: "OpenTelemetry Documentation", url: "https://opentelemetry.io/docs/", desc: "Vendor-neutral observability framework for traces, metrics, and logs." },
-        { label: "Distributed Systems Observability", url: "https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/", desc: "Free O'Reilly book — metrics, logging, and tracing in distributed systems." },
+        {
+          label: "OpenTelemetry Documentation",
+          url: "https://opentelemetry.io/docs/",
+          desc: "Vendor-neutral observability framework for traces, metrics, and logs.",
+        },
+        {
+          label: "Distributed Systems Observability",
+          url: "https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/",
+          desc: "Free O'Reilly book — metrics, logging, and tracing in distributed systems.",
+        },
       ],
     },
   ],

@@ -33,11 +33,11 @@ export const softSkillsArea: SkillAreaData = {
   concepts: [],
   resources: [],
   checklist: [
-    { id: "agenda",   label: "Meeting has clear agenda & desired outcome" },
+    { id: "agenda", label: "Meeting has clear agenda & desired outcome" },
     { id: "feedback", label: "Feedback is specific, behavioral, and timely" },
-    { id: "focus",    label: "Deep work blocks scheduled in calendar" },
-    { id: "listen",   label: "Repeat back understanding before disagreeing" },
-    { id: "write",    label: "Key decisions documented in writing" },
+    { id: "focus", label: "Deep work blocks scheduled in calendar" },
+    { id: "listen", label: "Repeat back understanding before disagreeing" },
+    { id: "write", label: "Key decisions documented in writing" },
     { id: "delegate", label: "Delegate the 'what', not the 'how'" },
   ],
   subAreas: [

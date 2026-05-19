@@ -18,16 +18,47 @@ export function ScenarioForm({ initial, onSave, onCancel }: ScenarioFormProps) {
     result: initial?.result ?? "",
   });
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
+  const set =
+    (k: keyof typeof form) => (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const valid = form.title.trim().length > 0 && form.action.trim().length > 0;
 
-  const FIELDS: { key: keyof typeof form; label: string; abbr: string; placeholder: string; color: string }[] = [
-    { key: "situation", abbr: "S", label: "Situation",  color: "text-blue-400",   placeholder: "What was the context? Set the scene briefly." },
-    { key: "task",      abbr: "T", label: "Task",       color: "text-amber-400",  placeholder: "What was your responsibility or goal?" },
-    { key: "action",    abbr: "A", label: "Action",     color: "text-primary",    placeholder: "What exactly did YOU do? Be specific — this is the most important part." },
-    { key: "result",    abbr: "R", label: "Result",     color: "text-emerald-400",placeholder: "What was the measurable or concrete outcome?" },
+  const FIELDS: {
+    key: keyof typeof form;
+    label: string;
+    abbr: string;
+    placeholder: string;
+    color: string;
+  }[] = [
+    {
+      key: "situation",
+      abbr: "S",
+      label: "Situation",
+      color: "text-blue-400",
+      placeholder: "What was the context? Set the scene briefly.",
+    },
+    {
+      key: "task",
+      abbr: "T",
+      label: "Task",
+      color: "text-amber-400",
+      placeholder: "What was your responsibility or goal?",
+    },
+    {
+      key: "action",
+      abbr: "A",
+      label: "Action",
+      color: "text-primary",
+      placeholder: "What exactly did YOU do? Be specific — this is the most important part.",
+    },
+    {
+      key: "result",
+      abbr: "R",
+      label: "Result",
+      color: "text-emerald-400",
+      placeholder: "What was the measurable or concrete outcome?",
+    },
   ];
 
   return (
@@ -60,7 +91,10 @@ export function ScenarioForm({ initial, onSave, onCancel }: ScenarioFormProps) {
         </div>
       ))}
       <div className="flex items-center justify-end gap-2 pt-1">
-        <button onClick={onCancel} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-all">
+        <button
+          onClick={onCancel}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-all"
+        >
           <X className="size-3" /> Cancel
         </button>
         <button
@@ -68,7 +102,9 @@ export function ScenarioForm({ initial, onSave, onCancel }: ScenarioFormProps) {
           disabled={!valid}
           className={cn(
             "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all",
-            valid ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground cursor-not-allowed",
+            valid
+              ? "bg-primary text-primary-foreground hover:bg-primary/90"
+              : "bg-muted text-muted-foreground cursor-not-allowed",
           )}
         >
           <Check className="size-3" /> Save Scenario

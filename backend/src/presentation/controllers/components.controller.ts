@@ -16,13 +16,25 @@ export const create = async (req: Request, res: Response) => {
   const { id, ...raw } = req.body;
   const data = stripDates(raw);
   const safeId = isUUID(id) ? id : undefined;
-  const existing = safeId ? await db.select().from(components).where(and(eq(components.id, safeId), eq(components.userId, uid))) : [];
-  
+  const existing = safeId
+    ? await db
+        .select()
+        .from(components)
+        .where(and(eq(components.id, safeId), eq(components.userId, uid)))
+    : [];
+
   if (existing.length > 0) {
-    const [r] = await db.update(components).set({ ...data, updatedAt: new Date() }).where(eq(components.id, safeId!)).returning();
+    const [r] = await db
+      .update(components)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(components.id, safeId!))
+      .returning();
     res.json(r);
   } else {
-    const [r] = await db.insert(components).values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any).returning();
+    const [r] = await db
+      .insert(components)
+      .values({ ...data, userId: uid, ...(safeId ? { id: safeId } : {}) } as any)
+      .returning();
     res.json(r);
   }
 };
@@ -51,6 +63,8 @@ export const deleteById = async (req: Request, res: Response) => {
     res.json({ ok: true });
     return;
   }
-  await db.delete(components).where(and(eq(components.id, req.params.id), eq(components.userId, uid)));
+  await db
+    .delete(components)
+    .where(and(eq(components.id, req.params.id), eq(components.userId, uid)));
   res.json({ ok: true });
 };

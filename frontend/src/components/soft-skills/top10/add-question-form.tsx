@@ -33,12 +33,17 @@ export function AddQuestionForm({ onSave, onCancel }: AddQuestionFormProps) {
           disabled={!title.trim()}
           className={cn(
             "flex-1 py-1.5 rounded-xl text-xs font-medium transition-all",
-            title.trim() ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground cursor-not-allowed",
+            title.trim()
+              ? "bg-primary text-primary-foreground hover:bg-primary/90"
+              : "bg-muted text-muted-foreground cursor-not-allowed",
           )}
         >
           Add Question
         </button>
-        <button onClick={onCancel} className="px-3 py-1.5 rounded-xl text-xs text-muted-foreground hover:bg-muted/60 transition-all">
+        <button
+          onClick={onCancel}
+          className="px-3 py-1.5 rounded-xl text-xs text-muted-foreground hover:bg-muted/60 transition-all"
+        >
           <X className="size-3" />
         </button>
       </div>

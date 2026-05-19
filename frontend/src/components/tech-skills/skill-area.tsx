@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import {
-  BookOpen, CheckSquare, ExternalLink, GraduationCap,
-  Search, Plus, ChevronRight, LucideIcon,
+  BookOpen,
+  CheckSquare,
+  ExternalLink,
+  GraduationCap,
+  Search,
+  Plus,
+  ChevronRight,
+  LucideIcon,
 } from "lucide-react";
 import type { SkillAreaData } from "@/types/skills";
-import { OverviewSection }   from "./overview-section";
-import { ChecklistSection }  from "./checklist-section";
-import { InterviewSection }  from "./interview-section";
-import { ResourcesSection }  from "./resources-section";
+import { OverviewSection } from "./overview-section";
+import { ChecklistSection } from "./checklist-section";
+import { InterviewSection } from "./interview-section";
+import { ResourcesSection } from "./resources-section";
 import { SplitLayout, TabNav } from "../layout";
 import { cn } from "@/lib/utils";
 
@@ -20,10 +26,10 @@ interface SubAreaTab {
 }
 
 const SECTIONS: { id: SectionId; label: string; icon: React.ElementType }[] = [
-  { id: "overview",  label: "Overview",     icon: BookOpen },
-  { id: "checklist", label: "Checklist",    icon: CheckSquare },
+  { id: "overview", label: "Overview", icon: BookOpen },
+  { id: "checklist", label: "Checklist", icon: CheckSquare },
   { id: "interview", label: "Interview Q&A", icon: GraduationCap },
-  { id: "resources", label: "Resources",    icon: ExternalLink },
+  { id: "resources", label: "Resources", icon: ExternalLink },
 ];
 
 const ADD_SECTIONS: SectionId[] = ["interview"];
@@ -39,11 +45,9 @@ export function SkillArea({
   subAreaGroups?: Record<string, SubAreaTab[]>;
 }) {
   const [activeSection, setActiveSection] = useState<SectionId>("overview");
-  const [subArea, setSubArea] = useState<string>(
-    activeSubArea || data.subAreas?.[0]?.id || "",
-  );
+  const [subArea, setSubArea] = useState<string>(activeSubArea || data.subAreas?.[0]?.id || "");
   const [searchQuery, setSearchQuery] = useState("");
-  const [addTrigger, setAddTrigger]   = useState(0);
+  const [addTrigger, setAddTrigger] = useState(0);
 
   // Which group parents are open in the sidebar
   const initExpanded = (): Set<string> => {
@@ -51,7 +55,7 @@ export function SkillArea({
     if (!subAreaGroups) return s;
     const target = activeSubArea || data.subAreas?.[0]?.id || "";
     Object.entries(subAreaGroups).forEach(([parentId, children]) => {
-      if (parentId === target || children.some(c => c.id === target)) s.add(parentId);
+      if (parentId === target || children.some((c) => c.id === target)) s.add(parentId);
     });
     return s;
   };
@@ -66,8 +70,8 @@ export function SkillArea({
   useEffect(() => {
     if (!subAreaGroups) return;
     Object.entries(subAreaGroups).forEach(([parentId, children]) => {
-      if (subArea === parentId || children.some(c => c.id === subArea)) {
-        setExpandedGroups(prev => new Set([...prev, parentId]));
+      if (subArea === parentId || children.some((c) => c.id === subArea)) {
+        setExpandedGroups((prev) => new Set([...prev, parentId]));
       }
     });
   }, [subArea]);
@@ -79,36 +83,39 @@ export function SkillArea({
   }, [data.id]);
 
   const toggleGroup = (id: string) =>
-    setExpandedGroups(prev => {
+    setExpandedGroups((prev) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
 
   // IDs that live as children under a group parent — excluded from top-level list
-  const childIds = new Set(
-    Object.values(subAreaGroups ?? {}).flatMap(ch => ch.map(c => c.id)),
-  );
+  const childIds = new Set(Object.values(subAreaGroups ?? {}).flatMap((ch) => ch.map((c) => c.id)));
 
-  const filteredSubAreas = data.subAreas?.filter(sa =>
+  const filteredSubAreas = data.subAreas?.filter((sa) =>
     sa.label.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // Top-level items: not a child of any group (or no groups exist)
   const topLevel = subAreaGroups
-    ? filteredSubAreas?.filter(sa => !childIds.has(sa.id))
+    ? filteredSubAreas?.filter((sa) => !childIds.has(sa.id))
     : filteredSubAreas;
 
-  const canAdd  = ADD_SECTIONS.includes(activeSection);
+  const canAdd = ADD_SECTIONS.includes(activeSection);
   const addLabel = activeSection === "interview" ? "Add Q&A" : "Add";
 
   // Inner tab nav — sections + active group's children
   const activeGroupChildren: SubAreaTab[] = subAreaGroups?.[activeSubArea ?? ""] ?? [];
-  const subAreaTabIds = new Set(activeGroupChildren.map(t => t.id));
+  const subAreaTabIds = new Set(activeGroupChildren.map((t) => t.id));
 
   const allTabs = [
-    ...SECTIONS.map(s => ({ id: s.id, label: s.label, icon: s.icon, isSubArea: false })),
-    ...activeGroupChildren.map(t => ({ id: t.id, label: t.label, icon: t.icon, isSubArea: true })),
+    ...SECTIONS.map((s) => ({ id: s.id, label: s.label, icon: s.icon, isSubArea: false })),
+    ...activeGroupChildren.map((t) => ({
+      id: t.id,
+      label: t.label,
+      icon: t.icon,
+      isSubArea: true,
+    })),
   ];
 
   const activeTabId = subAreaTabIds.has(subArea) ? subArea : activeSection;
@@ -127,7 +134,7 @@ export function SkillArea({
 
   /* ── Sidebar ──────────────────────────────────────────── */
   const renderSidebarItem = (sa: { id: string; label: string; icon?: any }) => {
-    const SaIcon   = sa.icon;
+    const SaIcon = sa.icon;
     const isActive = subArea === sa.id;
     return (
       <button
@@ -166,7 +173,7 @@ export function SkillArea({
             {data.label}
           </span>
           <button
-            onClick={() => canAdd && setAddTrigger(n => n + 1)}
+            onClick={() => canAdd && setAddTrigger((n) => n + 1)}
             title={addLabel}
             className={cn(
               "size-6 rounded-lg flex items-center justify-center transition-all",
@@ -188,11 +195,11 @@ export function SkillArea({
                 data.id === "softskills"
                   ? "Filter topics…"
                   : data.subAreasLabel
-                  ? `Filter ${data.subAreasLabel.toLowerCase()}…`
-                  : "Filter stacks…"
+                    ? `Filter ${data.subAreasLabel.toLowerCase()}…`
+                    : "Filter stacks…"
               }
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-muted/40 border border-border/60 rounded-xl py-1.5 pl-8 pr-3 text-xs outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary/40 transition-all"
             />
           </div>
@@ -207,21 +214,21 @@ export function SkillArea({
               {data.id === "softskills"
                 ? "Topics"
                 : data.subAreasLabel
-                ? data.subAreasLabel
-                : "Stacks / Frameworks"}
+                  ? data.subAreasLabel
+                  : "Stacks / Frameworks"}
             </p>
             <nav className="space-y-0.5">
-              {topLevel?.map(sa => {
+              {topLevel?.map((sa) => {
                 const children = subAreaGroups?.[sa.id];
                 const hasChildren = children && children.length > 0;
 
                 if (!hasChildren) return renderSidebarItem(sa);
 
                 // — Collapsible group —
-                const isOpen   = expandedGroups.has(sa.id);
-                const SaIcon   = sa.icon;
+                const isOpen = expandedGroups.has(sa.id);
+                const SaIcon = sa.icon;
                 const isActive = subArea === sa.id;
-                const childActive = children.some(c => c.id === subArea);
+                const childActive = children.some((c) => c.id === subArea);
 
                 return (
                   <div key={sa.id}>
@@ -267,8 +274,8 @@ export function SkillArea({
                     {/* Children (animated) */}
                     {isOpen && (
                       <div className="ml-3 mt-0.5 pl-2 border-l border-border/40 space-y-0.5 pb-1">
-                        {children.map(child => {
-                          const ChildIcon   = child.icon;
+                        {children.map((child) => {
+                          const ChildIcon = child.icon;
                           const childActive = subArea === child.id;
                           return (
                             <button
@@ -315,8 +322,10 @@ export function SkillArea({
       <div className="h-full flex flex-col overflow-hidden">
         <div className="px-4 pt-4 pb-3 border-b border-border/60 shrink-0">
           <TabNav
-            tabs={allTabs.map(t => ({
-              id: t.id, label: t.label, icon: t.icon as LucideIcon | undefined,
+            tabs={allTabs.map((t) => ({
+              id: t.id,
+              label: t.label,
+              icon: t.icon as LucideIcon | undefined,
               onClick: () => handleTabClick(t.id, t.isSubArea),
             }))}
             activeTab={activeTabId}
@@ -325,9 +334,13 @@ export function SkillArea({
 
         <div className="flex-1 overflow-y-auto scrollbar-thin">
           <div className="w-full max-w-[1200px] mx-auto p-4 sm:p-8">
-            {activeSection === "overview"  && <OverviewSection  data={data} subArea={subArea} onSubAreaChange={setSubArea} />}
+            {activeSection === "overview" && (
+              <OverviewSection data={data} subArea={subArea} onSubAreaChange={setSubArea} />
+            )}
             {activeSection === "checklist" && <ChecklistSection data={data} />}
-            {activeSection === "interview" && <InterviewSection data={data} triggerAdd={addTrigger} />}
+            {activeSection === "interview" && (
+              <InterviewSection data={data} triggerAdd={addTrigger} />
+            )}
             {activeSection === "resources" && <ResourcesSection data={data} subArea={subArea} />}
           </div>
         </div>

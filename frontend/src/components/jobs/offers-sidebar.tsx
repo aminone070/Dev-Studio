@@ -13,8 +13,11 @@ interface Props {
 }
 
 const statusLabel: Record<string, string> = {
-  new: "New", in_review: "In Review", accepted: "Accepted",
-  rejected: "Rejected", completed: "Done",
+  new: "New",
+  in_review: "In Review",
+  accepted: "Accepted",
+  rejected: "Rejected",
+  completed: "Done",
 };
 
 type OfferFilter = "all" | "new" | "in_review";
@@ -100,10 +103,14 @@ export function OffersSidebar({ offers, activeId, onSelect, onAdd }: Props) {
           <div className="flex flex-col items-center justify-center py-12 gap-2 text-center px-4">
             <Handshake className="size-8 text-muted-foreground/30" />
             <p className="text-xs text-muted-foreground">
-              {searchQuery || activeFilter !== "all" ? "No matching offers" : "No offers tracked yet."}
+              {searchQuery || activeFilter !== "all"
+                ? "No matching offers"
+                : "No offers tracked yet."}
             </p>
             {!searchQuery && activeFilter === "all" && (
-              <p className="text-[10px] text-muted-foreground/60">Add offers from Mostaql, Upwork, Fiverr, etc.</p>
+              <p className="text-[10px] text-muted-foreground/60">
+                Add offers from Mostaql, Upwork, Fiverr, etc.
+              </p>
             )}
           </div>
         )}
@@ -120,19 +127,27 @@ export function OffersSidebar({ offers, activeId, onSelect, onAdd }: Props) {
               >
                 <p className="text-xs font-medium truncate leading-snug">{offer.title}</p>
                 {offer.client && (
-                  <p className="text-[10px] text-muted-foreground truncate mt-0.5">{offer.client}</p>
+                  <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                    {offer.client}
+                  </p>
                 )}
                 <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                   {offer.platform && (
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded-lg font-medium ${PLATFORM_COLORS[offer.platform] ?? "bg-muted text-muted-foreground"}`}>
+                    <span
+                      className={`text-[9px] px-1.5 py-0.5 rounded-lg font-medium ${PLATFORM_COLORS[offer.platform] ?? "bg-muted text-muted-foreground"}`}
+                    >
                       {offer.platform}
                     </span>
                   )}
-                  <span className={`text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${STATUS_COLORS[offer.status] ?? ""}`}>
+                  <span
+                    className={`text-[9px] px-1.5 py-0.5 rounded-lg border font-medium ${STATUS_COLORS[offer.status] ?? ""}`}
+                  >
                     {statusLabel[offer.status] ?? offer.status}
                   </span>
                   {offer.budget && (
-                    <span className="text-[9px] text-green-400 font-medium">{offer.budget} {offer.currency}</span>
+                    <span className="text-[9px] text-green-400 font-medium">
+                      {offer.budget} {offer.currency}
+                    </span>
                   )}
                 </div>
               </button>
@@ -141,7 +156,13 @@ export function OffersSidebar({ offers, activeId, onSelect, onAdd }: Props) {
         </ul>
       </div>
 
-      <ListPagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} onPageChange={setPage} />
+      <ListPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
 
       {/* Bottom Action */}
       <div className="px-2 pb-2 shrink-0">

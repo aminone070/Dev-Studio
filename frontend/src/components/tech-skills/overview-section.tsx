@@ -15,7 +15,6 @@ export function OverviewSection({ data, subArea, onSubAreaChange, hideSubAreaNav
   return (
     <div className="space-y-10">
       {/* Sub-area selector */}
-      
 
       <div>
         <h2 className="text-2xl font-bold tracking-tight mb-2">

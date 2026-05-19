@@ -9,7 +9,9 @@ export function UserMenu({ isCollapsed }: { isCollapsed?: boolean }) {
   const displayName = profile.displayName || user?.name || "Account";
 
   return (
-    <div className={`flex items-center rounded-xl ${isCollapsed ? "justify-center p-1" : "gap-2 px-2 py-1.5 hover:bg-muted/40 transition-colors"}`}>
+    <div
+      className={`flex items-center rounded-xl ${isCollapsed ? "justify-center p-1" : "gap-2 px-2 py-1.5 hover:bg-muted/40 transition-colors"}`}
+    >
       <Link
         to="/profile"
         title={isCollapsed ? displayName : undefined}

@@ -66,9 +66,35 @@ export const JOB_STATUSES = ["saved", "applied", "interview", "offer", "rejected
 export const OFFER_STATUSES = ["new", "in_review", "accepted", "rejected", "completed"] as const;
 export const SERVICE_STATUSES = ["active", "paused", "draft"] as const;
 
-export const JOB_PLATFORMS = ["LinkedIn", "Indeed", "Glassdoor", "RemoteOK", "Upwork", "We Work Remotely", "AngelList", "Other"];
-export const OFFER_PLATFORMS = ["Mostaql", "Upwork", "Freelancer", "Khamsat", "Toptal", "PeoplePerHour", "Fiverr", "Other"];
-export const SERVICE_PLATFORMS = ["Fiverr", "Mostaql", "Khamsat", "Upwork", "PeoplePerHour", "Freelancer", "Other"];
+export const JOB_PLATFORMS = [
+  "LinkedIn",
+  "Indeed",
+  "Glassdoor",
+  "RemoteOK",
+  "Upwork",
+  "We Work Remotely",
+  "AngelList",
+  "Other",
+];
+export const OFFER_PLATFORMS = [
+  "Mostaql",
+  "Upwork",
+  "Freelancer",
+  "Khamsat",
+  "Toptal",
+  "PeoplePerHour",
+  "Fiverr",
+  "Other",
+];
+export const SERVICE_PLATFORMS = [
+  "Fiverr",
+  "Mostaql",
+  "Khamsat",
+  "Upwork",
+  "PeoplePerHour",
+  "Freelancer",
+  "Other",
+];
 
 export const STATUS_COLORS: Record<string, string> = {
   saved: "bg-blue-500/15 text-blue-400 border-blue-500/20",
