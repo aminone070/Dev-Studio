@@ -37,7 +37,6 @@ export const WORKSPACE_NAV = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/planner", label: "Planner", icon: CalendarDays },
   { to: "/tools", label: "Tools", icon: Code2 },
-  { to: "/profile", label: "Profile", icon: User },
 ] as const;
 
 export const COMMUNICATION_NAV = [
